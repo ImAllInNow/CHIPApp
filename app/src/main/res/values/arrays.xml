@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="locationChoices">
+        <item>Detroit</item>
+        <item>Haiti</item>
+        <item>Nepal</item>
+        <item>Ghana</item>
+    </array>
+
+    <array name="roleChoices">
+        <item>Community Health Worker</item>
+        <item>Mentor</item>
+        <item>Innovator</item>
+        <item>Program Team</item>
+    </array>
+
+</resources>

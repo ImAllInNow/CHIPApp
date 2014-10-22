@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Strings related to register -->
+    <string name="title_activity_register">Register</string>
+
+    <string name="register_instructions">Please enter the following:</string>
+
+    <string name="register_first_name">First name</string>
+    <string name="register_last_name">Last name</string>
+    <string name="register_address">Address</string>
+    <string name="register_location">Location</string>
+    <string name="register_role">Role</string>
+    <string name="register_mentor">Please select one mentor</string>
+    <string name="register_bio">Your short bio</string>
+
+    <string name="register_login_title">Please enter your login information</string>
+    <string name="register_email">Email</string>
+    <string name="register_reenter_email">Re-enter email</string>
+    <string name="register_password">Password</string>
+
+    <string name="register_success">Registration successful!</string>
+
+    <string name="confirm_cancel_registration">Cancel registration?</string>
+</resources>

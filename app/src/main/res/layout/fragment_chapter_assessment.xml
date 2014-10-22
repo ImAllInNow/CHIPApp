@@ -1,0 +1,56 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="chiprogram.chipapp.ChapterVideoFragment">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TableLayout
+                android:id="@+id/assess_table"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TableRow
+                    android:id="@+id/assess_table_header_row"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="#AAAAAA">
+
+                    <TextView
+                        android:id="@+id/assess_table_title1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/training_session_name"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:textSize="20sp"
+                        android:textColor="#000000" />
+
+                    <TextView
+                        android:id="@+id/assess_table_title2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="@string/training_status"
+                        android:textSize="20sp"
+                        android:textColor="#000000" />
+                </TableRow>
+            </TableLayout>
+        </ScrollView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_gravity="center"
+            android:text="@string/assess_click_instructions"/>
+    </LinearLayout>
+</FrameLayout>

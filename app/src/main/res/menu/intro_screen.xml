@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="chiprogram.chipapp.IntroScreenActivity" >
+
+    <item android:id="@+id/action_login"
+        android:title="@string/common_login"
+        android:orderInCategory="1" />
+
+    <item android:id="@+id/action_register"
+        android:title="@string/common_register"
+        android:orderInCategory="2" />
+
+    <item android:id="@+id/action_about_chip"
+        android:title="@string/title_activity_about_chip"
+        android:orderInCategory="101" />
+</menu>

@@ -1,0 +1,29 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="chiprogram.chipapp.ProfileActivity" >
+
+    <item android:id="@+id/action_profile"
+        android:title="@string/common_profile"
+        android:icon="@drawable/ic_action_profile"
+        app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/action_discussion"
+        android:title="@string/common_discussion"
+        android:icon="@drawable/ic_action_discussion"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_about_chip"
+        android:title="@string/title_activity_about_chip"
+        android:orderInCategory="101" />
+
+    <item android:id="@+id/action_logout"
+        android:title="@string/common_logout"
+        android:orderInCategory="102"
+        app:showAsAction="never" />
+</menu>

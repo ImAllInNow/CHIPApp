@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="title_activity_training">Training Content</string>
+
+    <string name="title_module_list">Training Modules</string>
+
+    <string name="title_chapter_list">Chapters</string>
+    <string name="title_chapter_detail">Training Chapter Detail</string>
+
+    <string name="training_video">Training Video</string>
+
+    <string name="training_session_name">Session Name</string>
+    <string name="training_materials">Materials</string>
+    <string name="training_status">Status</string>
+
+    <string name="title_activity_chapter_tabs">Chapter Details</string>
+
+    <string name="title_section1">Video</string>
+    <string name="title_section2">Sessions</string>
+    <string name="title_section3">Assessment</string>
+
+    <string name="assess_click_instructions">(Tap a session name to begin assessment)</string>
+
+    <string name="title_activity_assessment">Assessment questions</string>
+    <string name="training_complete">Complete</string>
+    <string name="training_incomplete">Incomplete</string>
+    <string name="training_score">Score</string>
+    <string name="questions_title_prefix">Assessment for</string>
+
+    <string name="confirm_cancel_assessment">Cancel assessment?</string>
+
+</resources>

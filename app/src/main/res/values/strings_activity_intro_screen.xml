@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_intro_screen">CHIP Mobile App</string>
+
+    <string name="intro_text">Our Community Health Innovator Program or "CHIP" is a novel framework that facilitates local innovation to improve health behaviors. CHIP empowers communities to identify health challenges for families with infants and young children, and address these challenges through innovative local ("on-the-ground") and global ("adaptable") solutions.</string>
+
+    <string name="chip_titleImage_descrip">CHIP: Community Health Innovator Program</string>
+    <string name="chip_image1_descrip">CHIP Image 1</string>
+    <string name="chip_image2_descrip">CHIP Image 2</string>
+</resources>

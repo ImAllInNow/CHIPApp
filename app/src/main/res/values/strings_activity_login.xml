@@ -1,0 +1,15 @@
+<resources>
+    <!-- Strings related to login -->
+    <string name="title_activity_login">Login</string>
+
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+
+    <string name="keep_logged_in">Auto-login at start of app</string>
+    <string name="remember_email">Remember email</string>
+</resources>
