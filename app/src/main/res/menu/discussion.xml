@@ -7,13 +7,15 @@
           android:title="@string/common_profile"
           android:icon="@drawable/ic_action_profile"
           android:orderInCategory="1"
-          app:showAsAction="ifRoom"/>
+          app:showAsAction="ifRoom"
+          android:showAsAction="ifRoom"/>
 
     <item android:id="@+id/action_training"
           android:title="@string/common_training"
           android:icon="@drawable/ic_action_training"
           android:orderInCategory="2"
-          app:showAsAction="ifRoom"/>
+          app:showAsAction="ifRoom"
+          android:showAsAction="ifRoom"/>
 
     <item android:id="@+id/action_settings"
           android:title="@string/action_settings"

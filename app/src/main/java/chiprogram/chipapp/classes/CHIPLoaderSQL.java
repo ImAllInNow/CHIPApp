@@ -29,12 +29,13 @@ public class CHIPLoaderSQL {
 
             ResultSet rs = null;
 
+            /*
             try {
                 rs = sqlServ.doGet();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
+            */
 
             if (rs != null) {
                 int i = 8;
@@ -56,12 +57,13 @@ public class CHIPLoaderSQL {
 
         ResultSet rs = null;
 
+        /*
         try {
             rs = sqlServ.doGet();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        */
 
         if (rs != null) {
             int i = 8;
