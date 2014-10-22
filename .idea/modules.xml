@@ -6,7 +6,6 @@
       <module fileurl="file://$PROJECT_DIR$/api/api.iml" filepath="$PROJECT_DIR$/api/api.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/google_cloud_backend/google_cloud_backend.iml" filepath="$PROJECT_DIR$/google_cloud_backend/google_cloud_backend.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mysql-connector-java-5.1.33/mysql-connector-java-5.1.33.iml" filepath="$PROJECT_DIR$/mysql-connector-java-5.1.33/mysql-connector-java-5.1.33.iml" />
     </modules>
   </component>
 </project>
