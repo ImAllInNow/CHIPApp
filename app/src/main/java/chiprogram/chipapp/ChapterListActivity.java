@@ -127,18 +127,6 @@ public class ChapterListActivity extends Activity
             // http://developer.android.com/design/patterns/navigation.html#up-vs-back
             //
             onBackPressed();
-            /*
-            Intent intent = new Intent(this, ModuleListActivity.class);
-
-            // add in user to bundle
-            Bundle extras = new Bundle();
-            extras.putParcelable(ProfileActivity.ARGUMENT_USER, m_user);
-
-            intent.putExtras(extras);
-
-            NavUtils.navigateUpTo(this, intent);
-            finish();
-            */
             return true;
         } else if (id == R.id.action_settings) {
             CommonFunctions.navigateToSettings(this, m_user);

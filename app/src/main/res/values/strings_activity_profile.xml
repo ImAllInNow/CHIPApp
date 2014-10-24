@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Strings related to register -->
-    <string name="title_activity_profile">Welcome</string>
+    <string name="title_activity_profile">Profile for</string>
 
     <string name="profile_title">Profile</string>
 

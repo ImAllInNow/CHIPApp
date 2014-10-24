@@ -251,7 +251,7 @@ public class LoginActivity extends Activity {
                 setLoginPreferences();
 
                 // navigate to profile activity
-                Intent intent = new Intent(m_Activity, ProfileActivity.class);
+                Intent intent = new Intent(m_Activity, HomeActivity.class);
 
                 // add in user to bundle
                 Bundle extras = new Bundle();

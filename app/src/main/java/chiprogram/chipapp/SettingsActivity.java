@@ -54,7 +54,7 @@ public class SettingsActivity extends Activity {
             //
             // http://developer.android.com/design/patterns/navigation.html#up-vs-back
             //
-            Intent intent = new Intent(this, ProfileActivity.class);
+            Intent intent = new Intent(this, HomeActivity.class);
 
             // add in user to bundle
             Bundle extras = new Bundle();

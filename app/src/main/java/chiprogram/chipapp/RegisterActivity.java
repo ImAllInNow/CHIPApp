@@ -159,7 +159,7 @@ public class RegisterActivity extends Activity implements
                 Toast.makeText(this, getString(R.string.register_success), Toast.LENGTH_SHORT).show();
 
                 // navigate to profile activity
-                Intent intent = new Intent(this, ProfileActivity.class);
+                Intent intent = new Intent(this, HomeActivity.class);
 
                 // add in user to bundle
                 Bundle extras = new Bundle();

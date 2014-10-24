@@ -82,32 +82,32 @@ public class CHIPUser implements Parcelable {
         return m_email;
     }
 
-    // return value of 0 means valid,
-    // if valid > 0, then that member variable is the last one with an error.
+    // return value of 0 means error,
+    // if error > 0, then that member variable is the last one with an error.
     public int validateUser() {
-        int valid = 0;
+        int error = 0;
 
         if (m_firstName.isEmpty()) {
-            valid = 1;
+            error = 1;
         } else if (m_lastName.isEmpty()) {
-            valid = 2;
+            error = 2;
         } else if (m_address.isEmpty()){
-            valid = 3;
+            error = 3;
         } else if (m_location.isEmpty()){
-            valid = 4;
+            error = 4;
         } else if (m_role.isEmpty()){
-            valid = 5;
+            error = 5;
         } else if (m_mentor.isEmpty()){
-            valid = 6;
+            error = 6;
         } else if (m_bio.isEmpty()){
-            valid = 7;
+            error = 7;
         } else if (CommonFunctions.ValidateEmail(m_email) == false){
-            valid = 8;
+            error = 8;
         }
 
         // TODO: check for SQL injection characters?
 
-        return valid;
+        return error;
     }
 
     @Override

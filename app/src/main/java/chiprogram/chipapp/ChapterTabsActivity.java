@@ -128,19 +128,6 @@ public class ChapterTabsActivity extends Activity implements ActionBar.TabListen
             // http://developer.android.com/design/patterns/navigation.html#up-vs-back
             //
             onBackPressed();
-            /*
-            Intent intent = new Intent(this, ChapterListActivity.class);
-
-            // add in user to bundle
-            Bundle extras = new Bundle();
-            extras.putParcelable(ProfileActivity.ARGUMENT_USER, m_user);
-            extras.putString(ChapterListActivity.ARGUMENT_MODULE_ID, m_moduleId);
-
-            intent.putExtras(extras);
-
-            NavUtils.navigateUpTo(this, intent);
-            finish();
-            */
             return true;
         } else if (id == R.id.action_settings) {
             CommonFunctions.navigateToSettings(this, m_user);
