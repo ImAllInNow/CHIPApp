@@ -108,6 +108,10 @@ public class CommonFunctions {
         String searchString = "v=";
         int startIndex = url.indexOf(searchString) + searchString.length();
         int endIndex = url.indexOf("&");
-        return url.substring(startIndex, endIndex);
+        if (endIndex == -1) {
+            return url.substring(startIndex);
+        } else {
+            return url.substring(startIndex, endIndex);
+        }
     }
 }
