@@ -41,29 +41,31 @@
         </activity>
         <activity
             android:name=".ProfileActivity"
-            android:label="@string/title_activity_profile">
-
+            android:label="@string/title_activity_profile" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="chiprogram.chipapp.HomeActivity" />
         </activity>
         <activity
             android:name=".DiscussionActivity"
             android:label="@string/title_activity_discussion" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="chiprogram.chipapp.ProfileActivity" />
+                android:value="chiprogram.chipapp.HomeActivity" />
         </activity>
         <activity
             android:name=".ModuleListActivity"
             android:label="@string/title_module_list" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="chiprogram.chipapp.ProfileActivity" />
+                android:value="chiprogram.chipapp.HomeActivity" />
         </activity>
         <activity
             android:name=".ChapterListActivity"
             android:label="@string/title_chapter_list" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="chiprogram.chipapp.ModuleListActivity" />
+                android:value="chiprogram.chipapp.HomeActivity" />
         </activity>
         <activity
             android:name=".ChapterTabsActivity"
@@ -90,6 +92,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ProfileActivity" />
         </activity>
+        <activity
+            android:name=".HomeActivity"
+            android:label="@string/title_activity_home" >
+        </activity>
 
         <receiver
             android:name=".classes.GcmBroadcastReceiver"
@@ -103,5 +109,4 @@
 
         <service android:name=".classes.GcmIntentService" />
     </application>
-
 </manifest>

@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CHIPApp.iml" filepath="$PROJECT_DIR$/CHIPApp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/api/api.iml" filepath="$PROJECT_DIR$/api/api.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/google_cloud_backend/google_cloud_backend.iml" filepath="$PROJECT_DIR$/google_cloud_backend/google_cloud_backend.iml" />
     </modules>

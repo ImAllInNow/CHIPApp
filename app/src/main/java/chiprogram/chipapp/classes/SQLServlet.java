@@ -71,6 +71,7 @@ public class SQLServlet {
     public ResultSet doGet() throws IOException {
         String url;
         ResultSet rs;
+        // TODO: change this to the correct ip address and instance name
         url = "jdbc:jtds:sqlserver://server_ip_address:1433/" + m_dbName + ";encrypt=false;instance=SQLEXPRESS;";
         //url = "jdbc:google:mysql://brave-night-729:chip-data/" + m_dbName;
         //url = "jdbc:mysql://173.194.83.91:3306/" + m_dbName;

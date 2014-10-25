@@ -19,23 +19,16 @@ import chiprogram.chipapp.classes.Consts;
 import chiprogram.chipapp.classes.GcmRegistrationAsyncTask;
 
 
-public class ProfileActivity extends Activity implements
-        ConfirmationDialog.ConfirmationDialogListener {
+public class ProfileActivity extends Activity {
 
     public static final String ARGUMENT_USER = "chiprogram.chipapp.ARGUMENT_USER";
 
-    private static final String CONFIRM_LOGOUT_TAG = "fragment_confirm_logout";
-
     private CHIPUser m_user;
-
-    private FragmentManager m_fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
-        m_fragmentManager = getFragmentManager();
 
         // Show the Up button in the action bar.
         setupActionBar();
@@ -66,6 +59,7 @@ public class ProfileActivity extends Activity implements
         mentor.setText(m_user.get_mentor());
         shortBioView.setText(m_user.get_bio());
 
+        // TODO: use this or remove it
         //new GcmRegistrationAsyncTask().execute(this);
     }
 
@@ -81,7 +75,7 @@ public class ProfileActivity extends Activity implements
      * Set up the {@link android.app.ActionBar}.
      */
     private void setupActionBar() {
-        getActionBar().setDisplayHomeAsUpEnabled(false);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setDisplayShowHomeEnabled(true);
     }
 
@@ -98,7 +92,26 @@ public class ProfileActivity extends Activity implements
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == android.R.id.home) {
+            // This ID represents the Home or Up button. In the case of this
+            // activity, the Up button is shown. Use NavUtils to allow users
+            // to navigate up one level in the application structure. For
+            // more details, see the Navigation pattern on Android Design:
+            //
+            // http://developer.android.com/design/patterns/navigation.html#up-vs-back
+            //
+            Intent intent = new Intent(this, HomeActivity.class);
+
+            // add in user to bundle
+            Bundle extras = new Bundle();
+            extras.putParcelable(ProfileActivity.ARGUMENT_USER, m_user);
+
+            intent.putExtras(extras);
+
+            NavUtils.navigateUpTo(this, intent);
+            finish();
+            return true;
+        } else if (id == R.id.action_settings) {
             CommonFunctions.navigateToSettings(this, m_user);
             return true;
         } else if (id == R.id.action_training) {
@@ -115,53 +128,6 @@ public class ProfileActivity extends Activity implements
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (getParent() == null ||
-            getParent().getClass() == RegisterActivity.class ||
-            getParent().getClass() == LoginActivity.class ||
-            getParent().getClass() == IntroScreenActivity.class) {
-            // verify that user wants to log out
-            FragmentTransaction fragmentTransaction = m_fragmentManager.beginTransaction();
-
-            ConfirmationDialog confirmLogoutDialog =
-                    new ConfirmationDialog();
-
-            Bundle args = new Bundle();
-
-            SharedPreferences prefs = getSharedPreferences(LoginActivity.class.getSimpleName(),
-                    Context.MODE_PRIVATE);
-            if (prefs.getString(Consts.PREF_REM_PASSWORD, "").isEmpty()) {
-                args.putString(ConfirmationDialog.ARG_MESSAGE_TEXT, getString(R.string.confirm_logout));
-            } else {
-                args.putString(ConfirmationDialog.ARG_MESSAGE_TEXT, getString(R.string.common_confirm_exit_app));
-            }
-            args.putString(ConfirmationDialog.ARG_TAG, CONFIRM_LOGOUT_TAG);
-
-            confirmLogoutDialog.setArguments(args);
-
-            fragmentTransaction.add(confirmLogoutDialog, CONFIRM_LOGOUT_TAG);
-            fragmentTransaction.commit();
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    public void onFinishConfirmationDialog(String tag) {
-        if (tag.equals(CONFIRM_LOGOUT_TAG)) {
-            SharedPreferences prefs = getSharedPreferences(LoginActivity.class.getSimpleName(),
-                    Context.MODE_PRIVATE);
-            if (prefs.getString(Consts.PREF_REM_PASSWORD, "").isEmpty()) {
-                Intent intent = new Intent(this, IntroScreenActivity.class);
-                startActivity(intent);
-            } else {
-                CommonFunctions.quitting_app = true;
-            }
-
-            finish();
-        }
     }
 
     public void editProfileClicked(View view) {
