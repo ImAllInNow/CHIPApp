@@ -9,14 +9,24 @@ public class NavItem {
 
     private String m_id;
     private String m_name;
+    private String m_childrenName;
     private double m_completionPercent;
     private ArrayList<Content> m_contentArray;
     private ArrayList<NavItem> m_childArray;
     private ArrayList<Question> m_questionArray;
 
     public NavItem(String _id, String _name) {
+        initializeMembers(_id, _name, null);
+    }
+
+    public NavItem(String _id, String _name, String _childrenName) {
+        initializeMembers(_id, _name, _childrenName);
+    }
+
+    private void initializeMembers(String _id, String _name, String _childrenName) {
         m_id = _id;
         m_name = _name;
+        m_childrenName = _childrenName;
         m_completionPercent = 0;
         m_contentArray = new ArrayList<Content>();
         m_childArray = new ArrayList<NavItem>();
@@ -29,6 +39,10 @@ public class NavItem {
 
     public String getName() {
         return m_name;
+    }
+
+    public String getChildrenName() {
+        return m_childrenName;
     }
 
     public double getCompletionPercent() {

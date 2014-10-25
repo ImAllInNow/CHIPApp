@@ -332,6 +332,7 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
                     //nilFrag.setArrayAdapter();
                     return nilFrag;
                 case QUESTIONS:
+                    // TODO: fix how the assessment fragment works
                     return ChapterAssessmentsFragment.newInstance(m_user, m_currentId);
             }
             return null;
@@ -359,7 +360,17 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
                 case CONTENT:
                     return getString(R.string.title_section1).toUpperCase(l);
                 case CHILDREN:
-                    return getString(R.string.title_section2).toUpperCase(l);
+                    if (m_navItem.getChildrenName() == null) {
+                        return getString(R.string.title_section2).toUpperCase(l);
+                    } else if (m_navItem.getChildrenName().equals("Modules")) {
+                        return getString(R.string.title_section2_modules).toUpperCase(l);
+                    } else if (m_navItem.getChildrenName().equals("Chapters")) {
+                        return getString(R.string.title_section2_chapters).toUpperCase(l);
+                    } else if (m_navItem.getChildrenName().equals("Sessions")) {
+                        return getString(R.string.title_section2_sessions).toUpperCase(l);
+                    } else {
+                        return m_navItem.getChildrenName().toUpperCase(l);
+                    }
                 case QUESTIONS:
                     return getString(R.string.title_section3).toUpperCase(l);
             }

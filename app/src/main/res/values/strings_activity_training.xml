@@ -22,6 +22,10 @@
     <string name="title_section2">Children</string>
     <string name="title_section3">Assessment</string>
 
+    <string name="title_section2_modules">Modules</string>
+    <string name="title_section2_chapters">Chapters</string>
+    <string name="title_section2_sessions">Sessions</string>
+
     <string name="assess_click_instructions">(Tap a session name to begin assessment)</string>
 
     <string name="title_activity_assessment">Assessment questions</string>

@@ -31,17 +31,17 @@ public class CHIPLoaderSQL {
             // TODO: remove placeholder
             NavItem currNavItem = null;
             if (navItemId.equals("1")) { // Module 1
-                currNavItem = new NavItem(navItemId, "Module 1");
+                currNavItem = new NavItem(navItemId, "Module 1", "Chapters");
                 currNavItem.addChild(getNavItem("3"));
                 currNavItem.addChild(getNavItem("4"));
                 currNavItem.addChild(getNavItem("5"));
             } else if (navItemId.equals("2")) { // Module 2
-                currNavItem = new NavItem(navItemId, "Module 2");
+                currNavItem = new NavItem(navItemId, "Module 2", "Chapters");
                 currNavItem.addChild(getNavItem("6"));
                 currNavItem.addChild(getNavItem("7"));
                 currNavItem.addChild(getNavItem("8"));
             } else if (navItemId.equals("3")) { // Chapter 1-1
-                currNavItem = new NavItem(navItemId, "Chapter 1: Ethics");
+                currNavItem = new NavItem(navItemId, "Chapter 1: Ethics", "Sessions");
 
                 currNavItem.addContent(getContent("1"));
                 currNavItem.addContent(getContent("2"));
@@ -51,15 +51,15 @@ public class CHIPLoaderSQL {
                 currNavItem.addChild(getNavItem("11"));
                 currNavItem.addChild(getNavItem("12"));
             } else if (navItemId.equals("4")) { // Chapter 1-2
-                currNavItem = new NavItem(navItemId, "Chapter 2");
+                currNavItem = new NavItem(navItemId, "Chapter 2", "Sessions");
             } else if (navItemId.equals("5")) { // Chapter 1-3
-                currNavItem = new NavItem(navItemId, "Chapter 3");
+                currNavItem = new NavItem(navItemId, "Chapter 3", "Sessions");
             } else if (navItemId.equals("6")) { // Chapter 2-1
-                currNavItem = new NavItem(navItemId, "Chapter 1");
+                currNavItem = new NavItem(navItemId, "Chapter 1", "Sessions");
             } else if (navItemId.equals("7")) { // Chapter 2-2
-                currNavItem = new NavItem(navItemId, "Chapter 2");
+                currNavItem = new NavItem(navItemId, "Chapter 2", "Sessions");
             } else if (navItemId.equals("8")) { // Chapter 2-3
-                currNavItem = new NavItem(navItemId, "Chapter 3");
+                currNavItem = new NavItem(navItemId, "Chapter 3", "Sessions");
             } else if (navItemId.equals("9")) { // Session 1-1-1
                 currNavItem = new NavItem(navItemId, "Principles of Research Ethics");
 
