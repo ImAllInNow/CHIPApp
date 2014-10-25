@@ -5,6 +5,7 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import chiprogram.chipapp.classes.CHIPLoaderSQL;
 import chiprogram.chipapp.classes.Chapter;
+import chiprogram.chipapp.classes.CommonFunctions;
 
 public class ChapterVideoFragmentListener implements YouTubePlayer.OnInitializedListener {
 
@@ -21,7 +22,7 @@ public class ChapterVideoFragmentListener implements YouTubePlayer.OnInitialized
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player,
                                         boolean wasRestored) {
         if (!wasRestored) {
-            player.cueVideo("Ir3VvYNzHeM");//m_chapter.getVideoURL()
+            player.cueVideo(CommonFunctions.getYouTubeVideoID(m_chapter.getVideoURL()));
         }
     }
 

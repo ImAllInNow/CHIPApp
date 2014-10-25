@@ -103,4 +103,11 @@ public class CommonFunctions {
         activity.startActivity(intent);
         activity.finish();
     }
+
+    public static String getYouTubeVideoID(String url) {
+        String searchString = "v=";
+        int startIndex = url.indexOf(searchString) + searchString.length();
+        int endIndex = url.indexOf("&");
+        return url.substring(startIndex, endIndex);
+    }
 }
