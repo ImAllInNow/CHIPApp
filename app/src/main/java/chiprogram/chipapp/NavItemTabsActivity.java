@@ -14,11 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TableRow;
-
-import com.google.android.youtube.player.YouTubePlayerFragment;
-
+import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import java.util.Locale;
-
 import chiprogram.chipapp.classes.CHIPLoaderSQL;
 import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.CommonFunctions;
@@ -211,6 +208,9 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
             switch (chosenContent.getType()) {
                 case YOUTUBE_VIDEO:
                     // TODO: start YouTubePlayerActivity
+                    Intent intent = YouTubeStandalonePlayer.createVideoIntent(this, "AIzaSyDnglrdVhIpcrMuQ6Kjw8E2nniSUyfs44Y",
+                            CommonFunctions.getYouTubeVideoID(chosenContent.getLink()), 0, true ,true);
+                    startActivity(intent);
 
                     break;
                 case PDF_LINK:
