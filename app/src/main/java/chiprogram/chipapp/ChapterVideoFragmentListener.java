@@ -21,7 +21,7 @@ public class ChapterVideoFragmentListener implements YouTubePlayer.OnInitialized
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player,
                                         boolean wasRestored) {
-        if (!wasRestored) {
+        if (!wasRestored && m_chapter.getVideoURL() != null && m_chapter.getVideoURL().isEmpty() == false) {
             player.cueVideo(CommonFunctions.getYouTubeVideoID(m_chapter.getVideoURL()));
         }
     }
