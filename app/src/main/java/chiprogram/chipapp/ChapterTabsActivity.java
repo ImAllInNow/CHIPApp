@@ -11,19 +11,17 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TableRow;
-
+import com.google.android.youtube.player.YouTubePlayerFragment;
 import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.CommonFunctions;
 
-
 public class ChapterTabsActivity extends Activity implements ActionBar.TabListener,
-        ChapterVideoFragment.OnFragmentInteractionListener,
+        ChapterVideoFragmentListener.OnFragmentInteractionListener,
         ChapterSessionsFragment.OnFragmentInteractionListener,
         View.OnClickListener {
 
@@ -232,7 +230,9 @@ public class ChapterTabsActivity extends Activity implements ActionBar.TabListen
         public Fragment getItem(int position) {
             switch(position) {
                 case 0:
-                    return ChapterVideoFragment.newInstance(m_chapterId);
+                    YouTubePlayerFragment youTubePlayerFragment = new YouTubePlayerFragment();
+                    youTubePlayerFragment.initialize("AIzaSyDnglrdVhIpcrMuQ6Kjw8E2nniSUyfs44Y", new ChapterVideoFragmentListener(m_chapterId));
+                    return youTubePlayerFragment;
                 case 1:
                     return ChapterSessionsFragment.newInstance(m_chapterId);
                 case 2:
