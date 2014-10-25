@@ -21,12 +21,10 @@ import chiprogram.chipapp.classes.NavItem;
  */
 public class NavItemListFragment extends ListFragment {
 
+    private static final String NAV_ITEM_ID = "chiprogram.chipapp.NAV_ITEM_ID";
+
     private ArrayList<NavItem> m_navItemArray;
     private String m_navItemId;
-
-    public void setNavItemId(String parentId) {
-        m_navItemId = parentId;
-    }
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -74,15 +72,28 @@ public class NavItemListFragment extends ListFragment {
     public NavItemListFragment() {
     }
 
+    public static NavItemListFragment newInstance(String navItemId) {
+        NavItemListFragment fragment = new NavItemListFragment();
+        Bundle args = new Bundle();
+        args.putString(NavItemListFragment.NAV_ITEM_ID, navItemId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            m_navItemId = getArguments().getString(NavItemListFragment.NAV_ITEM_ID);
+            NavItem ni = CHIPLoaderSQL.getNavItem(m_navItemId);
+            m_navItemArray = ni.getChildArray();
+        } else {
+            m_navItemArray = null;
+        }
     }
 
     public void setArrayAdapter() {
-        NavItem ni = CHIPLoaderSQL.getNavItem(m_navItemId);
-        m_navItemArray = ni.getChildArray();
-
         setListAdapter(new ArrayAdapter<NavItem>(
                 getActivity(),
                 android.R.layout.simple_list_item_activated_1,

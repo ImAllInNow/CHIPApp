@@ -15,8 +15,7 @@ import chiprogram.chipapp.classes.CommonFunctions;
  * An activity representing a list of Modules. This activity
  * has different presentations for handset and tablet-size devices. On
  * handsets, the activity presents a list of items, which when touched,
- * lead to a {@link ChapterListActivity} representing a list of chapters
- * for the module.
+ * lead to a {@link NavItemTabsActivity} representing the chosen Module.
  * <p>
  * The activity makes use of fragments. The list of items is a
  * {@link ModuleListFragment}.
@@ -66,19 +65,7 @@ public class ModuleListActivity extends Activity
      */
     @Override
     public void onItemSelected(String navItemId) {
-        /*
-        // start the chapter list activity with the chosen module
-        Intent chapterListActivity= new Intent(this, ChapterListActivity.class);
-
-        // add in user to bundle
-        Bundle extras = new Bundle();
-        extras.putParcelable(ProfileActivity.ARGUMENT_USER, m_user);
-        extras.putString(ChapterListActivity.ARGUMENT_MODULE_ID, moduleId);
-        chapterListActivity.putExtras(extras);
-
-        startActivity(chapterListActivity);
-        */
-        // start the chapter list activity with the chosen module
+        // start the nav item tabs activity with the chosen module
         Intent navItemTabsActivity = new Intent(this, NavItemTabsActivity.class);
 
         // add in user to bundle

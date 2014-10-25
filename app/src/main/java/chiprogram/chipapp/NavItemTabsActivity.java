@@ -322,15 +322,9 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
         public Fragment getItem(int position) {
             switch(getTabType(position)) {
                 case CONTENT:
-                    ContentListFragment clFrag = new ContentListFragment();
-                    clFrag.setNavItemId(m_currentId);
-                    //clFrag.setArrayAdapter();
-                    return clFrag;
+                    return ContentListFragment.newInstance(m_currentId);
                 case CHILDREN:
-                    NavItemListFragment nilFrag = new NavItemListFragment();
-                    nilFrag.setNavItemId(m_currentId);
-                    //nilFrag.setArrayAdapter();
-                    return nilFrag;
+                    return NavItemListFragment.newInstance(m_currentId);
                 case QUESTIONS:
                     // TODO: fix how the assessment fragment works
                     return ChapterAssessmentsFragment.newInstance(m_user, m_currentId);

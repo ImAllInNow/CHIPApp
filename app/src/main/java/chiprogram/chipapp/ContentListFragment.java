@@ -23,12 +23,10 @@ import chiprogram.chipapp.classes.NavItem;
  */
 public class ContentListFragment extends ListFragment {
 
+    private static final String NAV_ITEM_ID = "chiprogram.chipapp.NAV_ITEM_ID";
+
     private ArrayList<Content> m_contentArray;
     private String m_navItemId;
-
-    public void setNavItemId(String parentId) {
-        m_navItemId = parentId;
-    }
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -76,15 +74,28 @@ public class ContentListFragment extends ListFragment {
     public ContentListFragment() {
     }
 
+    public static ContentListFragment newInstance(String navItemId) {
+        ContentListFragment fragment = new ContentListFragment();
+        Bundle args = new Bundle();
+        args.putString(ContentListFragment.NAV_ITEM_ID, navItemId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            m_navItemId = getArguments().getString(ContentListFragment.NAV_ITEM_ID);
+            NavItem ni = CHIPLoaderSQL.getNavItem(m_navItemId);
+            m_contentArray = ni.getContentArray();
+        } else {
+            m_contentArray = null;
+        }
     }
 
     public void setArrayAdapter() {
-        NavItem ni = CHIPLoaderSQL.getNavItem(m_navItemId);
-        m_contentArray = ni.getContentArray();
-
         setListAdapter(new ArrayAdapter<Content>(
                 getActivity(),
                 android.R.layout.simple_list_item_activated_1,
