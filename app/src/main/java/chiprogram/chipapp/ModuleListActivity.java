@@ -65,7 +65,8 @@ public class ModuleListActivity extends Activity
      * indicating that the item with the given ID was selected.
      */
     @Override
-    public void onItemSelected(String moduleId) {
+    public void onItemSelected(String navItemId) {
+        /*
         // start the chapter list activity with the chosen module
         Intent chapterListActivity= new Intent(this, ChapterListActivity.class);
 
@@ -76,6 +77,18 @@ public class ModuleListActivity extends Activity
         chapterListActivity.putExtras(extras);
 
         startActivity(chapterListActivity);
+        */
+        // start the chapter list activity with the chosen module
+        Intent navItemTabsActivity = new Intent(this, NavItemTabsActivity.class);
+
+        // add in user to bundle
+        Bundle extras = new Bundle();
+        extras.putParcelable(ProfileActivity.ARGUMENT_USER, m_user);
+        extras.putString(NavItemTabsActivity.CURRENT_ID, navItemId);
+        extras.putString(NavItemTabsActivity.PARENT_ID, null);
+        navItemTabsActivity.putExtras(extras);
+
+        startActivity(navItemTabsActivity);
     }
 
     @Override

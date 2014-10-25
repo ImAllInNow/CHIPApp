@@ -96,6 +96,13 @@
             android:name=".HomeActivity"
             android:label="@string/title_activity_home" >
         </activity>
+        <activity
+            android:name=".NavItemTabsActivity"
+            android:label="@string/title_activity_navitem_tabs" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="chiprogram.chipapp.ChapterListActivity" />
+        </activity>
 
         <receiver
             android:name=".classes.GcmBroadcastReceiver"

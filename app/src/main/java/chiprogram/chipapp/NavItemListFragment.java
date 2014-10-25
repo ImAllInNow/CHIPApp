@@ -1,29 +1,32 @@
 package chiprogram.chipapp;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.app.ListFragment;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-
 import java.util.ArrayList;
 
 import chiprogram.chipapp.classes.CHIPLoaderSQL;
-import chiprogram.chipapp.classes.Module;
+import chiprogram.chipapp.classes.Content;
 import chiprogram.chipapp.classes.NavItem;
 
 /**
- * A list fragment representing a list of Modules.
+ * A list fragment representing a list of Chapters.
  * <p>
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class ModuleListFragment extends ListFragment {
+public class NavItemListFragment extends ListFragment {
 
-    //private ArrayList<Module> m_modules;
-    private ArrayList<NavItem> m_topLevelNavItems;
+    private ArrayList<NavItem> m_navItemArray;
+    private String m_navItemId;
+
+    public void setNavItemId(String parentId) {
+        m_navItemId = parentId;
+    }
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -51,7 +54,7 @@ public class ModuleListFragment extends ListFragment {
         /**
          * Callback for when an item has been selected.
          */
-        public void onItemSelected(String id);
+        public void onItemSelected(boolean isNavItem, int index);
     }
 
     /**
@@ -60,7 +63,7 @@ public class ModuleListFragment extends ListFragment {
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(String id) {
+        public void onItemSelected(boolean isNavItem, int index) {
         }
     };
 
@@ -68,26 +71,30 @@ public class ModuleListFragment extends ListFragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public ModuleListFragment() {
+    public NavItemListFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
 
-        //m_modules = CHIPLoaderSQL.getModules();
-        m_topLevelNavItems = CHIPLoaderSQL.getBaseNavItems();
+    public void setArrayAdapter() {
+        NavItem ni = CHIPLoaderSQL.getNavItem(m_navItemId);
+        m_navItemArray = ni.getChildArray();
 
         setListAdapter(new ArrayAdapter<NavItem>(
                 getActivity(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
-                m_topLevelNavItems));
+                m_navItemArray));
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        setArrayAdapter();
 
         // Restore the previously serialized activated item position.
         if (savedInstanceState != null
@@ -122,7 +129,7 @@ public class ModuleListFragment extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(m_topLevelNavItems.get(position).getId());
+        mCallbacks.onItemSelected(true, position);
     }
 
     @Override
