@@ -17,10 +17,6 @@ public class CHIPUser implements Parcelable {
     private String m_bio;
     private String m_email;
 
-    public CHIPUser() {
-
-    }
-
     public CHIPUser(Parcel p) {
         readFromParcel(p);
     }

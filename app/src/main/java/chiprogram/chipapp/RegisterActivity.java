@@ -33,17 +33,17 @@ public class RegisterActivity extends Activity implements
 
         // set mentors spinner
         Spinner mentorSpinner = (Spinner) findViewById(R.id.reg_spinnerMentor);
-        ArrayAdapter spinnerAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, CHIPLoaderSQL.getMentorList());
+        ArrayAdapter spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, CHIPLoaderSQL.getMentorList());
         mentorSpinner.setAdapter(spinnerAdapter);
 
         // set location spinner
         Spinner locationSpinner = (Spinner) findViewById(R.id.reg_spinnerLocation);
-        spinnerAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, CHIPLoaderSQL.getLocationList());
+        spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, CHIPLoaderSQL.getLocationList());
         locationSpinner.setAdapter(spinnerAdapter);
 
         // set role spinner
         Spinner roleSpinner = (Spinner) findViewById(R.id.reg_spinnerRole);
-        spinnerAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, CHIPLoaderSQL.getRoleList());
+        spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, CHIPLoaderSQL.getRoleList());
         roleSpinner.setAdapter(spinnerAdapter);
     }
 

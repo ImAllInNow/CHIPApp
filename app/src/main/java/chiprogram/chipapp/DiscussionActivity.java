@@ -6,10 +6,8 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import chiprogram.chipapp.R;
 import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.CommonFunctions;
-import chiprogram.chipapp.classes.GcmRegistrationAsyncTask;
 
 public class DiscussionActivity extends Activity {
 

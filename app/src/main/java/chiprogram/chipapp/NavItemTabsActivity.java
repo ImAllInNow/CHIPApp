@@ -6,9 +6,9 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,8 +24,6 @@ import chiprogram.chipapp.classes.Content;
 import chiprogram.chipapp.classes.NavItem;
 
 public class NavItemTabsActivity extends Activity implements ActionBar.TabListener,
-        ChapterVideoFragmentListener.OnFragmentInteractionListener,
-        ChapterSessionsFragment.OnFragmentInteractionListener,
         NavItemListFragmentTab.Callbacks,
         ContentListFragmentTab.Callbacks,
         View.OnClickListener {
@@ -36,7 +34,6 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
         QUESTIONS
     }
 
-    public static final String PARENT_ID = "chiprogram.chipapp.PARENT_ID";
     public static final String CURRENT_ID = "chiprogram.chipapp.CURRENT_ID";
 
     public final static int REQUEST_ASSESSMENT = 1;
@@ -58,22 +55,18 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
 
     private CHIPUser m_user;
     private NavItem m_navItem;
-    String m_parentId;
     String m_currentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chapter_tabs);
+        setContentView(R.layout.activity_nav_item_tabs);
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
 
         m_user = extras.getParcelable(ProfileActivity.ARGUMENT_USER);
-
-        m_parentId = extras.getString(PARENT_ID);
         m_currentId = extras.getString(CURRENT_ID);
-
         m_navItem = CHIPLoaderSQL.getNavItem(m_currentId);
 
         // Set up the action bar.
@@ -143,7 +136,22 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
             //
             // http://developer.android.com/design/patterns/navigation.html#up-vs-back
             //
-            onBackPressed();
+            Intent intent;
+            // add in user to bundle
+            Bundle extras = new Bundle();
+            extras.putParcelable(ProfileActivity.ARGUMENT_USER, m_user);
+            if (m_navItem.getParentId() == null) {
+                intent = new Intent(this, ModuleListActivity.class);
+            } else {
+                intent = new Intent(this, NavItemTabsActivity.class);
+                NavItem parent = CHIPLoaderSQL.getNavItem(m_navItem.getParentId());
+                extras.putString(NavItemTabsActivity.CURRENT_ID, parent.getId());
+            }
+
+            intent.putExtras(extras);
+
+            NavUtils.navigateUpTo(this, intent);
+            finish();
             return true;
         } else if (id == R.id.action_settings) {
             CommonFunctions.navigateToSettings(this, m_user);
@@ -182,11 +190,6 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
-
-    @Override
     public void onItemSelected(boolean isNavItem, int index) {
         if (isNavItem) {
             NavItem chosenNavItem = m_navItem.getChild(index);
@@ -197,7 +200,6 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
             Bundle extras = new Bundle();
             extras.putParcelable(ProfileActivity.ARGUMENT_USER, m_user);
             extras.putString(NavItemTabsActivity.CURRENT_ID, chosenNavItem.getId());
-            extras.putString(NavItemTabsActivity.PARENT_ID, m_currentId);
 
             intent.putExtras(extras);
 
@@ -210,7 +212,7 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
                 case YOUTUBE_VIDEO:
                     // TODO: start YouTubePlayerActivity
                     Intent intent = YouTubeStandalonePlayer.createVideoIntent(this, "AIzaSyDnglrdVhIpcrMuQ6Kjw8E2nniSUyfs44Y",
-                            CommonFunctions.getYouTubeVideoID(chosenContent.getLink()), 0, true ,true);
+                            CommonFunctions.getYouTubeVideoID(chosenContent.getLink()));
                     startActivity(intent);
 
                     break;

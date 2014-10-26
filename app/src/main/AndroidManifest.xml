@@ -61,20 +61,6 @@
                 android:value="chiprogram.chipapp.HomeActivity" />
         </activity>
         <activity
-            android:name=".ChapterListActivity"
-            android:label="@string/title_chapter_list" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="chiprogram.chipapp.HomeActivity" />
-        </activity>
-        <activity
-            android:name=".ChapterTabsActivity"
-            android:label="@string/title_activity_chapter_tabs" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="chiprogram.chipapp.ChapterListActivity" />
-        </activity>
-        <activity
             android:name=".AssessmentActivity"
             android:label="@string/title_activity_assessment" >
             <meta-data

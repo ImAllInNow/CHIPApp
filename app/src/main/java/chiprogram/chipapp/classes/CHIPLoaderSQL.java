@@ -13,11 +13,11 @@ public class CHIPLoaderSQL {
     private static Map<String, Content> m_contentMap = new HashMap<String, Content>();
     private static Map<String, NavItem> m_navItemMap = new HashMap<String, NavItem>();
 
-
+    /*
     private static Map<String, Module> m_moduleMap = new HashMap<String, Module>();
     private static Map<String, Chapter> m_chapterMap = new HashMap<String, Chapter>();
     private static Map<String, Session> m_sessionMap = new HashMap<String, Session>();
-
+    */
     private static Map<String, Integer> m_scoresMap = new HashMap<String, Integer>();
 
     private static String[] mentors;
@@ -33,17 +33,17 @@ public class CHIPLoaderSQL {
             // TODO: remove placeholder
             NavItem currNavItem = null;
             if (navItemId.equals("1")) { // Module 1
-                currNavItem = new NavItem(navItemId, "Module 1", "Chapters");
+                currNavItem = new NavItem(navItemId, null, "Module 1", "Chapters");
                 currNavItem.addChild(getNavItem("3"));
                 currNavItem.addChild(getNavItem("4"));
                 currNavItem.addChild(getNavItem("5"));
             } else if (navItemId.equals("2")) { // Module 2
-                currNavItem = new NavItem(navItemId, "Module 2", "Chapters");
+                currNavItem = new NavItem(navItemId, null, "Module 2", "Chapters");
                 currNavItem.addChild(getNavItem("6"));
                 currNavItem.addChild(getNavItem("7"));
                 currNavItem.addChild(getNavItem("8"));
             } else if (navItemId.equals("3")) { // Chapter 1-1
-                currNavItem = new NavItem(navItemId, "Chapter 1: Ethics", "Sessions");
+                currNavItem = new NavItem(navItemId, "1", "Chapter 1: Ethics", "Sessions");
 
                 currNavItem.addContent(getContent("1"));
                 currNavItem.addContent(getContent("2"));
@@ -53,17 +53,17 @@ public class CHIPLoaderSQL {
                 currNavItem.addChild(getNavItem("11"));
                 currNavItem.addChild(getNavItem("12"));
             } else if (navItemId.equals("4")) { // Chapter 1-2
-                currNavItem = new NavItem(navItemId, "Chapter 2", "Sessions");
+                currNavItem = new NavItem(navItemId, "1", "Chapter 2", "Sessions");
             } else if (navItemId.equals("5")) { // Chapter 1-3
-                currNavItem = new NavItem(navItemId, "Chapter 3", "Sessions");
+                currNavItem = new NavItem(navItemId, "1", "Chapter 3", "Sessions");
             } else if (navItemId.equals("6")) { // Chapter 2-1
-                currNavItem = new NavItem(navItemId, "Chapter 1", "Sessions");
+                currNavItem = new NavItem(navItemId, "2", "Chapter 1", "Sessions");
             } else if (navItemId.equals("7")) { // Chapter 2-2
-                currNavItem = new NavItem(navItemId, "Chapter 2", "Sessions");
+                currNavItem = new NavItem(navItemId, "2", "Chapter 2", "Sessions");
             } else if (navItemId.equals("8")) { // Chapter 2-3
-                currNavItem = new NavItem(navItemId, "Chapter 3", "Sessions");
+                currNavItem = new NavItem(navItemId, "2", "Chapter 3", "Sessions");
             } else if (navItemId.equals("9")) { // Session 1-1-1
-                currNavItem = new NavItem(navItemId, "Principles of Research Ethics");
+                currNavItem = new NavItem(navItemId, "3", "Principles of Research Ethics");
 
                 currNavItem.addContent(getContent("3"));
 
@@ -100,7 +100,7 @@ public class CHIPLoaderSQL {
                 q4.addPossibleAnswer("Contributes to the advancement of science", false);
                 currNavItem.addQuestion(q4);
             } else if (navItemId.equals("10")) { // Session 1-1-2
-                currNavItem = new NavItem(navItemId, "Foundations of Research Ethics");
+                currNavItem = new NavItem(navItemId, "3", "Foundations of Research Ethics");
 
                 currNavItem.addContent(getContent("4"));
 
@@ -145,7 +145,7 @@ public class CHIPLoaderSQL {
                 q5.addPossibleAnswer("Behavioral research", false);
                 currNavItem.addQuestion(q5);
             } else if (navItemId.equals("11")) { // Session 1-1-3
-                currNavItem = new NavItem(navItemId, "Responsible Conduct of Ethical Research");
+                currNavItem = new NavItem(navItemId, "3", "Responsible Conduct of Ethical Research");
 
                 currNavItem.addContent(getContent("5"));
 
@@ -167,7 +167,7 @@ public class CHIPLoaderSQL {
                 q2.addPossibleAnswer("A researcher's cultural or intellectual status should not play a role in the potential participant's decision to enroll in a research study", false);
                 currNavItem.addQuestion(q2);
             } else if (navItemId.equals("12")) { // Session 1-1-4
-                currNavItem = new NavItem(navItemId, "Roles and Responsibilities");
+                currNavItem = new NavItem(navItemId, "3", "Roles and Responsibilities");
 
                 currNavItem.addContent(getContent("6"));
 
@@ -232,6 +232,7 @@ public class CHIPLoaderSQL {
         return m_contentMap.get(contentId);
     }
 
+    /*
     public static Module getModule(String moduleId) {
         if (m_moduleMap.containsKey(moduleId) == false || isNewUpdate) {
             // TODO: make call to database to get modules
@@ -448,6 +449,7 @@ public class CHIPLoaderSQL {
         }
         return m_sessionMap.get(sessionId);
     }
+    */
 
     // returns -1 if the user has not attempted the assessment
     public static int getAssessmentScore(String sessionId, String userEmail) {

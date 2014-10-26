@@ -28,6 +28,10 @@ public class Question {
         m_AnswersCorrectness = new ArrayList<Boolean>();
     }
 
+    public String getId() {
+        return m_id;
+    }
+
     public QuestionType getType() {
         return m_questionType;
     }

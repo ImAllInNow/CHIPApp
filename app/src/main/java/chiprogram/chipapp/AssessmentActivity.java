@@ -28,10 +28,9 @@ import chiprogram.chipapp.classes.NavItem;
 public class AssessmentActivity extends Activity implements
         ConfirmationDialog.ConfirmationDialogListener {
 
-    public static final String CONFIRM_CANCEL_ASSESSMENT_TAG = "fragment_confirm_cancel_assessment";
-    public static final int QUESTIONS_LOC_IN_LAYOUT = 1;
-
-    public static final String CURRENT_RESPONSES = "chiprogram.chipapp.CURRENT_RESPONSES";
+    private static final String CONFIRM_CANCEL_ASSESSMENT_TAG = "fragment_confirm_cancel_assessment";
+    private static final int QUESTIONS_LOC_IN_LAYOUT = 1;
+    private static final String CURRENT_RESPONSES = "chiprogram.chipapp.CURRENT_RESPONSES";
 
     private CHIPUser m_user;
     private String m_navItemId;

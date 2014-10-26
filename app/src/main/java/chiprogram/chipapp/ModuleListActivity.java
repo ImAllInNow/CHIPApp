@@ -72,7 +72,6 @@ public class ModuleListActivity extends Activity
         Bundle extras = new Bundle();
         extras.putParcelable(ProfileActivity.ARGUMENT_USER, m_user);
         extras.putString(NavItemTabsActivity.CURRENT_ID, navItemId);
-        extras.putString(NavItemTabsActivity.PARENT_ID, null);
         navItemTabsActivity.putExtras(extras);
 
         startActivity(navItemTabsActivity);

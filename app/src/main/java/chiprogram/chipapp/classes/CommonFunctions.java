@@ -33,6 +33,17 @@ public class CommonFunctions {
         return (password.length() >= 4);
     }
 
+    public static String getYouTubeVideoID(String url) {
+        String searchString = "v=";
+        int startIndex = url.indexOf(searchString) + searchString.length();
+        int endIndex = url.indexOf("&");
+        if (endIndex == -1) {
+            return url.substring(startIndex);
+        } else {
+            return url.substring(startIndex, endIndex);
+        }
+    }
+
     public static void navigateToAboutCHIP(Activity activity) {
         Intent intent = new Intent(activity, AboutCHIPActivity.class);
         activity.startActivity(intent);
@@ -86,16 +97,6 @@ public class CommonFunctions {
         activity.startActivity(intent);
     }
 
-    public static void resetAutoLoginPreference(Activity activity) {
-        SharedPreferences prefs = activity.getSharedPreferences(LoginActivity.class.getSimpleName(),
-                Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-
-        editor.putString(Consts.PREF_REM_PASSWORD, "");
-
-        editor.apply();
-    }
-
     public static void handleLogout(Activity activity) {
         resetAutoLoginPreference(activity);
 
@@ -104,14 +105,13 @@ public class CommonFunctions {
         activity.finish();
     }
 
-    public static String getYouTubeVideoID(String url) {
-        String searchString = "v=";
-        int startIndex = url.indexOf(searchString) + searchString.length();
-        int endIndex = url.indexOf("&");
-        if (endIndex == -1) {
-            return url.substring(startIndex);
-        } else {
-            return url.substring(startIndex, endIndex);
-        }
+    private static void resetAutoLoginPreference(Activity activity) {
+        SharedPreferences prefs = activity.getSharedPreferences(LoginActivity.class.getSimpleName(),
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putString(Consts.PREF_REM_PASSWORD, "");
+
+        editor.apply();
     }
 }

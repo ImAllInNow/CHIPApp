@@ -1,19 +1,9 @@
 package chiprogram.chipapp;
 
-
-
 import android.os.Bundle;
-import android.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.os.Bundle;
 import android.app.DialogFragment;
 
 public class ConfirmationDialog extends DialogFragment {
@@ -28,13 +18,12 @@ public class ConfirmationDialog extends DialogFragment {
     public ConfirmationDialog() {
     }
 
-    private String m_messageText;
     private String m_tag;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        m_messageText = getArguments().getString(ARG_MESSAGE_TEXT);
+        String m_messageText = getArguments().getString(ARG_MESSAGE_TEXT);
         m_tag = getArguments().getString(ARG_TAG);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

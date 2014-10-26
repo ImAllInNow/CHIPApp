@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class NavItem {
 
     private String m_id;
+    private String m_parentId;
     private String m_name;
     private String m_childrenName;
     private double m_completionPercent;
@@ -15,16 +16,17 @@ public class NavItem {
     private ArrayList<NavItem> m_childArray;
     private ArrayList<Question> m_questionArray;
 
-    public NavItem(String _id, String _name) {
-        initializeMembers(_id, _name, null);
+    public NavItem(String _id, String _parentId, String _name) {
+        initializeMembers(_id, _parentId, _name, null);
     }
 
-    public NavItem(String _id, String _name, String _childrenName) {
-        initializeMembers(_id, _name, _childrenName);
+    public NavItem(String _id, String _parentId, String _name, String _childrenName) {
+        initializeMembers(_id, _parentId, _name, _childrenName);
     }
 
-    private void initializeMembers(String _id, String _name, String _childrenName) {
+    private void initializeMembers(String _id, String _parentId, String _name, String _childrenName) {
         m_id = _id;
+        m_parentId = _parentId;
         m_name = _name;
         m_childrenName = _childrenName;
         m_completionPercent = 0;
@@ -35,6 +37,9 @@ public class NavItem {
 
     public String getId() {
         return m_id;
+    }
+    public String getParentId() {
+        return m_parentId;
     }
 
     public String getName() {

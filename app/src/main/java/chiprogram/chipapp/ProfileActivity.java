@@ -1,11 +1,7 @@
 package chiprogram.chipapp;
 
 import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
@@ -15,8 +11,6 @@ import android.widget.TextView;
 
 import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.CommonFunctions;
-import chiprogram.chipapp.classes.Consts;
-import chiprogram.chipapp.classes.GcmRegistrationAsyncTask;
 
 
 public class ProfileActivity extends Activity {

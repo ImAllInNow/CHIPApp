@@ -170,11 +170,6 @@ public class LoginActivity extends Activity {
         }
     }
 
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
-    }
-
     /**
      * Shows the progress UI and hides the login form.
      */
@@ -235,11 +230,7 @@ public class LoginActivity extends Activity {
         protected Boolean doInBackground(Void... params) {
             m_loginUser = CHIPLoaderSQL.checkUserLogin(m_Email, m_Password);
 
-            if (m_loginUser != null) {
-                return true;
-            } else {
-                return false;
-            }
+            return (m_loginUser != null);
         }
 
         @Override
@@ -291,7 +282,7 @@ public class LoginActivity extends Activity {
             editor.putString(Consts.PREF_REM_PASSWORD, "");
         }
 
-        editor.commit();
+        editor.apply();
     }
 }
 

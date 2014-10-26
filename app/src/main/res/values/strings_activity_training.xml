@@ -2,30 +2,24 @@
 <resources>
 
     <string name="title_activity_training">Training Content</string>
-
     <string name="title_module_list">Training Modules</string>
 
-    <string name="title_chapter_list">Chapters</string>
-    <string name="title_chapter_detail">Training Chapter Detail</string>
-
-    <string name="training_video">Training Video</string>
-
     <string name="training_assessment_name">Assessment Name</string>
-    <string name="training_materials">Materials</string>
-    <string name="training_status">Status</string>
 
     <string name="title_activity_navitem_tabs">NavItem Name</string>
 
-    <string name="title_activity_chapter_tabs">Chapter Details</string>
-
+    <!-- Section 2: Children NavItems -->
     <string name="title_section1">Content</string>
-    <string name="title_section2">Children</string>
-    <string name="title_section3">Assessment</string>
 
+    <!-- Section 2: Children NavItems -->
+    <string name="title_section2">Children</string>
     <string name="title_section2_modules">Modules</string>
     <string name="title_section2_chapters">Chapters</string>
     <string name="title_section2_sessions">Sessions</string>
 
+    <!-- Section 3: Assessment -->
+    <string name="title_section3">Assessment</string>
+    <string name="training_status">Status</string>
     <string name="asses_begin">Begin Assessment</string>
     <string name="assess_click_instructions">(Tap a session name to begin assessment)</string>
 

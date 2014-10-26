@@ -13,7 +13,6 @@ import android.view.View;
 
 import chiprogram.chipapp.classes.CommonFunctions;
 import chiprogram.chipapp.classes.Consts;
-import chiprogram.chipapp.classes.GcmRegistrationAsyncTask;
 
 
 public class IntroScreenActivity extends Activity implements
