@@ -29,7 +29,7 @@
                         android:id="@+id/assess_table_title1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/training_session_name"
+                        android:text="@string/training_assessment_name"
                         android:layout_margin="10dp"
                         android:layout_weight="1"
                         android:textSize="20sp"
@@ -46,11 +46,14 @@
                 </TableRow>
             </TableLayout>
         </ScrollView>
-        <TextView
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/reg_btnEditProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:layout_gravity="center"
-            android:text="@string/assess_click_instructions"/>
+            android:layout_margin="10dp"
+            android:text="@string/asses_begin"
+            android:onClick="onClick"/>
     </LinearLayout>
 </FrameLayout>

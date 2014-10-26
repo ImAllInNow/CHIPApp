@@ -10,7 +10,7 @@
 
     <string name="training_video">Training Video</string>
 
-    <string name="training_session_name">Session Name</string>
+    <string name="training_assessment_name">Assessment Name</string>
     <string name="training_materials">Materials</string>
     <string name="training_status">Status</string>
 
@@ -26,6 +26,7 @@
     <string name="title_section2_chapters">Chapters</string>
     <string name="title_section2_sessions">Sessions</string>
 
+    <string name="asses_begin">Begin Assessment</string>
     <string name="assess_click_instructions">(Tap a session name to begin assessment)</string>
 
     <string name="title_activity_assessment">Assessment questions</string>

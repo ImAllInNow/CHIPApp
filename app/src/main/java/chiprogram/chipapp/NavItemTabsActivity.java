@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TableRow;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import java.util.Locale;
@@ -25,8 +26,8 @@ import chiprogram.chipapp.classes.NavItem;
 public class NavItemTabsActivity extends Activity implements ActionBar.TabListener,
         ChapterVideoFragmentListener.OnFragmentInteractionListener,
         ChapterSessionsFragment.OnFragmentInteractionListener,
-        NavItemListFragment.Callbacks,
-        ContentListFragment.Callbacks,
+        NavItemListFragmentTab.Callbacks,
+        ContentListFragmentTab.Callbacks,
         View.OnClickListener {
 
     public enum TabType {
@@ -227,13 +228,14 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
 
     @Override
     public void onClick(View view) {
-        if (view.getClass() == new TableRow(this).getClass()) {
+        if (view.getClass() == TableRow.class ||
+            view.getClass() == Button.class) {
             Intent intent = new Intent(this, AssessmentActivity.class);
 
             // add in user to bundle
             Bundle extras = new Bundle();
             extras.putParcelable(ProfileActivity.ARGUMENT_USER, m_user);
-            extras.putString(AssessmentActivity.SESSION_ID, (String) view.getTag());
+            extras.putString(CURRENT_ID, m_currentId);
 
             intent.putExtras(extras);
 
@@ -322,12 +324,11 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
         public Fragment getItem(int position) {
             switch(getTabType(position)) {
                 case CONTENT:
-                    return ContentListFragment.newInstance(m_currentId);
+                    return ContentListFragmentTab.newInstance(m_currentId);
                 case CHILDREN:
-                    return NavItemListFragment.newInstance(m_currentId);
+                    return NavItemListFragmentTab.newInstance(m_currentId);
                 case QUESTIONS:
-                    // TODO: fix how the assessment fragment works
-                    return ChapterAssessmentsFragment.newInstance(m_user, m_currentId);
+                    return AssessmentFragmentTab.newInstance(m_user, m_currentId);
             }
             return null;
         }

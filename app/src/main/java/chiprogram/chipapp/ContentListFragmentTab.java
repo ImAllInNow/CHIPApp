@@ -10,9 +10,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import chiprogram.chipapp.classes.CHIPLoaderSQL;
-import chiprogram.chipapp.classes.Chapter;
 import chiprogram.chipapp.classes.Content;
-import chiprogram.chipapp.classes.Module;
 import chiprogram.chipapp.classes.NavItem;
 
 /**
@@ -21,12 +19,9 @@ import chiprogram.chipapp.classes.NavItem;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class ContentListFragment extends ListFragment {
-
-    private static final String NAV_ITEM_ID = "chiprogram.chipapp.NAV_ITEM_ID";
+public class ContentListFragmentTab extends ListFragment {
 
     private ArrayList<Content> m_contentArray;
-    private String m_navItemId;
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -71,13 +66,13 @@ public class ContentListFragment extends ListFragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public ContentListFragment() {
+    public ContentListFragmentTab() {
     }
 
-    public static ContentListFragment newInstance(String navItemId) {
-        ContentListFragment fragment = new ContentListFragment();
+    public static ContentListFragmentTab newInstance(String navItemId) {
+        ContentListFragmentTab fragment = new ContentListFragmentTab();
         Bundle args = new Bundle();
-        args.putString(ContentListFragment.NAV_ITEM_ID, navItemId);
+        args.putString(NavItemTabsActivity.CURRENT_ID, navItemId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -87,7 +82,7 @@ public class ContentListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            m_navItemId = getArguments().getString(ContentListFragment.NAV_ITEM_ID);
+            String m_navItemId = getArguments().getString(NavItemTabsActivity.CURRENT_ID);
             NavItem ni = CHIPLoaderSQL.getNavItem(m_navItemId);
             m_contentArray = ni.getContentArray();
         } else {

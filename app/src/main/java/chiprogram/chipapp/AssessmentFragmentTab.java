@@ -12,20 +12,19 @@ import android.widget.TextView;
 
 import chiprogram.chipapp.classes.CHIPLoaderSQL;
 import chiprogram.chipapp.classes.CHIPUser;
-import chiprogram.chipapp.classes.Chapter;
-import chiprogram.chipapp.classes.Session;
+import chiprogram.chipapp.classes.NavItem;
 
 /**
  * A simple {@link android.app.Fragment} subclass.
- * Use the {@link chiprogram.chipapp.ChapterAssessmentsFragment#newInstance} factory method to
+ * Use the {@link AssessmentFragmentTab#newInstance} factory method to
  * create an instance of this fragment.
  *
  */
-public class ChapterAssessmentsFragment extends Fragment {
+public class AssessmentFragmentTab extends Fragment {
 
     private CHIPUser m_user;
 
-    private Chapter m_chapter;
+    private NavItem m_navItem;
 
     private View.OnClickListener mListener;
 
@@ -33,18 +32,18 @@ public class ChapterAssessmentsFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param chapterId Name of chosen Chapter.
+     * @param navItemId Name of chosen Chapter.
      * @return A new instance of fragment ChapterVideoFragment.
      */
-    public static ChapterAssessmentsFragment newInstance(CHIPUser user, String chapterId) {
-        ChapterAssessmentsFragment fragment = new ChapterAssessmentsFragment();
+    public static AssessmentFragmentTab newInstance(CHIPUser user, String navItemId) {
+        AssessmentFragmentTab fragment = new AssessmentFragmentTab();
         Bundle args = new Bundle();
         args.putParcelable(ProfileActivity.ARGUMENT_USER, user);
-        args.putString(ChapterTabsActivity.CHAPTER_ID, chapterId);
+        args.putString(NavItemTabsActivity.CURRENT_ID, navItemId);
         fragment.setArguments(args);
         return fragment;
     }
-    public ChapterAssessmentsFragment() {
+    public AssessmentFragmentTab() {
         // Required empty public constructor
     }
 
@@ -53,11 +52,11 @@ public class ChapterAssessmentsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             m_user = getArguments().getParcelable(ProfileActivity.ARGUMENT_USER);
-            String chapterId = getArguments().getString(ChapterTabsActivity.CHAPTER_ID);
+            String navItemId = getArguments().getString(NavItemTabsActivity.CURRENT_ID);
 
-            m_chapter = CHIPLoaderSQL.getChapterDetails(chapterId);
+            m_navItem = CHIPLoaderSQL.getNavItem(navItemId);
         } else {
-            m_chapter = null;
+            m_navItem = null;
         }
     }
 
@@ -68,18 +67,14 @@ public class ChapterAssessmentsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_assessment_tab, container, false);
 
         TableLayout baseLayout = (TableLayout) view.findViewById(R.id.assess_table);
-        if (m_chapter != null) {
-            for (int i = 0; i < m_chapter.numSessions(); ++i) {
-                Session currSession = m_chapter.getSessions(i);
-                int userScore = CHIPLoaderSQL.getAssessmentScore(currSession.getId(), m_user.get_email());
+        if (m_navItem != null) {
+            int userScore = CHIPLoaderSQL.getAssessmentScore(m_navItem.getId(), m_user.get_email());
 
-                TableRow row = makeTableRow(view, (i+1) + ". " + currSession.toString(),
-                        userScore != -1, userScore, currSession.getNumQuestions());
-                row.setTag(currSession.getId());
-                row.setOnClickListener(mListener);
+            TableRow row = makeTableRow(view, m_navItem.toString(),
+                    userScore != -1, userScore, m_navItem.getNumQuestions());
+            row.setOnClickListener(mListener);
 
-                baseLayout.addView(row);
-            }
+            baseLayout.addView(row);
         } else {
             // TODO: handle error somehow
         }

@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,21 +22,20 @@ import chiprogram.chipapp.classes.CHIPLoaderSQL;
 import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.CommonFunctions;
 import chiprogram.chipapp.classes.Question;
-import chiprogram.chipapp.classes.Session;
+import chiprogram.chipapp.classes.NavItem;
 
 
 public class AssessmentActivity extends Activity implements
         ConfirmationDialog.ConfirmationDialogListener {
 
-    public static final String SESSION_ID = "chiprogram.chipapp.SESSION_ID";
     public static final String CONFIRM_CANCEL_ASSESSMENT_TAG = "fragment_confirm_cancel_assessment";
     public static final int QUESTIONS_LOC_IN_LAYOUT = 1;
 
     public static final String CURRENT_RESPONSES = "chiprogram.chipapp.CURRENT_RESPONSES";
 
     private CHIPUser m_user;
-    private String m_sessionId;
-    private Session m_session;
+    private String m_navItemId;
+    private NavItem m_navItem;
 
     private FragmentManager m_fragmentManager;
 
@@ -54,14 +54,14 @@ public class AssessmentActivity extends Activity implements
 
         m_user = extras.getParcelable(ProfileActivity.ARGUMENT_USER);
 
-        m_sessionId = extras.getString(SESSION_ID);
-        m_session = CHIPLoaderSQL.getSessionDetails(m_sessionId);
+        m_navItemId = extras.getString(NavItemTabsActivity.CURRENT_ID);
+        m_navItem = CHIPLoaderSQL.getNavItem(m_navItemId);
 
         m_currentResponses = new ArrayList<Boolean[]>();
         m_allQuestionsAnswered = false;
         if (savedInstanceState == null) {
-            for (int i = 0; i < m_session.getNumQuestions(); ++i) {
-                Question currQuestion = m_session.getQuestion(i);
+            for (int i = 0; i < m_navItem.getNumQuestions(); ++i) {
+                Question currQuestion = m_navItem.getQuestion(i);
 
                 m_currentResponses.add(new Boolean[currQuestion.numAnswers()]);
                 for (int j = 0; j < currQuestion.numAnswers(); ++j) {
@@ -69,7 +69,7 @@ public class AssessmentActivity extends Activity implements
                 }
             }
         } else {
-            for (int i = 0; i < m_session.getNumQuestions(); ++i) {
+            for (int i = 0; i < m_navItem.getNumQuestions(); ++i) {
                 boolean[] bundleResponses = savedInstanceState.getBooleanArray(CURRENT_RESPONSES + i);
                 Boolean[] currResponses = new Boolean[bundleResponses.length];
 
@@ -91,7 +91,7 @@ public class AssessmentActivity extends Activity implements
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         getCurrentAnswers();
 
         for(int i = 0; i < m_currentResponses.size(); ++i) {
@@ -150,12 +150,12 @@ public class AssessmentActivity extends Activity implements
     private void setUpQuestionsViews() {
 
         TextView assessmentTitle = (TextView) findViewById(R.id.questions_assessment_title);
-        assessmentTitle.setText(m_session.toString());
+        assessmentTitle.setText(m_navItem.toString());
 
         LinearLayout baseLayout = (LinearLayout) findViewById(R.id.questions_layout);
 
-        for (int i = 0; i < m_session.getNumQuestions(); ++i) {
-            Question currQuestion = m_session.getQuestion(i);
+        for (int i = 0; i < m_navItem.getNumQuestions(); ++i) {
+            Question currQuestion = m_navItem.getQuestion(i);
             Boolean[] currResponses = m_currentResponses.get(i);
 
             LinearLayout questionLayout = new LinearLayout(this);
@@ -210,8 +210,8 @@ public class AssessmentActivity extends Activity implements
         LinearLayout baseLayout = (LinearLayout) findViewById(R.id.questions_layout);
 
         m_allQuestionsAnswered = true;
-        for (int i = 0; i < m_session.getNumQuestions(); ++i) {
-            Question currQuestion = m_session.getQuestion(i);
+        for (int i = 0; i < m_navItem.getNumQuestions(); ++i) {
+            Question currQuestion = m_navItem.getQuestion(i);
             Boolean[] currResponses = m_currentResponses.get(i);
 
             LinearLayout questionLayout = (LinearLayout) baseLayout.getChildAt(i+QUESTIONS_LOC_IN_LAYOUT);
@@ -246,56 +246,14 @@ public class AssessmentActivity extends Activity implements
     }
 
     public void submitClicked(View view) {
-        LinearLayout baseLayout = (LinearLayout) findViewById(R.id.questions_layout);
-
         int numCorrect = 0;
-        boolean[] answersCorrect = new boolean[m_session.getNumQuestions()];
-        /*
-        for (int i = 0; i < m_session.getNumQuestions(); ++i) {
-            Question currQuestion = m_session.getQuestion(i);
-
-            LinearLayout questionLayout = (LinearLayout) baseLayout.getChildAt(i+QUESTIONS_LOC_IN_LAYOUT);
-
-            boolean answerChosen = false;
-            boolean[] answers = new boolean[currQuestion.numAnswers()];
-            if (currQuestion.getType() == Question.QuestionType.MULTIPLE_ANSWERS) {
-                LinearLayout answerGroup = (LinearLayout) questionLayout.getChildAt(1);
-
-                for (int j = 0; j < currQuestion.numAnswers(); ++j) {
-                    CheckBox chkBox = (CheckBox) answerGroup.getChildAt(j);
-                    answers[j] = chkBox.isChecked();
-                    if (answers[j]) {
-                        answerChosen = true;
-                    }
-                }
-            } else {
-                RadioGroup answerGroup = (RadioGroup) questionLayout.getChildAt(1);
-
-                for (int j = 0; j < currQuestion.numAnswers(); ++j) {
-                    RadioButton rdoBtn = (RadioButton) answerGroup.getChildAt(j);
-                    answers[j] = rdoBtn.isChecked();
-                    if (answers[j]) {
-                        answerChosen = true;
-                    }
-                }
-            }
-            if (answerChosen) {
-                answersCorrect[i] = currQuestion.checkAnswer(answers);
-
-                if (answersCorrect[i]) {
-                    numCorrect++;
-                }
-            } else {
-                // no choice made for question i
-                Toast.makeText(this, "Please answer all of the questions before submitting", Toast.LENGTH_LONG).show(); // TODO: remove magic text
-            }
-        }
-        */
+        boolean[] answersCorrect = new boolean[m_navItem.getNumQuestions()];
 
         getCurrentAnswers();
+
         if (m_allQuestionsAnswered) {
-            for (int i = 0; i < m_session.getNumQuestions(); ++i) {
-                answersCorrect[i] = m_session.getQuestion(i).checkAnswer(m_currentResponses.get(i));
+            for (int i = 0; i < m_navItem.getNumQuestions(); ++i) {
+                answersCorrect[i] = m_navItem.getQuestion(i).checkAnswer(m_currentResponses.get(i));
 
                 if (answersCorrect[i]) {
                     numCorrect++;
@@ -304,7 +262,7 @@ public class AssessmentActivity extends Activity implements
 
             String numCorrectString;
             String questionWord = "questions"; // TODO: remove magic text
-            if (numCorrect == m_session.getNumQuestions()) {
+            if (numCorrect == m_navItem.getNumQuestions()) {
                 numCorrectString = "all"; // TODO: remove magic text
             } else if (numCorrect == 0) {
                 numCorrectString = "no"; // TODO: remove magic text
@@ -316,7 +274,7 @@ public class AssessmentActivity extends Activity implements
             }
             Toast.makeText(this, "You got " + numCorrectString + " " + questionWord + " correct!", Toast.LENGTH_LONG).show(); // TODO: remove magic text
 
-            CHIPLoaderSQL.setAssessmentScore(m_sessionId, m_user.get_email(), numCorrect);
+            CHIPLoaderSQL.setAssessmentScore(m_navItemId, m_user.get_email(), numCorrect);
 
             Intent intent = new Intent();
             setResult(numCorrect, intent);

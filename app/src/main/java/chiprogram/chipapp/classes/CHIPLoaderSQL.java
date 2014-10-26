@@ -13,9 +13,11 @@ public class CHIPLoaderSQL {
     private static Map<String, Content> m_contentMap = new HashMap<String, Content>();
     private static Map<String, NavItem> m_navItemMap = new HashMap<String, NavItem>();
 
+
     private static Map<String, Module> m_moduleMap = new HashMap<String, Module>();
     private static Map<String, Chapter> m_chapterMap = new HashMap<String, Chapter>();
     private static Map<String, Session> m_sessionMap = new HashMap<String, Session>();
+
     private static Map<String, Integer> m_scoresMap = new HashMap<String, Integer>();
 
     private static String[] mentors;
@@ -230,7 +232,6 @@ public class CHIPLoaderSQL {
         return m_contentMap.get(contentId);
     }
 
-
     public static Module getModule(String moduleId) {
         if (m_moduleMap.containsKey(moduleId) == false || isNewUpdate) {
             // TODO: make call to database to get modules
@@ -239,13 +240,11 @@ public class CHIPLoaderSQL {
 
             ResultSet rs = null;
 
-            /*
             try {
                 rs = sqlServ.doGet();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            */
 
             if (rs != null) {
                 int i = 8;
@@ -267,13 +266,11 @@ public class CHIPLoaderSQL {
 
         ResultSet rs = null;
 
-        /*
         try {
             rs = sqlServ.doGet();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        */
 
         if (rs != null) {
             int i = 8;

@@ -11,7 +11,6 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import chiprogram.chipapp.classes.CHIPLoaderSQL;
-import chiprogram.chipapp.classes.Module;
 import chiprogram.chipapp.classes.NavItem;
 
 /**
@@ -22,7 +21,6 @@ import chiprogram.chipapp.classes.NavItem;
  */
 public class ModuleListFragment extends ListFragment {
 
-    //private ArrayList<Module> m_modules;
     private ArrayList<NavItem> m_topLevelNavItems;
 
     /**

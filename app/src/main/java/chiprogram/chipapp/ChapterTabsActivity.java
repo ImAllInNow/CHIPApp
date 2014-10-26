@@ -170,13 +170,13 @@ public class ChapterTabsActivity extends Activity implements ActionBar.TabListen
 
     @Override
     public void onClick(View view) {
-        if (view.getClass() == new TableRow(this).getClass()) {
+        if (view.getClass() == TableRow.class) {
             Intent intent = new Intent(this, AssessmentActivity.class);
 
             // add in user to bundle
             Bundle extras = new Bundle();
             extras.putParcelable(ProfileActivity.ARGUMENT_USER, m_user);
-            extras.putString(AssessmentActivity.SESSION_ID, (String) view.getTag());
+            extras.putString(NavItemTabsActivity.CURRENT_ID, (String) view.getTag());
 
             intent.putExtras(extras);
 
