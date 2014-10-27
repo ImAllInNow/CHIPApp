@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-
 import java.util.ArrayList;
 
 import chiprogram.chipapp.classes.CHIPLoaderSQL;
@@ -74,7 +73,7 @@ public class ModuleListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         //m_modules = CHIPLoaderSQL.getModules();
-        m_topLevelNavItems = CHIPLoaderSQL.getBaseNavItems();
+        m_topLevelNavItems = CHIPLoaderSQL.getInstance().getBaseNavItems();
 
         setListAdapter(new ArrayAdapter<NavItem>(
                 getActivity(),

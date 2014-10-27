@@ -82,7 +82,7 @@ public class NavItemListFragmentTab extends ListFragment {
 
         if (getArguments() != null) {
             String m_navItemId = getArguments().getString(NavItemTabsActivity.CURRENT_ID);
-            NavItem ni = CHIPLoaderSQL.getNavItem(m_navItemId);
+            NavItem ni = CHIPLoaderSQL.getInstance().getNavItem(m_navItemId);
             m_navItemArray = ni.getChildArray();
         } else {
             m_navItemArray = null;

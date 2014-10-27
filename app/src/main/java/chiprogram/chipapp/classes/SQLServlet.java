@@ -1,19 +1,36 @@
 package chiprogram.chipapp.classes;
 
+import android.os.AsyncTask;
+
 import java.io.IOException;
 import java.sql.*;
 
 /**
  * Created by Robert Tanniru on 10/11/2014.
  */
-public class SQLServlet {
+public class SQLServlet extends AsyncTask<Void, Void, Void> {
+
     private String m_sqlString;
     private String m_dbName;
 
-    public SQLServlet(String _sql, String _dbName) {
+    private SQLListener m_listener;
+
+    private ResultSet m_results;
+
+    public SQLServlet(String _sql, String _dbName, SQLListener listener) {
         super();
         m_sqlString = _sql;
         m_dbName = _dbName;
+
+        m_listener = listener;
+        m_results = null;
+    }
+
+    public interface SQLListener {
+        /**
+         * Callback for when an item has been selected.
+         */
+        public void onResultSetReturned(ResultSet rs);
     }
 
     /*
@@ -68,11 +85,13 @@ public class SQLServlet {
     }
     */
 
-    public ResultSet doGet() throws IOException {
+    @Override
+    protected Void doInBackground(Void... voids) {
         String url;
         ResultSet rs;
         // TODO: change this to the correct ip address and instance name
-        url = "jdbc:jtds:sqlserver://server_ip_address:1433/" + m_dbName + ";encrypt=false;instance=SQLEXPRESS;";
+        url = "jdbc:jtds:sqlserver://tombrusca.db.4217918.hostedresource.com/" + m_dbName;
+        //url = "jdbc:jtds:sqlserver://tombrusca.db.4217918.hostedresource.com/" + m_dbName + ";encrypt=false;instance=tombrusca";
         //url = "jdbc:google:mysql://brave-night-729:chip-data/" + m_dbName;
         //url = "jdbc:mysql://173.194.83.91:3306/" + m_dbName;
 
@@ -83,19 +102,26 @@ public class SQLServlet {
             //String className = "com.mysql.jdbc.Driver";
             Class.forName(className);
 
-            String user = "root";
-            String password = "CH!(ch19";
+            String user = "tombrusca";
+            String password = "TacoB3!!";
 
-            //Connection conn = DriverManager.getConnection(url, user, password);
-            Connection conn = DriverManager.getConnection(url);
-            rs = conn.createStatement().executeQuery(m_sqlString);
+            Connection conn = DriverManager.getConnection(url, user, password);
+            //Connection conn = DriverManager.getConnection(url);
+            m_results = conn.createStatement().executeQuery(m_sqlString);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-        return rs;
+        return null;
+    }
+
+    protected void onPostExecute(Void voids) {
+        m_listener.onResultSetReturned(m_results);
     }
 }

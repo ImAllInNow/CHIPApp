@@ -54,7 +54,7 @@ public class AssessmentFragmentTab extends Fragment {
             m_user = getArguments().getParcelable(ProfileActivity.ARGUMENT_USER);
             String navItemId = getArguments().getString(NavItemTabsActivity.CURRENT_ID);
 
-            m_navItem = CHIPLoaderSQL.getNavItem(navItemId);
+            m_navItem = CHIPLoaderSQL.getInstance().getNavItem(navItemId);
         } else {
             m_navItem = null;
         }
@@ -68,7 +68,7 @@ public class AssessmentFragmentTab extends Fragment {
 
         TableLayout baseLayout = (TableLayout) view.findViewById(R.id.assess_table);
         if (m_navItem != null) {
-            int userScore = CHIPLoaderSQL.getAssessmentScore(m_navItem.getId(), m_user.get_email());
+            int userScore = CHIPLoaderSQL.getInstance().getAssessmentScore(m_navItem.getId(), m_user.get_email());
 
             TableRow row = makeTableRow(view, m_navItem.toString(),
                     userScore != -1, userScore, m_navItem.getNumQuestions());

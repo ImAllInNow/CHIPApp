@@ -15,6 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableRow;
+import android.widget.Toast;
+
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import java.util.Locale;
 import chiprogram.chipapp.classes.CHIPLoaderSQL;
@@ -67,7 +69,7 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
 
         m_user = extras.getParcelable(ProfileActivity.ARGUMENT_USER);
         m_currentId = extras.getString(CURRENT_ID);
-        m_navItem = CHIPLoaderSQL.getNavItem(m_currentId);
+        m_navItem = CHIPLoaderSQL.getInstance().getNavItem(m_currentId);
 
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
@@ -144,7 +146,7 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
                 intent = new Intent(this, ModuleListActivity.class);
             } else {
                 intent = new Intent(this, NavItemTabsActivity.class);
-                NavItem parent = CHIPLoaderSQL.getNavItem(m_navItem.getParentId());
+                NavItem parent = CHIPLoaderSQL.getInstance().getNavItem(m_navItem.getParentId());
                 extras.putString(NavItemTabsActivity.CURRENT_ID, parent.getId());
             }
 
@@ -218,11 +220,11 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
                     break;
                 case PDF_LINK:
                     // TODO: handle pdfs
-
+                    Toast.makeText(this, getString(R.string.common_support_coming_soon), Toast.LENGTH_LONG).show();
                     break;
                 case PPT_LINK:
                     // TODO: handle ppts
-
+                    Toast.makeText(this, getString(R.string.common_support_coming_soon), Toast.LENGTH_LONG).show();
                     break;
             }
         }

@@ -54,7 +54,7 @@ public class AssessmentActivity extends Activity implements
         m_user = extras.getParcelable(ProfileActivity.ARGUMENT_USER);
 
         m_navItemId = extras.getString(NavItemTabsActivity.CURRENT_ID);
-        m_navItem = CHIPLoaderSQL.getNavItem(m_navItemId);
+        m_navItem = CHIPLoaderSQL.getInstance().getNavItem(m_navItemId);
 
         m_currentResponses = new ArrayList<Boolean[]>();
         m_allQuestionsAnswered = false;
@@ -273,7 +273,7 @@ public class AssessmentActivity extends Activity implements
             }
             Toast.makeText(this, "You got " + numCorrectString + " " + questionWord + " correct!", Toast.LENGTH_LONG).show(); // TODO: remove magic text
 
-            CHIPLoaderSQL.setAssessmentScore(m_navItemId, m_user.get_email(), numCorrect);
+            CHIPLoaderSQL.getInstance().setAssessmentScore(m_navItemId, m_user.get_email(), numCorrect);
 
             Intent intent = new Intent();
             setResult(numCorrect, intent);

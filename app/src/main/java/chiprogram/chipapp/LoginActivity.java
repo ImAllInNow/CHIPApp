@@ -228,7 +228,7 @@ public class LoginActivity extends Activity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            m_loginUser = CHIPLoaderSQL.checkUserLogin(m_Email, m_Password);
+            m_loginUser = CHIPLoaderSQL.getInstance().checkUserLogin(m_Email, m_Password);
 
             return (m_loginUser != null);
         }
