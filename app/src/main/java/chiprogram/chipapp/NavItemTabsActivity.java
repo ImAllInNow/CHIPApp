@@ -220,11 +220,15 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
                     break;
                 case PDF_LINK:
                     // TODO: handle pdfs
-                    Toast.makeText(this, getString(R.string.common_support_coming_soon), Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, getString(R.string.common_support_coming_soon) + "\n\nURL:" +
+                                         CommonFunctions.convertUrlToGoogleDocsURL(chosenContent.getLink()),
+                                         Toast.LENGTH_LONG).show();
                     break;
                 case PPT_LINK:
                     // TODO: handle ppts
-                    Toast.makeText(this, getString(R.string.common_support_coming_soon), Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, getString(R.string.common_support_coming_soon) + "\n\nURL:" +
+                                         CommonFunctions.convertUrlToGoogleDocsURL(chosenContent.getLink()),
+                                         Toast.LENGTH_LONG).show();
                     break;
             }
         }

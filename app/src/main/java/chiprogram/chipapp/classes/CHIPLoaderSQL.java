@@ -66,15 +66,16 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
             // TODO: remove placeholder
             NavItem currNavItem = null;
             if (navItemId.equals("1")) { // Module 1
-                currNavItem = new NavItem(navItemId, null, "Module 1", "Chapters");
+                currNavItem = new NavItem(navItemId, null, "Research Module", "Chapters");
                 currNavItem.addChild(getNavItem("3"));
                 currNavItem.addChild(getNavItem("4"));
                 currNavItem.addChild(getNavItem("5"));
             } else if (navItemId.equals("2")) { // Module 2
-                currNavItem = new NavItem(navItemId, null, "Module 2", "Chapters");
+                currNavItem = new NavItem(navItemId, null, "mHealth Module", "Sessions");
                 currNavItem.addChild(getNavItem("6"));
                 currNavItem.addChild(getNavItem("7"));
                 currNavItem.addChild(getNavItem("8"));
+                currNavItem.addChild(getNavItem("13"));
             } else if (navItemId.equals("3")) { // Chapter 1-1
                 currNavItem = new NavItem(navItemId, "1", "Chapter 1: Ethics", "Sessions");
 
@@ -86,15 +87,23 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
                 currNavItem.addChild(getNavItem("11"));
                 currNavItem.addChild(getNavItem("12"));
             } else if (navItemId.equals("4")) { // Chapter 1-2
-                currNavItem = new NavItem(navItemId, "1", "Chapter 2", "Sessions");
+                currNavItem = new NavItem(navItemId, "1", "Chapter 2: Intro to Research", "Sessions");
+                currNavItem.addChild(getNavItem("14"));
+                currNavItem.addChild(getNavItem("15"));
+                currNavItem.addChild(getNavItem("16"));
+                currNavItem.addChild(getNavItem("17"));
             } else if (navItemId.equals("5")) { // Chapter 1-3
-                currNavItem = new NavItem(navItemId, "1", "Chapter 3", "Sessions");
-            } else if (navItemId.equals("6")) { // Chapter 2-1
-                currNavItem = new NavItem(navItemId, "2", "Chapter 1", "Sessions");
-            } else if (navItemId.equals("7")) { // Chapter 2-2
-                currNavItem = new NavItem(navItemId, "2", "Chapter 2", "Sessions");
-            } else if (navItemId.equals("8")) { // Chapter 2-3
-                currNavItem = new NavItem(navItemId, "2", "Chapter 3", "Sessions");
+                currNavItem = new NavItem(navItemId, "1", "Chapter 3: Unknown", "Sessions");
+            } else if (navItemId.equals("6")) { // Session 2-1
+                currNavItem = new NavItem(navItemId, "2", "Session 1");
+                currNavItem.addContent(getContent("7"));
+                currNavItem.addContent(getContent("11"));
+            } else if (navItemId.equals("7")) { // Session 2-2
+                currNavItem = new NavItem(navItemId, "2", "Session 2");
+                currNavItem.addContent(getContent("8"));
+            } else if (navItemId.equals("8")) { // Session 2-3
+                currNavItem = new NavItem(navItemId, "2", "Session 3");
+                currNavItem.addContent(getContent("9"));
             } else if (navItemId.equals("9")) { // Session 1-1-1
                 currNavItem = new NavItem(navItemId, "3", "Principles of Research Ethics");
 
@@ -212,6 +221,17 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
                 q.addPossibleAnswer("All of the above", true);
                 q.addPossibleAnswer("None of the above", false);
                 currNavItem.addQuestion(q);
+            } else if (navItemId.equals("13")) { // Session 2-4
+                currNavItem = new NavItem(navItemId, "2", "Session 4");
+                currNavItem.addContent(getContent("10"));
+            } else if (navItemId.equals("14")) { // Session 1-2-1
+                currNavItem = new NavItem(navItemId, "4", "Session 1");
+            } else if (navItemId.equals("15")) { // Session 1-2-2
+                currNavItem = new NavItem(navItemId, "4", "Session 2");
+            } else if (navItemId.equals("16")) { // Session 1-2-3
+                currNavItem = new NavItem(navItemId, "4", "Session 3");
+            } else if (navItemId.equals("17")) { // Session 1-2-4
+                currNavItem = new NavItem(navItemId, "4", "Session 4");
             }
             m_navItemMap.put(navItemId, currNavItem);
 
@@ -262,6 +282,26 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
                 currContent = new Content(contentId, "Session 4 PPT",
                         Content.ContentType.PPT_LINK,
                         "http://chiprogram.com/training_ppt/session_4.pptx");
+            } else if (contentId.equals("7")) { // Session 2-1 YouTube Video
+                currContent = new Content(contentId, "Session 1 YouTube Video",
+                        Content.ContentType.YOUTUBE_VIDEO,
+                        "https://www.youtube.com/watch?v=k3Xr7sPi7iU");
+            } else if (contentId.equals("8")) { // Session 2-2 YouTube Video
+                currContent = new Content(contentId, "Session 2 YouTube Video",
+                        Content.ContentType.YOUTUBE_VIDEO,
+                        "https://www.youtube.com/watch?v=qkm_7XUDqIY");
+            } else if (contentId.equals("9")) { // Session 2-3 YouTube Video
+                currContent = new Content(contentId, "Session 3 YouTube Video",
+                        Content.ContentType.YOUTUBE_VIDEO,
+                        "https://www.youtube.com/watch?v=MRYVI42x41Q");
+            } else if (contentId.equals("10")) { // Session 2-4 YouTube Video
+                currContent = new Content(contentId, "Session 4 YouTube Video",
+                        Content.ContentType.YOUTUBE_VIDEO,
+                        "https://www.youtube.com/watch?v=XFcbx81CxeM");
+            } else if (contentId.equals("11")) { // Session 2-1 YouTube Video 2
+                currContent = new Content(contentId, "Session 1 YouTube Video 2",
+                        Content.ContentType.YOUTUBE_VIDEO,
+                        "https://www.youtube.com/watch?v=Xh52sRK13i8&t=10s");
             }
             m_contentMap.put(contentId, currContent);
         }
