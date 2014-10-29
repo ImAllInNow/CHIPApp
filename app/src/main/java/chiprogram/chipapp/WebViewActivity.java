@@ -33,9 +33,11 @@ public class WebViewActivity extends Activity {
         Bundle extras = intent.getExtras();
 
         m_user = extras.getParcelable(ProfileActivity.ARGUMENT_USER);
-
         m_contentId = extras.getString(CONTENT_ID);
+
         Content content = CHIPLoaderSQL.getInstance().getContent(m_contentId);
+        this.setTitle(content.getName());
+
         WebView myWebView = (WebView) findViewById(R.id.webview);
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
