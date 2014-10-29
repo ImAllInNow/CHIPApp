@@ -18,6 +18,7 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
     private Map<String, Content> m_contentMap = new HashMap<String, Content>();
     private Map<String, NavItem> m_navItemMap = new HashMap<String, NavItem>();
     private Map<String, Integer> m_scoresMap = new HashMap<String, Integer>();
+    private Map<String, String> m_recentViewedItem = new HashMap<String, String>();
 
     private String[] mentors;
     private String[] roles;
@@ -45,6 +46,20 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
         } else {
             System.err.print("not found!");
         }
+    }
+
+    public String getMostRecentNavItem(String email) {
+        if (m_recentViewedItem.containsKey(email) == false || isNewUpdate) {
+            // TODO: make call to database to get more recent navitem
+
+            // TODO: remove placeholder
+            return null;
+        }
+        return m_recentViewedItem.get(email);
+    }
+
+    public void setMostRecentNavItem(String email, String navItemId) {
+        m_recentViewedItem.put(email, navItemId);
     }
 
     public NavItem getNavItem(String navItemId) {

@@ -9,10 +9,16 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import java.util.ArrayList;
+
+import chiprogram.chipapp.classes.CHIPLoaderSQL;
 import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.CommonFunctions;
 import chiprogram.chipapp.classes.Consts;
+import chiprogram.chipapp.classes.NavItem;
 
 
 public class HomeActivity extends Activity implements
@@ -43,6 +49,36 @@ public class HomeActivity extends Activity implements
 
         // Update profile for current user
         this.setTitle(getString(R.string.title_activity_home) + " " + m_user.get_firstName());
+
+        addRecentlyViewedItem();
+    }
+
+    private void addRecentlyViewedItem() {
+        LinearLayout recentItemLayout = (LinearLayout) findViewById(R.id.most_recently_viewed_item);
+
+        String recentlyViewedId = CHIPLoaderSQL.getInstance().getMostRecentNavItem(m_user.get_email());
+        if (recentlyViewedId == null) {
+            recentItemLayout.setVisibility(LinearLayout.GONE);
+        } else {
+            recentItemLayout.setVisibility(LinearLayout.VISIBLE);
+            NavItem recentlyViewedItem = CHIPLoaderSQL.getInstance().getNavItem(recentlyViewedId);
+            ArrayList<NavItem> navItemTree = new ArrayList<NavItem>();
+
+            NavItem currentItem = recentlyViewedItem;
+            navItemTree.add(currentItem);
+            while(currentItem.getParentId() != null) {
+                currentItem = CHIPLoaderSQL.getInstance().getNavItem(currentItem.getParentId());
+                navItemTree.add(currentItem);
+            }
+
+            for (int i = navItemTree.size() - 1; i >= 0; --i) {
+                TextView newTextView = new TextView(this);
+                currentItem = navItemTree.get(i);
+                newTextView.setText(currentItem.toString());
+
+                recentItemLayout.addView(newTextView);
+            }
+        }
     }
 
     @Override

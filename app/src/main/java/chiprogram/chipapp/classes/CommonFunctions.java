@@ -58,7 +58,6 @@ public class CommonFunctions {
 
     public static String convertUrlToGoogleDocsURL(String url) {
         return "https://docs.google.com/viewer?url=" + convertFromUrlToUrlParameter(url);
-
     }
 
     public static String convertFromUrlToUrlParameter(String url) {

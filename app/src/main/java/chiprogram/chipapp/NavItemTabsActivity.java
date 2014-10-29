@@ -15,6 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableRow;
+import android.widget.Toast;
+
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import java.util.Locale;
 import chiprogram.chipapp.classes.CHIPLoaderSQL;
@@ -34,7 +36,6 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
         QUESTIONS
     }
 
-    public static final String PARENT_ID = "chiprogram.chipapp.PARENT_ID";
     public static final String CURRENT_ID = "chiprogram.chipapp.CURRENT_ID";
 
     public final static int REQUEST_ASSESSMENT = 1;
@@ -56,7 +57,6 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
 
     private CHIPUser m_user;
     private NavItem m_navItem;
-    String m_parentId;
     String m_currentId;
 
     @Override
@@ -68,10 +68,10 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
         Bundle extras = intent.getExtras();
 
         m_user = extras.getParcelable(ProfileActivity.ARGUMENT_USER);
-
-        m_parentId = extras.getString(PARENT_ID);
         m_currentId = extras.getString(CURRENT_ID);
         m_navItem = CHIPLoaderSQL.getInstance().getNavItem(m_currentId);
+
+        CHIPLoaderSQL.getInstance().setMostRecentNavItem(m_user.get_email(), m_currentId);
 
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
@@ -204,7 +204,6 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
             Bundle extras = new Bundle();
             extras.putParcelable(ProfileActivity.ARGUMENT_USER, m_user);
             extras.putString(NavItemTabsActivity.CURRENT_ID, chosenNavItem.getId());
-            extras.putString(NavItemTabsActivity.PARENT_ID, m_currentId);
 
             intent.putExtras(extras);
 
@@ -219,11 +218,9 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
                             CommonFunctions.getYouTubeVideoID(chosenContent.getLink()), 0, true ,true);
                     startActivity(intent1);
                     break;
-
                 case PDF_LINK:
                     runWebViewActivity(chosenContent);
                     break;
-
                 case PPT_LINK:
                     runWebViewActivity(chosenContent);
                     break;
@@ -344,7 +341,6 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
                 case CHILDREN:
                     return NavItemListFragmentTab.newInstance(m_currentId);
                 case QUESTIONS:
-                    // TODO: fix how the assessment fragment works
                     return AssessmentFragmentTab.newInstance(m_user, m_currentId);
             }
             return null;
