@@ -101,5 +101,11 @@
         </receiver>
 
         <service android:name=".classes.GcmIntentService" />
+
+        <activity
+            android:name=".WebViewActivity"
+            android:label="@string/title_activity_web_view" >
+        </activity>
     </application>
+
 </manifest>
