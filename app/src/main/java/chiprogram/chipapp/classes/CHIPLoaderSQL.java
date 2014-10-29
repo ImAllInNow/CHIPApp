@@ -226,12 +226,16 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
                 currNavItem.addContent(getContent("10"));
             } else if (navItemId.equals("14")) { // Session 1-2-1
                 currNavItem = new NavItem(navItemId, "4", "Session 1");
+                currNavItem.addContent(getContent("12"));
             } else if (navItemId.equals("15")) { // Session 1-2-2
                 currNavItem = new NavItem(navItemId, "4", "Session 2");
+                currNavItem.addContent(getContent("13"));
             } else if (navItemId.equals("16")) { // Session 1-2-3
                 currNavItem = new NavItem(navItemId, "4", "Session 3");
+                currNavItem.addContent(getContent("14"));
             } else if (navItemId.equals("17")) { // Session 1-2-4
                 currNavItem = new NavItem(navItemId, "4", "Session 4");
+                currNavItem.addContent(getContent("15"));
             }
             m_navItemMap.put(navItemId, currNavItem);
 
@@ -260,8 +264,8 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
             Content currContent = null;
             if (contentId.equals("1")) { // Chapter 1-1 YouTube video
                 currContent = new Content(contentId, "Ethics YouTube Video",
-                                          Content.ContentType.YOUTUBE_VIDEO,
-                                          "https://www.youtube.com/watch?v=Ir3VvYNzHeM");
+                        Content.ContentType.YOUTUBE_VIDEO,
+                        "https://www.youtube.com/watch?v=Ir3VvYNzHeM");
             } else if (contentId.equals("2")) { // Chapter 1-1 PDF file
                 currContent = new Content(contentId, "Ethics PDF Link",
                         Content.ContentType.PDF_LINK,
@@ -301,7 +305,23 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
             } else if (contentId.equals("11")) { // Session 2-1 YouTube Video 2
                 currContent = new Content(contentId, "Session 1 YouTube Video 2",
                         Content.ContentType.YOUTUBE_VIDEO,
-                        "https://www.youtube.com/watch?v=Xh52sRK13i8&t=10s");
+                        "https://www.youtube.com/watch?v=Xh52sRK13i8");
+            } else if (contentId.equals("12")) { // Session 1-2-1 PDF
+                currContent = new Content(contentId, "Session 1 PDF: (Pages 4-6)",
+                        Content.ContentType.PDF_LINK,
+                        "http://www.rds-yh.nihr.ac.uk/wp-content/uploads/2013/05/5_Introduction-to-qualitative-research-2009.pdf");
+            } else if (contentId.equals("13")) { // Session 1-2-2 PDF
+                currContent = new Content(contentId, "Session 2 PDF: (Pages 9-16)",
+                        Content.ContentType.PDF_LINK,
+                        "http://www.rds-yh.nihr.ac.uk/wp-content/uploads/2013/05/5_Introduction-to-qualitative-research-2009.pdf");
+            } else if (contentId.equals("14")) { // Session 1-2-3 PDF
+                currContent = new Content(contentId, "Session 3 PDF: (Pages 24-31)",
+                        Content.ContentType.PDF_LINK,
+                        "http://www.rds-yh.nihr.ac.uk/wp-content/uploads/2013/05/5_Introduction-to-qualitative-research-2009.pdf");
+            } else if (contentId.equals("15")) { // Session 1-2-4 PDF
+                currContent = new Content(contentId, "Session 4 PDF: (Pages 31-34)",
+                        Content.ContentType.PDF_LINK,
+                        "http://www.rds-yh.nihr.ac.uk/wp-content/uploads/2013/05/5_Introduction-to-qualitative-research-2009.pdf");
             }
             m_contentMap.put(contentId, currContent);
         }
