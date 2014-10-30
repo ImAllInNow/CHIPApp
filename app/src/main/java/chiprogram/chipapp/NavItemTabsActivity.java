@@ -215,7 +215,7 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
             switch (chosenContent.getType()) {
                 case YOUTUBE_VIDEO:
                     Intent intent1 = YouTubeStandalonePlayer.createVideoIntent(this, "AIzaSyDnglrdVhIpcrMuQ6Kjw8E2nniSUyfs44Y",
-                            CommonFunctions.getYouTubeVideoID(chosenContent.getLink()), 0, true ,true);
+                            CommonFunctions.getYouTubeVideoID(chosenContent.getLink()), 0, true, false);
                     startActivity(intent1);
                     break;
                 case PDF_LINK:
