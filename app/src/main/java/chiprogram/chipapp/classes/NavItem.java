@@ -11,7 +11,6 @@ public class NavItem {
     private String m_parentId;
     private String m_name;
     private String m_childrenName;
-    private double m_completionPercent;
     private ArrayList<Content> m_contentArray;
     private ArrayList<NavItem> m_childArray;
     private ArrayList<Question> m_questionArray;
@@ -29,7 +28,6 @@ public class NavItem {
         m_parentId = _parentId;
         m_name = _name;
         m_childrenName = _childrenName;
-        m_completionPercent = 0;
         m_contentArray = new ArrayList<Content>();
         m_childArray = new ArrayList<NavItem>();
         m_questionArray = new ArrayList<Question>();
@@ -50,8 +48,34 @@ public class NavItem {
         return m_childrenName;
     }
 
-    public double getCompletionPercent() {
-        return m_completionPercent;
+    // returns -1 if there are no items in this NavItem that can be completed
+    public double getCompletionPercent(String email) {
+        double runningSum = 0;
+        int runningCount = 0;
+        if (hasChildren()) {
+            for (NavItem navItem : m_childArray) {
+                double subCompletionPercent = navItem.getCompletionPercent(email);
+                if (subCompletionPercent != -1) {
+                    runningSum = runningSum + subCompletionPercent;
+                    ++runningCount;
+                }
+            }
+        }
+        if (hasQuestions()) {
+            ++runningCount;
+            int currScore = CHIPLoaderSQL.getInstance().getAssessmentScore(m_id, email);
+            if (currScore == -1) currScore = 0;
+            double assessmentScore = (double) currScore / m_questionArray.size();
+            if (assessmentScore > Consts.PASSING_GRADE) {
+                runningSum = runningSum + 100;
+            }
+        }
+
+        if (runningCount == 0) {
+            return -1;
+        } else {
+            return runningSum / runningCount;
+        }
     }
 
     public boolean hasContent() {

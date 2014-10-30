@@ -154,7 +154,7 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
 
             intent.putExtras(extras);
 
-            NavUtils.navigateUpTo(this, intent);
+            startActivity(intent);
             finish();
             return true;
         } else if (id == R.id.action_settings) {

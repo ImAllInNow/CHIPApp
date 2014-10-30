@@ -63,7 +63,7 @@ public class DiscussionActivity extends Activity {
 
             intent.putExtras(extras);
 
-            NavUtils.navigateUpTo(this, intent);
+            startActivity(intent);
             finish();
             return true;
         } else if (id == R.id.action_settings) {

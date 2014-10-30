@@ -9,7 +9,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -22,7 +25,8 @@ import chiprogram.chipapp.classes.NavItem;
 
 
 public class HomeActivity extends Activity implements
-        ConfirmationDialog.ConfirmationDialogListener {
+        ConfirmationDialog.ConfirmationDialogListener,
+        View.OnClickListener {
 
     public static final String ARGUMENT_USER = "chiprogram.chipapp.ARGUMENT_USER";
 
@@ -51,6 +55,7 @@ public class HomeActivity extends Activity implements
         this.setTitle(getString(R.string.title_activity_home) + " " + m_user.get_firstName());
 
         addRecentlyViewedItem();
+        addProgressReport();
     }
 
     private void addRecentlyViewedItem() {
@@ -75,9 +80,58 @@ public class HomeActivity extends Activity implements
                 TextView newTextView = new TextView(this);
                 currentItem = navItemTree.get(i);
                 newTextView.setText(currentItem.toString());
+                newTextView.setTextSize(Consts.MEDIUM_TEXT_SIZE);
 
-                recentItemLayout.addView(newTextView);
+                TableRow fillerRow = new TableRow(this);
+                fillerRow.addView(newTextView);
+                recentItemLayout.addView(fillerRow);
+
+                ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) fillerRow.getLayoutParams();
+                lp.setMargins(20 * (navItemTree.size() - i), 5, 5, 5);
+                fillerRow.setLayoutParams(lp);
+                fillerRow.setTag(currentItem.getId());
+                fillerRow.setOnClickListener(this);
             }
+        }
+    }
+
+    private void addProgressReport() {
+        LinearLayout progressReportLayout = (LinearLayout) findViewById(R.id.progress_report);
+
+        ArrayList<NavItem> topLevelItems = CHIPLoaderSQL.getInstance().getBaseNavItems();
+
+        if (topLevelItems.isEmpty()) {
+            progressReportLayout.setVisibility(LinearLayout.GONE);
+        } else {
+            for (int i = 0; i < topLevelItems.size(); ++i) {
+                TextView newTextView = new TextView(this);
+                NavItem currentItem = topLevelItems.get(i);
+
+                double completionPercentage = currentItem.getCompletionPercent(m_user.get_email());
+                if (completionPercentage == -1) {
+                    completionPercentage = 100;
+                }
+                newTextView.setText(currentItem.toString() + " " + completionPercentage + "%");
+                newTextView.setTextSize(Consts.MEDIUM_TEXT_SIZE);
+
+                TableRow fillerRow = new TableRow(this);
+                fillerRow.addView(newTextView);
+                progressReportLayout.addView(fillerRow);
+
+                ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) fillerRow.getLayoutParams();
+                lp.setMargins(20, 5, 5, 5);
+                fillerRow.setLayoutParams(lp);
+                fillerRow.setTag(currentItem.getId());
+                fillerRow.setOnClickListener(this);
+            }
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getClass() == TableRow.class &&
+            view.getTag() != null && view.getTag().getClass() == String.class) {
+            CommonFunctions.navigateToNavItem(this, m_user, (String) view.getTag());
         }
     }
 

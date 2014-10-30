@@ -11,9 +11,11 @@ import java.net.URLEncoder;
 
 import chiprogram.chipapp.AboutCHIPActivity;
 import chiprogram.chipapp.DiscussionActivity;
+import chiprogram.chipapp.HomeActivity;
 import chiprogram.chipapp.IntroScreenActivity;
 import chiprogram.chipapp.LoginActivity;
 import chiprogram.chipapp.ModuleListActivity;
+import chiprogram.chipapp.NavItemTabsActivity;
 import chiprogram.chipapp.ProfileActivity;
 import chiprogram.chipapp.SettingsActivity;
 
@@ -81,6 +83,19 @@ public class CommonFunctions {
         // add in user to bundle
         Bundle extras = new Bundle();
         extras.putParcelable(ProfileActivity.ARGUMENT_USER, user);
+
+        intent.putExtras(extras);
+
+        activity.startActivity(intent);
+    }
+
+    public static void navigateToNavItem(Activity activity, CHIPUser user, String navItemId) {
+        Intent intent = new Intent(activity, NavItemTabsActivity.class);
+
+        // add in user to bundle
+        Bundle extras = new Bundle();
+        extras.putParcelable(ProfileActivity.ARGUMENT_USER, user);
+        extras.putString(NavItemTabsActivity.CURRENT_ID, navItemId);
 
         intent.putExtras(extras);
 

@@ -53,7 +53,7 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
             // TODO: make call to database to get more recent navitem
 
             // TODO: remove placeholder
-            return null;
+            return "9";
         }
         return m_recentViewedItem.get(email);
     }
