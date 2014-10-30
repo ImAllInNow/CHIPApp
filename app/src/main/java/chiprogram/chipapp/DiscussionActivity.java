@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.CommonFunctions;
 
@@ -26,7 +28,10 @@ public class DiscussionActivity extends Activity {
 
         m_user = extras.getParcelable(ProfileActivity.ARGUMENT_USER);
 
-
+        WebView myWebView = (WebView) findViewById(R.id.webview);
+        WebSettings webSettings = myWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        myWebView.loadUrl("http://www.chiprogram.com/discussion/index.php");
     }
 
     private void setupActionBar() {
