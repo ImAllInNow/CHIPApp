@@ -10,6 +10,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import chiprogram.chipapp.classes.CHIPLoaderSQL;
+import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.NavItem;
 
 /**
@@ -21,7 +22,7 @@ import chiprogram.chipapp.classes.NavItem;
 public class NavItemListFragmentTab extends ListFragment {
 
     private ArrayList<NavItem> m_navItemArray;
-
+    private CHIPUser m_user;
     /**
      * The serialization (saved instance state) Bundle key representing the
      * activated item position. Only used on tablets.
@@ -68,9 +69,10 @@ public class NavItemListFragmentTab extends ListFragment {
     public NavItemListFragmentTab() {
     }
 
-    public static NavItemListFragmentTab newInstance(String navItemId) {
+    public static NavItemListFragmentTab newInstance(CHIPUser m_user, String navItemId) {
         NavItemListFragmentTab fragment = new NavItemListFragmentTab();
         Bundle args = new Bundle();
+        args.putParcelable(ProfileActivity.ARGUMENT_USER, m_user);
         args.putString(NavItemTabsActivity.CURRENT_ID, navItemId);
         fragment.setArguments(args);
         return fragment;
@@ -81,6 +83,7 @@ public class NavItemListFragmentTab extends ListFragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
+            m_user = getArguments().getParcelable(ProfileActivity.ARGUMENT_USER);
             String m_navItemId = getArguments().getString(NavItemTabsActivity.CURRENT_ID);
             NavItem ni = CHIPLoaderSQL.getInstance().getNavItem(m_navItemId);
             m_navItemArray = ni.getChildArray();
@@ -90,11 +93,21 @@ public class NavItemListFragmentTab extends ListFragment {
     }
 
     public void setArrayAdapter() {
-        setListAdapter(new ArrayAdapter<NavItem>(
+        ArrayList<String> titlePlusProgress = new ArrayList<String>();
+
+        // TODO: create a TextView array instead for this.
+        for (NavItem navItem : m_navItemArray) {
+            int percentComplete = (int) navItem.getCompletionPercent(m_user.get_email());
+            if (percentComplete == -1) percentComplete = 0;
+            titlePlusProgress.add(navItem.toString() + " " +
+                                  percentComplete + "%");
+        }
+
+        setListAdapter(new ArrayAdapter<String>(
                 getActivity(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
-                m_navItemArray));
+                titlePlusProgress));
     }
 
     @Override

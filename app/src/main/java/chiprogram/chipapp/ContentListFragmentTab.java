@@ -10,6 +10,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import chiprogram.chipapp.classes.CHIPLoaderSQL;
+import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.Content;
 import chiprogram.chipapp.classes.NavItem;
 
@@ -22,6 +23,7 @@ import chiprogram.chipapp.classes.NavItem;
 public class ContentListFragmentTab extends ListFragment {
 
     private ArrayList<Content> m_contentArray;
+    private CHIPUser m_user;
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -69,9 +71,10 @@ public class ContentListFragmentTab extends ListFragment {
     public ContentListFragmentTab() {
     }
 
-    public static ContentListFragmentTab newInstance(String navItemId) {
+    public static ContentListFragmentTab newInstance(CHIPUser user, String navItemId) {
         ContentListFragmentTab fragment = new ContentListFragmentTab();
         Bundle args = new Bundle();
+        args.putParcelable(ProfileActivity.ARGUMENT_USER, user);
         args.putString(NavItemTabsActivity.CURRENT_ID, navItemId);
         fragment.setArguments(args);
         return fragment;
@@ -82,6 +85,7 @@ public class ContentListFragmentTab extends ListFragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
+            m_user = getArguments().getParcelable(ProfileActivity.ARGUMENT_USER);
             String m_navItemId = getArguments().getString(NavItemTabsActivity.CURRENT_ID);
             NavItem ni = CHIPLoaderSQL.getInstance().getNavItem(m_navItemId);
             m_contentArray = ni.getContentArray();
@@ -91,6 +95,8 @@ public class ContentListFragmentTab extends ListFragment {
     }
 
     public void setArrayAdapter() {
+        // TODO: create a TableRow array instead for this and
+        // have a way to mark a piece of content as "completed".
         setListAdapter(new ArrayAdapter<Content>(
                 getActivity(),
                 android.R.layout.simple_list_item_activated_1,

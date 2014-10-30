@@ -337,9 +337,9 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
         public Fragment getItem(int position) {
             switch(getTabType(position)) {
                 case CONTENT:
-                    return ContentListFragmentTab.newInstance(m_currentId);
+                    return ContentListFragmentTab.newInstance(m_user, m_currentId);
                 case CHILDREN:
-                    return NavItemListFragmentTab.newInstance(m_currentId);
+                    return NavItemListFragmentTab.newInstance(m_user, m_currentId);
                 case QUESTIONS:
                     return AssessmentFragmentTab.newInstance(m_user, m_currentId);
             }

@@ -12,7 +12,7 @@
     <string name="title_section1">Content</string>
 
     <!-- Section 2: Children NavItems -->
-    <string name="title_section2">Children</string>
+    <string name="title_section2">Child Nodes</string>
     <string name="title_section2_modules">Modules</string>
     <string name="title_section2_chapters">Chapters</string>
     <string name="title_section2_sessions">Sessions</string>
