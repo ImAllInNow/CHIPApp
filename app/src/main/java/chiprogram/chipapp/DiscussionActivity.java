@@ -2,6 +2,7 @@ package chiprogram.chipapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
@@ -90,7 +91,17 @@ public class DiscussionActivity extends Activity {
             CommonFunctions.navigateToAboutCHIP(this);
             return true;
         } else if (id == R.id.action_email_mentor) {
-            // TODO: add email mentor functionality
+            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "abc@gmail.com", null));
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "EXTRA_SUBJECT");
+            startActivity(Intent.createChooser(emailIntent, "Send email..."));
+
+/*            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_EMAIL, "emailaddress@emailaddress.com");
+
+            // need this to prompts email client only
+            intent.setType("message/rfc822");
+            startActivity(Intent.createChooser(intent, "Send Email"));*/
         }
          return super.onOptionsItemSelected(item);
     }
