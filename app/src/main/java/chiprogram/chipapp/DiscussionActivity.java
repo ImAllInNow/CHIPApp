@@ -86,7 +86,9 @@ public class DiscussionActivity extends Activity {
         } else if (id == R.id.action_about_chip) {
             CommonFunctions.navigateToAboutCHIP(this);
             return true;
+        } else if (id == R.id.action_email_mentor) {
+            // TODO: add email mentor functionality
         }
-        return super.onOptionsItemSelected(item);
+         return super.onOptionsItemSelected(item);
     }
 }
