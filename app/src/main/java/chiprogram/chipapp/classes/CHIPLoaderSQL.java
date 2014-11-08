@@ -371,7 +371,7 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
         // TODO: remove placeholder
         if (email.equals("bkt421@gmail.com") && password.equals("CH!(ch19")) {
             return new CHIPUser("Robert", "Tanniru", "123 4th Street\r\nRochester, MI 48306",
-                                "Detroit", "Program Team", "Mohan Tanniru",
+                                "Detroit", "Program Team", "", "Mohan Tanniru",
                                 "Creating a mobile app version of the CHIP website",
                                 "bkt421@gmail.com");
         } else {
@@ -379,28 +379,51 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
         }
     }
 
-    public String[] getMentorList() {
-        if (mentors == null || isNewUpdate) {
-            // TODO: make call to database to get mentor list
 
-            // SQL: "Select * from users where role=\"Mentor\";";
+    public String getMentorInfo(String mentorEmail) {
+        // TODO: make call to database to get mentor first, last, and
+
+        // SQL: "Select (firstname, lastname) from user where email=" + userEmail + ";";
+
+        // TODO: remove placeholder
+        if (mentorEmail.equals("tanniru@oakland.edu")) {
+            return "Mohan Tanniru - Business IT (US)";
+        } else {
+            return null;
+        }
+    }
+
+    public String[] getMentorEmailList() {
+        if (mentors == null || isNewUpdate) {
+            // TODO: add in call to database for this
+            /*
+                    "Yubraj Acharya - Nutrition & Health Financing (Nepal)",
+                    "Eli Bailey - Micro Financing and Financial Modeling (US and India)",
+                    "Deepak Bajracharya - Management & Communications (Nepal)",
+                    "Kofi Awusabo-Asare - Population Studies (Ghana)",
+                    "Linda Kaljee - Anthropology (US)",
+                    "Paul Kilgore - Vaccines (US)",
+                    "Mentor Lucien - Microbiology & Immunology (Haiti)",
+                    "Kate Otto - mHealth & data collection (US)",
+                    "Genevieve Poitevien - Medicine (Haiti)",
+                    "Mohan Tanniru - Business IT (US)",
+                    "Placide Tapsoba - Community Health (Ghana)",
+                    "Marcus Zervos - Infectious Diseases (US)";
+             */
 
             // TODO: remove placeholder
-            mentors = new String[]{"None",
-                    "Yubraj Acharya—Nutrition & Health Financing (Nepal)",
-                    "Eli Bailey – Micro Financing and Financial Modeling (US and India)",
-                    "Deepak Bajracharya—Management & Communications (Nepal)",
-                    "Kofi Awusabo-Asare—Population Studies (Ghana)",
-                    "Linda Kaljee—Anthropology (US)",
-                    "Paul Kilgore—Vaccines (US)",
-                    "Mentor Lucien—Microbiology & Immunology (Haiti)",
-                    "Kate Otto—mHealth & data collection (US)",
-                    "Genevieve Poitevien—Medicine (Haiti)",
-                    "Mohan Tanniru—Business IT (US)",
-                    "Placide Tapsoba—Community Health (Ghana)",
-                    "Marcus Zervos—Infectious Diseases (US)"};
+            mentors = new String[]{"tanniru@oakland.edu"};
         }
+
         return mentors;
+    }
+
+    public String[] getMentorInfoList(String[] mentorEmails) {
+        String[] mentorInfoList = new String[mentorEmails.length];
+        for (int i = 0; i < mentorEmails.length; ++i) {
+            mentorInfoList[i] = getMentorInfo(mentorEmails[i]);
+        }
+        return mentorInfoList;
     }
 
     public String[] getLocationList() {

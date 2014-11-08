@@ -24,6 +24,7 @@ import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.CommonFunctions;
 import chiprogram.chipapp.classes.Content;
 import chiprogram.chipapp.classes.NavItem;
+import chiprogram.chipapp.webview.WebViewActivity;
 
 public class NavItemTabsActivity extends Activity implements ActionBar.TabListener,
         NavItemListFragmentTab.Callbacks,

@@ -1,7 +1,10 @@
 package chiprogram.chipapp.classes;
 
+import android.app.Activity;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import chiprogram.chipapp.R;
 
 /**
  * Created by Rob Tanniru on 10/6/2014.
@@ -13,7 +16,8 @@ public class CHIPUser implements Parcelable {
     private String m_address;
     private String m_location;
     private String m_role;
-    private String m_mentor;
+    private String m_specialization;
+    private String m_mentorEmail;
     private String m_bio;
     private String m_email;
 
@@ -33,7 +37,8 @@ public class CHIPUser implements Parcelable {
     };
 
     public CHIPUser(String _firstName, String _lastName, String _address, String _location,
-                    String _role, String _mentor, String _bio, String _email) {
+                    String _role, String _specialization, String _mentorEmail,
+                    String _bio, String _email) {
 
         // TODO: remove placeholders
         m_firstName = _firstName.isEmpty() ? "Rob" : _firstName;
@@ -41,7 +46,8 @@ public class CHIPUser implements Parcelable {
         m_address = _address.isEmpty() ? "123 4th Street\r\nRochester, MI 48306" : _address;
         m_location = _location.isEmpty() ? "Detroit" : _location;
         m_role = _role.isEmpty() ? "Mentor" : _role;
-        m_mentor = _mentor.isEmpty() ? "testMentor1" : _mentor;
+        m_specialization = _specialization;
+        m_mentorEmail = _mentorEmail.isEmpty() ? "tanniru@oakland.edu" : _mentorEmail;
         m_bio = _bio.isEmpty() ? "Test Bio" : _bio;
         m_email = _email.isEmpty() ? "bkt421@gmail.com" : _email;
     }
@@ -66,8 +72,12 @@ public class CHIPUser implements Parcelable {
         return m_role;
     }
 
-    public String get_mentor() {
-        return m_mentor;
+    public String get_specialization() {
+        return m_specialization;
+    }
+
+    public String get_mentorEmail() {
+        return m_mentorEmail;
     }
 
     public String get_bio() {
@@ -80,7 +90,7 @@ public class CHIPUser implements Parcelable {
 
     // return value of 0 means error,
     // if error > 0, then that member variable is the last one with an error.
-    public int validateUser() {
+    public int validateUser(Activity activity) {
         int error = 0;
 
         if (m_firstName.isEmpty()) {
@@ -93,7 +103,10 @@ public class CHIPUser implements Parcelable {
             error = 4;
         } else if (m_role.isEmpty()){
             error = 5;
-        } else if (m_mentor.isEmpty()){
+        } /*else if (m_mentorEmail.isEmpty()){
+            error = 6; TODO: is validation of mentor email needed?
+        } */
+        else if (m_role.equals(activity.getString(R.string.common_mentor)) && m_specialization.isEmpty()) { // only mentors have specializations
             error = 6;
         } else if (m_bio.isEmpty()){
             error = 7;
@@ -118,7 +131,8 @@ public class CHIPUser implements Parcelable {
         out.writeString(m_address);
         out.writeString(m_location);
         out.writeString(m_role);
-        out.writeString(m_mentor);
+        out.writeString(m_specialization);
+        out.writeString(m_mentorEmail);
         out.writeString(m_bio);
         out.writeString(m_email);
     }
@@ -129,7 +143,8 @@ public class CHIPUser implements Parcelable {
         m_address = in.readString();
         m_location = in.readString();
         m_role = in.readString();
-        m_mentor = in.readString();
+        m_specialization = in.readString();
+        m_mentorEmail = in.readString();
         m_bio = in.readString();
         m_email = in.readString();
     }

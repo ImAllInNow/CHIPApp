@@ -29,7 +29,6 @@ public class HomeActivity extends Activity implements
         View.OnClickListener {
 
     public static final String ARGUMENT_USER = "chiprogram.chipapp.ARGUMENT_USER";
-
     private static final String CONFIRM_LOGOUT_TAG = "fragment_confirm_logout";
 
     private CHIPUser m_user;

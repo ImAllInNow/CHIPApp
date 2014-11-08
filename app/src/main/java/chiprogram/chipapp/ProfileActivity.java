@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import chiprogram.chipapp.classes.CHIPLoaderSQL;
 import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.CommonFunctions;
 
@@ -50,7 +51,11 @@ public class ProfileActivity extends Activity {
         addressView.setText(m_user.get_address());
         location.setText(m_user.get_location());
         role.setText(m_user.get_role());
-        mentor.setText(m_user.get_mentor());
+        if (m_user.get_mentorEmail() == null) {
+            mentor.setText(getString(R.string.common_none));
+        } else {
+            mentor.setText(CHIPLoaderSQL.getInstance().getMentorInfo(m_user.get_mentorEmail()));
+        }
         shortBioView.setText(m_user.get_bio());
 
         // TODO: use this or remove it
@@ -125,6 +130,14 @@ public class ProfileActivity extends Activity {
     }
 
     public void editProfileClicked(View view) {
-        // TODO: add functionality for editing profile
+        Intent intent = new Intent(this, RegisterOrEditActivity.class);
+
+        // add in user to bundle
+        Bundle extras = new Bundle();
+        extras.putParcelable(ProfileActivity.ARGUMENT_USER, m_user);
+
+        intent.putExtras(extras);
+
+        startActivity(intent);
     }
 }

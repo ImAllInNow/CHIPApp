@@ -103,7 +103,7 @@ public class IntroScreenActivity extends Activity implements
     }
 
     public void registerClicked(View view) {
-        Intent intent = new Intent(this, RegisterActivity.class);
+        Intent intent = new Intent(this, RegisterOrEditActivity.class);
         startActivity(intent);
     }
 

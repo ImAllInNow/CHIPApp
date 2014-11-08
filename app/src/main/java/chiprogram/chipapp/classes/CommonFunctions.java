@@ -77,6 +77,18 @@ public class CommonFunctions {
         activity.startActivity(intent);
     }
 
+    public static void navigateToHome(Activity activity, CHIPUser user) {
+        Intent intent = new Intent(activity, HomeActivity.class);
+
+        // add in user to bundle
+        Bundle extras = new Bundle();
+        extras.putParcelable(ProfileActivity.ARGUMENT_USER, user);
+
+        intent.putExtras(extras);
+
+        activity.startActivity(intent);
+    }
+
     public static void navigateToTraining(Activity activity, CHIPUser user) {
         Intent intent = new Intent(activity, ModuleListActivity.class);
 

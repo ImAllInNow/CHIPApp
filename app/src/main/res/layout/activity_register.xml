@@ -6,7 +6,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="chiprogram.chipapp.RegisterActivity">
+    tools:context="chiprogram.chipapp.RegisterOrEditActivity">
 
     <TextView
         android:id="@+id/reg_instructions"
@@ -136,7 +136,32 @@
                     android:layout_height="wrap_content"
                     android:entries="@array/roleChoices"
                     android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp" />
+                    android:layout_marginLeft="20dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/reg_specializationBlock"
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:text="@string/register_specialization"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"  />
+
+                <EditText
+                    android:id="@+id/reg_editTextSpecialization"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:inputType="textCapWords"
+                    android:ems="10" />
 
             </LinearLayout>
 
@@ -187,6 +212,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/reg_layoutEmail"
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -210,6 +236,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/reg_layoutReenterEmail"
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content">
@@ -232,6 +259,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/reg_layoutPassword"
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content">
