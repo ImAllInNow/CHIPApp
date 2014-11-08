@@ -10,10 +10,12 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.CommonFunctions;
+import chiprogram.chipapp.webview.DiscussionWebViewClient;
 
 public class DiscussionActivity extends Activity {
 
     private CHIPUser m_user;
+    private WebView myWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +30,10 @@ public class DiscussionActivity extends Activity {
 
         m_user = extras.getParcelable(ProfileActivity.ARGUMENT_USER);
 
-        WebView myWebView = (WebView) findViewById(R.id.webview);
+        myWebView = (WebView) findViewById(R.id.webview);
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        myWebView.setWebViewClient(new DiscussionWebViewClient());
         myWebView.loadUrl("http://www.chiprogram.com/discussion/index.php");
     }
 
@@ -88,5 +91,13 @@ public class DiscussionActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(myWebView.canGoBack())
+            myWebView.goBack();
+        else
+            super.onBackPressed();
     }
 }
