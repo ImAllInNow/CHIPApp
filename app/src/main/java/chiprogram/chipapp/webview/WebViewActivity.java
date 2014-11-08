@@ -1,4 +1,4 @@
-package chiprogram.chipapp;
+package chiprogram.chipapp.webview;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import chiprogram.chipapp.ProfileActivity;
+import chiprogram.chipapp.R;
 import chiprogram.chipapp.classes.CHIPLoaderSQL;
 import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.CommonFunctions;
