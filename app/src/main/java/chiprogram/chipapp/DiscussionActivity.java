@@ -4,16 +4,21 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Toast;
+
 import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.CommonFunctions;
 import chiprogram.chipapp.webview.DiscussionWebViewClient;
 
 public class DiscussionActivity extends Activity {
+
+    private static final String CURRENT_URL = "chiprogram.chipapp.CURRENT_URL";
 
     private CHIPUser m_user;
     private WebView myWebView;
@@ -34,6 +39,8 @@ public class DiscussionActivity extends Activity {
         myWebView = (WebView) findViewById(R.id.webview);
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setSupportZoom(true);
+        webSettings.setBuiltInZoomControls(true);
         myWebView.setWebViewClient(new DiscussionWebViewClient());
         myWebView.loadUrl("http://www.chiprogram.com/discussion/index.php");
     }
@@ -91,8 +98,13 @@ public class DiscussionActivity extends Activity {
             CommonFunctions.navigateToAboutCHIP(this);
             return true;
         } else if (id == R.id.action_email_mentor) {
-            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", m_user.get_mentorEmail(), null));
-            startActivity(Intent.createChooser(emailIntent, "Send email..."));
+            CHIPUser mentor = m_user.get_mentor();
+            if (mentor != null) {
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", mentor.get_email(), null));
+                startActivity(Intent.createChooser(emailIntent, "Send email..."));
+            } else {
+                Toast.makeText(this, getString(R.string.no_mentor), Toast.LENGTH_SHORT).show();
+            }
         }
          return super.onOptionsItemSelected(item);
     }

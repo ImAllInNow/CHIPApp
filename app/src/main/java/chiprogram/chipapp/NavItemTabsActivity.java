@@ -34,7 +34,7 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
     public enum TabType {
         CONTENT,
         CHILDREN,
-        QUESTIONS
+        ASSESSMENTS
     }
 
     public static final String CURRENT_ID = "chiprogram.chipapp.CURRENT_ID";
@@ -72,7 +72,7 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
         m_currentId = extras.getString(CURRENT_ID);
         m_navItem = CHIPLoaderSQL.getInstance().getNavItem(m_currentId);
 
-        CHIPLoaderSQL.getInstance().setMostRecentNavItem(m_user.get_email(), m_currentId);
+        CHIPLoaderSQL.getInstance().setMostRecentNavItem(m_user.get_id(), m_currentId);
 
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
@@ -89,7 +89,7 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
             mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
             mSectionsPagerAdapter.hasContent = m_navItem.hasContent();
             mSectionsPagerAdapter.hasChildren = m_navItem.hasChildren();
-            mSectionsPagerAdapter.hasQuestions = m_navItem.hasQuestions();
+            mSectionsPagerAdapter.hasAssessments = m_navItem.hasAssessments();
 
             // Set up the ViewPager with the sections adapter.
             mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -242,14 +242,14 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
 
     @Override
     public void onClick(View view) {
-        if (view.getClass() == TableRow.class ||
-            view.getClass() == Button.class) {
+        if (view.getClass() == TableRow.class) {
+            String assessmentId = (String) view.getTag();
             Intent intent = new Intent(this, AssessmentActivity.class);
 
             // add in user to bundle
             Bundle extras = new Bundle();
             extras.putParcelable(ProfileActivity.ARGUMENT_USER, m_user);
-            extras.putString(CURRENT_ID, m_currentId);
+            extras.putString(AssessmentActivity.ASSESSMENT_ID, assessmentId);
 
             intent.putExtras(extras);
 
@@ -284,14 +284,14 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
 
         public boolean hasContent;
         public boolean hasChildren;
-        public boolean hasQuestions;
+        public boolean hasAssessments;
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
 
             hasContent = false;
             hasChildren = false;
-            hasQuestions = false;
+            hasAssessments = false;
         }
 
         private TabType getTabType(int position) {
@@ -301,8 +301,8 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
                         return TabType.CONTENT;
                     } else if (hasChildren) {
                         return TabType.CHILDREN;
-                    } else if (hasQuestions) {
-                        return TabType.QUESTIONS;
+                    } else if (hasAssessments) {
+                        return TabType.ASSESSMENTS;
                     } else {
                         return null;
                     }
@@ -310,14 +310,14 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
                     if (hasContent) {
                         if (hasChildren) {
                             return TabType.CHILDREN;
-                        } else if (hasQuestions) {
-                            return TabType.QUESTIONS;
+                        } else if (hasAssessments) {
+                            return TabType.ASSESSMENTS;
                         } else {
                             return null;
                         }
                     } else if (hasChildren) {
-                        if (hasQuestions) {
-                            return TabType.QUESTIONS;
+                        if (hasAssessments) {
+                            return TabType.ASSESSMENTS;
                         } else {
                             return null;
                         }
@@ -325,8 +325,8 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
                         return null;
                     }
                 case 2:
-                    if (hasContent && hasChildren && hasQuestions) {
-                        return TabType.QUESTIONS;
+                    if (hasContent && hasChildren && hasAssessments) {
+                        return TabType.ASSESSMENTS;
                     } else {
                         return null;
                     }
@@ -341,7 +341,7 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
                     return ContentListFragmentTab.newInstance(m_user, m_currentId);
                 case CHILDREN:
                     return NavItemListFragmentTab.newInstance(m_user, m_currentId);
-                case QUESTIONS:
+                case ASSESSMENTS:
                     return AssessmentFragmentTab.newInstance(m_user, m_currentId);
             }
             return null;
@@ -356,7 +356,7 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
             if (hasChildren) {
                 ++count;
             }
-            if (hasQuestions) {
+            if (hasAssessments) {
                 ++count;
             }
             return count;
@@ -380,7 +380,7 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
                     } else {
                         return m_navItem.getChildrenName().toUpperCase(l);
                     }
-                case QUESTIONS:
+                case ASSESSMENTS:
                     return getString(R.string.title_section3).toUpperCase(l);
             }
             return null;

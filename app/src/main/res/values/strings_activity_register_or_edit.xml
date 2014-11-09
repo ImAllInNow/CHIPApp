@@ -2,6 +2,7 @@
 <resources>
     <!-- Strings related to register -->
     <string name="title_activity_register">Register</string>
+    <string name="title_activity_edit">Edit Profile</string>
 
     <string name="register_instructions">Please enter the following:</string>
 
@@ -24,4 +25,12 @@
     <string name="register_specialization">Specialization</string>
     <string name="edit_success">Profile edit successful!</string>
     <string name="confirm_cancel_edit">Cancel profile edit?</string>
+
+    <string name="register_error_first_name">Please provide a first name</string>
+    <string name="register_error_address">Please provide an address</string>
+    <string name="register_error_specialization">As a mentor, you must provide a specialization</string>
+    <string name="register_error_short_bio">Please provide a short bio</string>
+    <string name="register_error_email">Please provide a valid email address</string>
+    <string name="register_error_reenter_email">Email address confirmation doesn\'t match</string>
+    <string name="register_error_password">Please provide a valid password (at least 4 characters)</string>
 </resources>

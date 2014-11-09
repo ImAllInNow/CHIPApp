@@ -46,14 +46,13 @@
                 </TableRow>
             </TableLayout>
         </ScrollView>
-        <Button
-            style="?android:attr/buttonBarButtonStyle"
-            android:id="@+id/reg_btnEditProfile"
+        <TextView
+            android:id="@+id/reg_clickInstructions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:text="@string/asses_begin"
-            android:onClick="onClick"/>
+            android:text="@string/assess_click_instructions"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
     </LinearLayout>
 </FrameLayout>

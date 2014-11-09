@@ -60,7 +60,7 @@ public class HomeActivity extends Activity implements
     private void addRecentlyViewedItem() {
         LinearLayout recentItemLayout = (LinearLayout) findViewById(R.id.most_recently_viewed_item);
 
-        String recentlyViewedId = CHIPLoaderSQL.getInstance().getMostRecentNavItem(m_user.get_email());
+        String recentlyViewedId = CHIPLoaderSQL.getInstance().getMostRecentNavItem(m_user.get_id());
         if (recentlyViewedId == null) {
             recentItemLayout.setVisibility(LinearLayout.GONE);
         } else {
@@ -106,7 +106,7 @@ public class HomeActivity extends Activity implements
                 TextView newTextView = new TextView(this);
                 NavItem currentItem = topLevelItems.get(i);
 
-                double completionPercentage = currentItem.getCompletionPercent(m_user.get_email());
+                double completionPercentage = currentItem.getCompletionPercent(m_user.get_id());
                 if (completionPercentage == -1) {
                     completionPercentage = 100;
                 }

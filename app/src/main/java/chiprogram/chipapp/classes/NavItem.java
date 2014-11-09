@@ -13,7 +13,7 @@ public class NavItem {
     private String m_childrenName;
     private ArrayList<Content> m_contentArray;
     private ArrayList<NavItem> m_childArray;
-    private ArrayList<Question> m_questionArray;
+    private ArrayList<Assessment> m_assessmentArray;
 
     public NavItem(String _id, String _parentId, String _name) {
         initializeMembers(_id, _parentId, _name, null);
@@ -30,7 +30,7 @@ public class NavItem {
         m_childrenName = _childrenName;
         m_contentArray = new ArrayList<Content>();
         m_childArray = new ArrayList<NavItem>();
-        m_questionArray = new ArrayList<Question>();
+        m_assessmentArray = new ArrayList<Assessment>();
     }
 
     public String getId() {
@@ -49,25 +49,27 @@ public class NavItem {
     }
 
     // returns -1 if there are no items in this NavItem that can be completed
-    public double getCompletionPercent(String email) {
+    public double getCompletionPercent(String userId) {
         double runningSum = 0;
         int runningCount = 0;
         if (hasChildren()) {
             for (NavItem navItem : m_childArray) {
-                double subCompletionPercent = navItem.getCompletionPercent(email);
+                double subCompletionPercent = navItem.getCompletionPercent(userId);
                 if (subCompletionPercent != -1) {
                     runningSum = runningSum + subCompletionPercent;
                     ++runningCount;
                 }
             }
         }
-        if (hasQuestions()) {
-            ++runningCount;
-            int currScore = CHIPLoaderSQL.getInstance().getAssessmentScore(m_id, email);
-            if (currScore == -1) currScore = 0;
-            double assessmentScore = (double) currScore / m_questionArray.size();
-            if (assessmentScore > Consts.PASSING_GRADE) {
-                runningSum = runningSum + 100;
+        if (hasAssessments()) {
+            for (Assessment assessment : m_assessmentArray) {
+                ++runningCount;
+                int currScore = CHIPLoaderSQL.getInstance().getAssessmentScore(assessment.getId(), userId);
+                if (currScore == -1) currScore = 0;
+                double assessmentScore = (double) currScore / assessment.getNumQuestions();
+                if (assessmentScore * 100 >= assessment.getPassingPercent()) {
+                    runningSum = runningSum + 100;
+                }
             }
         }
 
@@ -86,8 +88,8 @@ public class NavItem {
         return (m_childArray.isEmpty() == false);
     }
 
-    public boolean hasQuestions() {
-        return (m_questionArray.isEmpty() == false);
+    public boolean hasAssessments() {
+        return (m_assessmentArray.isEmpty() == false);
     }
 
     public int getNumContent() {
@@ -150,17 +152,17 @@ public class NavItem {
         return m_childArray.add(_child);
     }
 
-    public boolean addQuestion(Question q) {
-        return (m_questionArray.add(q));
+    public boolean addAssessment(Assessment a) {
+        return (m_assessmentArray.add(a));
     }
 
-    public int getNumQuestions() {
-        return m_questionArray.size();
+    public int getNumAssessments() {
+        return (m_assessmentArray.size());
     }
 
-    public Question getQuestion(int index) {
-        if (index >= 0 && index < m_questionArray.size()) {
-            return m_questionArray.get(index);
+    public Assessment getAssessment(int index) {
+        if (index >= 0 && index < m_assessmentArray.size()) {
+            return m_assessmentArray.get(index);
         } else {
             return null;
         }

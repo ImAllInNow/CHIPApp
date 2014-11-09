@@ -14,14 +14,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
 
 import chiprogram.chipapp.classes.CHIPLoaderSQL;
 import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.CommonFunctions;
-import chiprogram.chipapp.classes.Consts;
 
 public class RegisterOrEditActivity extends Activity implements
         ConfirmationDialog.ConfirmationDialogListener,
@@ -32,40 +30,57 @@ public class RegisterOrEditActivity extends Activity implements
         EDIT,
     }
 
+    public enum RegistrationError {
+        NONE,
+        FIRST_NAME_EMPTY,
+        ADDRESS_EMPTY,
+        MENTOR_SPECIALIZATION_EMPTY,
+        SHORT_BIO_EMPTY,
+        EMAIL_INVALID,
+        PASSWORD_INVALID,
+        REENTER_EMAIL_MISMATCH
+    }
+
     private static final String CONFIRM_CANCEL_REGISTRATION_TAG = "fragment_confirm_cancel_registration";
 
     private CHIPUser m_user;
     private ProfileEditType m_type;
-    private String[] m_mentorEmailList;
+    private String[] m_mentorIdList;
 
     private FragmentManager m_fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_register_or_edit);
 
         m_fragmentManager = getFragmentManager();
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
 
+        TextView titleView = (TextView) findViewById(R.id.reg_instructions);
         if (extras != null && extras.containsKey(ProfileActivity.ARGUMENT_USER)) {
             m_user = extras.getParcelable(ProfileActivity.ARGUMENT_USER);
             m_type = ProfileEditType.EDIT;
+
+            titleView.setVisibility(TextView.GONE);
+            setTitle(getString(R.string.title_activity_edit));
         } else {
             m_user = null;
             m_type = ProfileEditType.REGISTER;
+
+            titleView.setVisibility(TextView.VISIBLE);
+            setTitle(getString(R.string.title_activity_register));
         }
 
         // set mentors spinner
-        m_mentorEmailList = CHIPLoaderSQL.getInstance().getMentorEmailList();
-        String[] mentorInfoList = CHIPLoaderSQL.getInstance().getMentorInfoList(m_mentorEmailList);
+        m_mentorIdList = CHIPLoaderSQL.getInstance().getMentorIdList();
+        String[] mentorInfoList = CHIPLoaderSQL.getInstance().getMentorInfoList(m_mentorIdList);
         String[] mentorPlusNone = new String[mentorInfoList.length + 1];
         mentorPlusNone[0] = getString(R.string.common_none);
-        for (int i = 0; i < mentorInfoList.length; ++i) {
-            mentorPlusNone[i+1] = mentorInfoList[i];
-        }
+        System.arraycopy(mentorInfoList, 0, mentorPlusNone, 1, mentorInfoList.length);
+
         Spinner mentorSpinner = (Spinner) findViewById(R.id.reg_spinnerMentor);
         ArrayAdapter spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,
                                                                mentorPlusNone);
@@ -93,18 +108,16 @@ public class RegisterOrEditActivity extends Activity implements
         EditText firstNameView = (EditText) findViewById(R.id.reg_editTextFirstName);
         EditText lastNameView = (EditText) findViewById(R.id.reg_editTextLastName);
         EditText addressView = (EditText) findViewById(R.id.reg_editTextAddress);
-        Spinner location = (Spinner) findViewById(R.id.reg_spinnerLocation);
-        Spinner role = (Spinner) findViewById(R.id.reg_spinnerRole);
+        Spinner locationSpinner = (Spinner) findViewById(R.id.reg_spinnerLocation);
+        Spinner roleSpinner = (Spinner) findViewById(R.id.reg_spinnerRole);
         LinearLayout specLL = (LinearLayout) findViewById(R.id.reg_specializationBlock);
-        EditText specialization = (EditText) findViewById(R.id.reg_editTextSpecialization);
-        Spinner mentor = (Spinner) findViewById(R.id.reg_spinnerMentor);
+        EditText specializationView = (EditText) findViewById(R.id.reg_editTextSpecialization);
+        Spinner mentorSpinner = (Spinner) findViewById(R.id.reg_spinnerMentor);
         EditText shortBioView = (EditText) findViewById(R.id.reg_editTextBio);
         EditText emailView = (EditText) findViewById(R.id.reg_editTextEmail);
-        EditText reenterEmailView = (EditText) findViewById(R.id.reg_editTextReenterEmail);
         LinearLayout reenterEmailLL = (LinearLayout) findViewById(R.id.reg_layoutReenterEmail);
         LinearLayout emailLL = (LinearLayout) findViewById(R.id.reg_layoutEmail);
         LinearLayout passwordLL = (LinearLayout) findViewById(R.id.reg_layoutPassword);
-        EditText passwordView = (EditText) findViewById(R.id.reg_editTextPassword);
 
         String[] locsArray = CHIPLoaderSQL.getInstance().getLocationList();
         String[] rolesArray = CHIPLoaderSQL.getInstance().getRoleList();
@@ -114,36 +127,36 @@ public class RegisterOrEditActivity extends Activity implements
         addressView.setText(m_user.get_address());
         for (int i = 0; i < locsArray.length; ++i) {
             if (locsArray[i].equals(m_user.get_location())) {
-                location.setSelection(i);
+                locationSpinner.setSelection(i);
             }
         }
         for (int i = 0; i < rolesArray.length; ++i) {
             if (rolesArray[i].equals(m_user.get_role())) {
-                role.setSelection(i);
+                roleSpinner.setSelection(i);
             }
         }
-        if (m_user.get_role() == getString(R.string.common_mentor)) {
+        if (m_user.get_role().equals(getString(R.string.common_mentor))) {
             specLL.setVisibility(LinearLayout.VISIBLE);
-            specialization.setText(m_user.get_specialization());
+            specializationView.setText(m_user.get_specialization());
         } else {
             specLL.setVisibility(LinearLayout.GONE);
-            specialization.setText("");
+            specializationView.setText("");
         }
-        if (m_user.get_mentorEmail() != null) {
-            for (int i = 0; i < m_mentorEmailList.length; ++i) {
-                if (m_mentorEmailList[i].equals(m_user.get_mentorEmail())) {
-                    mentor.setSelection(i + 1);
+        if (m_user.get_mentorId() != null && m_user.get_mentorId().isEmpty() == false) {
+            for (int i = 0; i < m_mentorIdList.length; ++i) {
+                if (m_mentorIdList[i].equals(m_user.get_mentorId())) {
+                    mentorSpinner.setSelection(i + 1);
                 }
             }
         } else {
-            mentor.setSelection(0);
+            mentorSpinner.setSelection(0);
         }
         shortBioView.setText(m_user.get_bio());
+
         emailView.setText(m_user.get_email());
         reenterEmailLL.setVisibility(LinearLayout.GONE);
         emailLL.setVisibility(LinearLayout.GONE);
         passwordLL.setVisibility(LinearLayout.GONE);
-
     }
 
     @Override
@@ -199,6 +212,9 @@ public class RegisterOrEditActivity extends Activity implements
 
     public void onFinishConfirmationDialog(String tag) {
         if (tag.equals(CONFIRM_CANCEL_REGISTRATION_TAG)) {
+            if (m_type == ProfileEditType.EDIT) {
+                setResult(ProfileActivity.EDIT_FAILED);
+            }
             finish();
         }
     }
@@ -230,10 +246,10 @@ public class RegisterOrEditActivity extends Activity implements
         EditText firstNameView = (EditText) findViewById(R.id.reg_editTextFirstName);
         EditText lastNameView = (EditText) findViewById(R.id.reg_editTextLastName);
         EditText addressView = (EditText) findViewById(R.id.reg_editTextAddress);
-        Spinner location = (Spinner) findViewById(R.id.reg_spinnerLocation);
-        Spinner role = (Spinner) findViewById(R.id.reg_spinnerRole);
+        Spinner locationSpinner = (Spinner) findViewById(R.id.reg_spinnerLocation);
+        Spinner roleSpinner = (Spinner) findViewById(R.id.reg_spinnerRole);
         LinearLayout specLL = (LinearLayout) findViewById(R.id.reg_specializationBlock);
-        EditText specialization = (EditText) findViewById(R.id.reg_editTextSpecialization);
+        EditText specializationView = (EditText) findViewById(R.id.reg_editTextSpecialization);
         Spinner mentor = (Spinner) findViewById(R.id.reg_spinnerMentor);
         EditText shortBioView = (EditText) findViewById(R.id.reg_editTextBio);
         EditText emailView = (EditText) findViewById(R.id.reg_editTextEmail);
@@ -241,75 +257,155 @@ public class RegisterOrEditActivity extends Activity implements
         EditText passwordView = (EditText) findViewById(R.id.reg_editTextPassword);
 
         int chosenMentor = mentor.getSelectedItemPosition();
-        String mentorEmail;
+        String mentorId;
         if (chosenMentor == 0) {
-            mentorEmail = "";
+            mentorId = "";
         } else {
-            mentorEmail = m_mentorEmailList[chosenMentor - 1];
+            mentorId = m_mentorIdList[chosenMentor - 1];
         }
-
-        boolean valid = true;
 
         String specializationString;
         if (specLL.getVisibility() == LinearLayout.GONE) {
             specializationString = "";
         } else {
-            specializationString = specialization.getText().toString();
+            specializationString = specializationView.getText().toString();
         }
 
-        // create user (with default id)
-        CHIPUser newUser = new CHIPUser(firstNameView.getText().toString(),
-                lastNameView.getText().toString(),
-                addressView.getText().toString(),
-                location.getSelectedItem().toString(),
-                role.getSelectedItem().toString(),
-                specializationString,
-                mentorEmail,
-                shortBioView.getText().toString(),
-                emailView.getText().toString());
+        // TODO: Remove placeholders in this part
+        String firstName = firstNameView.getText().toString();//.isEmpty() ? "Rob" : firstNameView.getText().toString();
+        String lastName = lastNameView.getText().toString().isEmpty() ? "Tanniru" : lastNameView.getText().toString();
+        String address = addressView.getText().toString().isEmpty() ? "123 4th Street\r\nRochester, MI 48306" : addressView.getText().toString();
+        String location = locationSpinner.getSelectedItem().toString().isEmpty() ? "Detroit" : locationSpinner.getSelectedItem().toString();
+        String role = roleSpinner.getSelectedItem().toString().isEmpty() ? "Mentor" : roleSpinner.getSelectedItem().toString();
+        String shortBio = shortBioView.getText().toString().isEmpty() ? "Test Bio" : shortBioView.getText().toString();
+        String email = emailView.getText().toString().isEmpty() ? "bkt421@gmail.com" : emailView.getText().toString();
+        String reenterEmail = reenterEmailView.getText().toString().isEmpty() ? "bkt421@gmail.com" : reenterEmailView.getText().toString();
+        String password = passwordView.getText().toString().isEmpty() ? "CH!(ch19" : passwordView.getText().toString();
 
         // verify all required fields are filled in and valid
-        int errorInput = newUser.validateUser(this);
-        if (errorInput > 0) {
-            // the errorInput'th field is the last error
+        RegistrationError errorInput = validateUser(firstName, address, role,
+                specializationString, mentorId, shortBio, email, reenterEmail, password);
 
-            // TODO: add error
+        if (errorInput != RegistrationError.NONE) {
+            handleRegistrationError(errorInput);
+        } else {
+            // create user with default id
 
-            valid = false;
-        }
-
-        // verify email matches the second email input for registering
-        if (m_type == ProfileEditType.REGISTER &&
-            reenterEmailView.getText().toString().equals(emailView.getText().toString()) == false) {
-            // emails don't match
-
-            // TODO: add error
-
-            valid = false;
-        }
-
-        // TODO: make sure password is valid
-
-        if (valid) {
             if (m_type == ProfileEditType.EDIT) {
+                CHIPUser editedUser = new CHIPUser(m_user.get_id(), firstName, lastName, address, location, role,
+                        specializationString, mentorId, shortBio, email);
+
                 // TODO: edit user in database
 
                 Toast.makeText(this, getString(R.string.edit_success), Toast.LENGTH_SHORT).show();
 
-                CommonFunctions.navigateToProfile(this, newUser);
+                Intent intent = new Intent();
+                Bundle extras = new Bundle();
+                extras.putParcelable(ProfileActivity.ARGUMENT_USER, editedUser);
+                intent.putExtras(extras);
+                setResult(ProfileActivity.EDIT_SUCCESSFUL, intent);
                 finish();
             } else {
+                // uses default id of 1
+                CHIPUser newUser = new CHIPUser("1", firstName, lastName, address, location, role,
+                        specializationString, mentorId, shortBio, email);
+
                 boolean unique = true;
-                // TODO: check if user is already in the database
+                // TODO: check if user email is already in the database
 
                 if (unique) {
-                    // TODO: submit user to database
+                    // TODO: submit user to database and update id
+
                     Toast.makeText(this, getString(R.string.register_success), Toast.LENGTH_SHORT).show();
 
                     CommonFunctions.navigateToHome(this, newUser);
                     finish();
                 }
             }
+        }
+    }
+
+    private RegistrationError validateUser(String firstName, String address,
+                                           String role, String specialization,
+                                           String mentorId, String shortBio, String email,
+                                           String reenterEmail, String password) {
+        RegistrationError error = RegistrationError.NONE;
+
+        if (firstName.isEmpty()) {
+            error = RegistrationError.FIRST_NAME_EMPTY;
+        } else if (address.isEmpty()){
+            error = RegistrationError.ADDRESS_EMPTY;
+        } /*else if (mentorId == null || mentorId.isEmpty()){
+            error = ??; TODO: is validation of mentor email needed?
+        } */
+        else if (role.equals(getString(R.string.common_mentor)) && specialization.isEmpty()) { // only mentors have specializations
+            error = RegistrationError.MENTOR_SPECIALIZATION_EMPTY;
+        } else if (shortBio.isEmpty()){
+            error = RegistrationError.SHORT_BIO_EMPTY;
+        } else if (CommonFunctions.ValidateEmail(email) == false){
+            error = RegistrationError.EMAIL_INVALID;
+        } else if (m_type == ProfileEditType.REGISTER &&
+                   email.equals(reenterEmail) == false) {
+            error = RegistrationError.REENTER_EMAIL_MISMATCH;
+        } else if (m_type == ProfileEditType.REGISTER &&
+                   CommonFunctions.ValidatePassword(password) == false) {
+            error = RegistrationError.PASSWORD_INVALID;
+        }
+
+        // TODO: check for SQL injection characters?
+
+        return error;
+    }
+
+    private void handleRegistrationError(RegistrationError errorCode) {
+        EditText firstNameView = (EditText) findViewById(R.id.reg_editTextFirstName);
+        EditText addressView = (EditText) findViewById(R.id.reg_editTextAddress);
+        EditText specializationView = (EditText) findViewById(R.id.reg_editTextSpecialization);
+        EditText shortBioView = (EditText) findViewById(R.id.reg_editTextBio);
+        EditText emailView = (EditText) findViewById(R.id.reg_editTextEmail);
+        EditText reenterEmailView = (EditText) findViewById(R.id.reg_editTextReenterEmail);
+        EditText passwordView = (EditText) findViewById(R.id.reg_editTextPassword);
+
+        // reset all errors
+        firstNameView.setError(null);
+        addressView.setError(null);
+        specializationView.setError(null);
+        shortBioView.setError(null);
+        emailView.setError(null);
+        reenterEmailView.setError(null);
+        passwordView.setError(null);
+
+        switch (errorCode) {
+            case NONE:
+                break;
+            case FIRST_NAME_EMPTY:
+                firstNameView.setError(getString(R.string.register_error_first_name));
+                firstNameView.requestFocus();
+                break;
+            case ADDRESS_EMPTY:
+                addressView.setError(getString(R.string.register_error_address));
+                addressView.requestFocus();
+                break;
+            case MENTOR_SPECIALIZATION_EMPTY:
+                specializationView.setError(getString(R.string.register_error_specialization));
+                specializationView.requestFocus();
+                break;
+            case SHORT_BIO_EMPTY:
+                shortBioView.setError(getString(R.string.register_error_short_bio));
+                shortBioView.requestFocus();
+                break;
+            case EMAIL_INVALID:
+                emailView.setError(getString(R.string.register_error_email));
+                emailView.requestFocus();
+                break;
+            case PASSWORD_INVALID:
+                passwordView.setError(getString(R.string.register_error_password));
+                passwordView.requestFocus();
+                break;
+            case REENTER_EMAIL_MISMATCH:
+                reenterEmailView.setError(getString(R.string.register_error_reenter_email));
+                reenterEmailView.requestFocus();
+                break;
         }
     }
 }

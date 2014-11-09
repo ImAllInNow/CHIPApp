@@ -10,6 +10,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import chiprogram.chipapp.classes.Assessment;
 import chiprogram.chipapp.classes.CHIPLoaderSQL;
 import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.NavItem;
@@ -68,13 +69,18 @@ public class AssessmentFragmentTab extends Fragment {
 
         TableLayout baseLayout = (TableLayout) view.findViewById(R.id.assess_table);
         if (m_navItem != null) {
-            int userScore = CHIPLoaderSQL.getInstance().getAssessmentScore(m_navItem.getId(), m_user.get_email());
+            for (int i = 0; i < m_navItem.getNumAssessments(); ++i) {
+                Assessment currAssessment = m_navItem.getAssessment(i);
 
-            TableRow row = makeTableRow(view, m_navItem.toString(),
-                    userScore != -1, userScore, m_navItem.getNumQuestions());
-            row.setOnClickListener(mListener);
+                int userScore = CHIPLoaderSQL.getInstance().getAssessmentScore(currAssessment.getId(), m_user.get_id());
 
-            baseLayout.addView(row);
+                TableRow row = makeTableRow(view, currAssessment.getName(),
+                        userScore != -1, userScore, currAssessment.getNumQuestions());
+                row.setOnClickListener(mListener);
+                row.setTag(currAssessment.getId());
+
+                baseLayout.addView(row);
+            }
         } else {
             // TODO: handle error somehow
         }

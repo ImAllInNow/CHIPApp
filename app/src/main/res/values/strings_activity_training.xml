@@ -21,7 +21,7 @@
     <string name="title_section3">Assessment</string>
     <string name="training_status">Status</string>
     <string name="asses_begin">Begin Assessment</string>
-    <string name="assess_click_instructions">(Tap a session name to begin assessment)</string>
+    <string name="assess_click_instructions">(Tap an assessment to begin)</string>
 
     <string name="title_activity_assessment">Assessment questions</string>
     <string name="training_complete">Complete</string>

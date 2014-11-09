@@ -48,6 +48,8 @@
         </activity>
         <activity
             android:name=".DiscussionActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_discussion" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -104,6 +106,8 @@
 
         <activity
             android:name=".webview.WebViewActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_web_view" >
         </activity>
     </application>

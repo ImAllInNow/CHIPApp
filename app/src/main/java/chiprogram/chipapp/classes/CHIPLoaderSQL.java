@@ -17,6 +17,7 @@ import chiprogram.chipapp.R;
 public class CHIPLoaderSQL implements SQLServlet.SQLListener {
     private Map<String, Content> m_contentMap = new HashMap<String, Content>();
     private Map<String, NavItem> m_navItemMap = new HashMap<String, NavItem>();
+    private Map<String, Assessment> m_assessmentMap = new HashMap<String, Assessment>();
     private Map<String, Integer> m_scoresMap = new HashMap<String, Integer>();
     private Map<String, String> m_recentViewedItem = new HashMap<String, String>();
 
@@ -103,6 +104,7 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
                 currNavItem.addChild(getNavItem("12"));
             } else if (navItemId.equals("4")) { // Chapter 1-2
                 currNavItem = new NavItem(navItemId, "1", "Chapter 2: Intro to Research", "Sessions");
+
                 currNavItem.addChild(getNavItem("14"));
                 currNavItem.addChild(getNavItem("15"));
                 currNavItem.addChild(getNavItem("16"));
@@ -111,145 +113,60 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
                 currNavItem = new NavItem(navItemId, "1", "Chapter 3: Unknown", "Sessions");
             } else if (navItemId.equals("6")) { // Session 2-1
                 currNavItem = new NavItem(navItemId, "2", "Session 1");
+
                 currNavItem.addContent(getContent("7"));
                 currNavItem.addContent(getContent("11"));
             } else if (navItemId.equals("7")) { // Session 2-2
                 currNavItem = new NavItem(navItemId, "2", "Session 2");
+
                 currNavItem.addContent(getContent("8"));
             } else if (navItemId.equals("8")) { // Session 2-3
                 currNavItem = new NavItem(navItemId, "2", "Session 3");
+
                 currNavItem.addContent(getContent("9"));
             } else if (navItemId.equals("9")) { // Session 1-1-1
                 currNavItem = new NavItem(navItemId, "3", "Principles of Research Ethics");
 
                 currNavItem.addContent(getContent("3"));
 
-                Question q1 = new Question("1", "Which of the following statements define the human research principle of respect for persons?",
-                        Question.QuestionType.SINGLE_ANSWER);
-                q1.addPossibleAnswer("The capacity and rights of all individuals to make their own decisions", false);
-                q1.addPossibleAnswer("The respect for the autonomy of all human beings", false);
-                q1.addPossibleAnswer("The recognition of the dignity and freedom of all persons", false);
-                q1.addPossibleAnswer("The need to provide special protection to vulnerable persons", false);
-                q1.addPossibleAnswer("All of the above", true);
-                currNavItem.addQuestion(q1);
-                Question q2 = new Question("2", "Which of the following statements define the human research principle of beneficence?",
-                        Question.QuestionType.SINGLE_ANSWER);
-                q2.addPossibleAnswer("Secure the participant's physical, mental and social well-being", false);
-                q2.addPossibleAnswer("Reduce the participant's risks to a minimum", false);
-                q2.addPossibleAnswer("Protection of the participant is more important than the pursuit of new knowledge", false);
-                q2.addPossibleAnswer("Protection of the participant is more important than personal or professional research interest", false);
-                q2.addPossibleAnswer("All of the above", true);
-                currNavItem.addQuestion(q2);
-                Question q3 = new Question("3", "Which of the following statements define the human research principle of justice?",
-                        Question.QuestionType.SINGLE_ANSWER);
-                q3.addPossibleAnswer("The selection of participants must be done in an equitable manner", false);
-                q3.addPossibleAnswer("Using research participants for the exclusive benefit of more privileged groups is not permitted", false);
-                q3.addPossibleAnswer("Groups such as minors and pregnant women need special protection", false);
-                q3.addPossibleAnswer("The poor and those with limited access to health care services need special protection", false);
-                q3.addPossibleAnswer("All of the above", true);
-                currNavItem.addQuestion(q3);
-                Question q4 = new Question("4", "Which 2 of the following statements are essential elements of the definition of research?",
-                        Question.QuestionType.MULTIPLE_ANSWERS);
-                q4.addPossibleAnswer("A systematic investigation", true);
-                q4.addPossibleAnswer("A protocol approved by a scientific review group", false);
-                q4.addPossibleAnswer("A confirmation of recently obtained new knowledge", false);
-                q4.addPossibleAnswer("Develops or contributes to generalizable knowledge", true);
-                q4.addPossibleAnswer("Contributes to the advancement of science", false);
-                currNavItem.addQuestion(q4);
+                currNavItem.addAssessment(getAssessment("1"));
             } else if (navItemId.equals("10")) { // Session 1-1-2
                 currNavItem = new NavItem(navItemId, "3", "Foundations of Research Ethics");
 
                 currNavItem.addContent(getContent("4"));
 
-                Question q1 = new Question("5", "According to the Nuremberg Code, which of the following is true?",
-                        Question.QuestionType.SINGLE_ANSWER);
-                q1.addPossibleAnswer("Military doctors should never conduct medical research", false);
-                q1.addPossibleAnswer("The voluntary consent of the human subject is absolutely essential", true);
-                q1.addPossibleAnswer("Research must not be conducted in times of war", false);
-                q1.addPossibleAnswer("Research should be regulated by an international agency", false);
-                q1.addPossibleAnswer("All of the above", false);
-                currNavItem.addQuestion(q1);
-                Question q2 = new Question("6", "The Declaration of Helsinki was revised in 2000. This revision prohibited the use of placebos in which scenario?",
-                        Question.QuestionType.SINGLE_ANSWER);
-                q2.addPossibleAnswer("In psychiatric research where a washout period could prove harmful", false);
-                q2.addPossibleAnswer("In less developed countries where participants cannot afford standard therapy", false);
-                q2.addPossibleAnswer("In research with children", false);
-                q2.addPossibleAnswer("In cases where proven prophylactic, diagnostic or therapeutic method exists", true);
-                q2.addPossibleAnswer("All of the above", false);
-                currNavItem.addQuestion(q2);
-                Question q3 = new Question("7", "The Belmont Report, which sets forth the basic ethical principles that govern the conduct of research involving human subjects, was developed in response to which of the following?",
-                        Question.QuestionType.SINGLE_ANSWER);
-                q3.addPossibleAnswer("Nazi experiments on prisoners in concentration camps", false);
-                q3.addPossibleAnswer("Placebo-controlled AZT studies in Africa", false);
-                q3.addPossibleAnswer("Research conducted on pregnant women", false);
-                q3.addPossibleAnswer("The Tuskegee syphilis study", true);
-                q3.addPossibleAnswer("The Common Rule", false);
-                currNavItem.addQuestion(q3);
-                Question q4 = new Question("8", "The US Common Rule governs which of the following?",
-                        Question.QuestionType.SINGLE_ANSWER);
-                q4.addPossibleAnswer("Research funded by the U.S. government", false);
-                q4.addPossibleAnswer("All research on new drugs", false);
-                q4.addPossibleAnswer("All research conducted in the United States", false);
-                q4.addPossibleAnswer("All of the above", false);
-                q4.addPossibleAnswer("None of the above", true);
-                currNavItem.addQuestion(q4);
-                Question q5 = new Question("9", "Published in 1993, the CIOMS guidelines specifically address which of the following?",
-                        Question.QuestionType.SINGLE_ANSWER);
-                q5.addPossibleAnswer("Conflict of interest", false);
-                q5.addPossibleAnswer("The accreditation of research centers", false);
-                q5.addPossibleAnswer("International research", true);
-                q5.addPossibleAnswer("The use of new designs in research", false);
-                q5.addPossibleAnswer("Behavioral research", false);
-                currNavItem.addQuestion(q5);
+                currNavItem.addAssessment(getAssessment("2"));
             } else if (navItemId.equals("11")) { // Session 1-1-3
                 currNavItem = new NavItem(navItemId, "3", "Responsible Conduct of Ethical Research");
 
                 currNavItem.addContent(getContent("5"));
 
-                Question q1 = new Question("10", "Which 3 of the following statements are essential elements of informed consent?",
-                        Question.QuestionType.MULTIPLE_ANSWERS);
-                q1.addPossibleAnswer("The participant has received the necessary information", true);
-                q1.addPossibleAnswer("The information has been given in the presence of a witness", false);
-                q1.addPossibleAnswer("The participant has understood the information", true);
-                q1.addPossibleAnswer("The participant arrived at a decision without undue influence", true);
-                q1.addPossibleAnswer("The information has been presented in a written document", false);
-                currNavItem.addQuestion(q1);
-                Question q2 = new Question("11", "Which of the following statements are true?",
-                        Question.QuestionType.SINGLE_ANSWER);
-                q2.addPossibleAnswer("The foreseeable risks presented in the informed consent do not need to be reviewed & approved by the Ethics Committee", false);
-                q2.addPossibleAnswer("Participants may not withdraw from a study without prior approval of the researcher", false);
-                q2.addPossibleAnswer("Informed consent is mostly a legal document rather than an ethical issue", false);
-                q2.addPossibleAnswer("Information in an informed consent must be presented in a way comprehensible to the potential participant", true);
-                q2.addPossibleAnswer("Informed consent must be obtained by a third party with no interest in the research", false);
-                q2.addPossibleAnswer("A researcher's cultural or intellectual status should not play a role in the potential participant's decision to enroll in a research study", false);
-                currNavItem.addQuestion(q2);
+                currNavItem.addAssessment(getAssessment("3"));
             } else if (navItemId.equals("12")) { // Session 1-1-4
                 currNavItem = new NavItem(navItemId, "3", "Roles and Responsibilities");
 
                 currNavItem.addContent(getContent("6"));
 
-                Question q = new Question("12", "To be effective, Ethical Committees require which of the following?",
-                        Question.QuestionType.SINGLE_ANSWER);
-                q.addPossibleAnswer("Members who are un-affiliated with the institution", false);
-                q.addPossibleAnswer("Members who are qualified scientists", false);
-                q.addPossibleAnswer("That the institution designates adequate resources", false);
-                q.addPossibleAnswer("All of the above", true);
-                q.addPossibleAnswer("None of the above", false);
-                currNavItem.addQuestion(q);
+                currNavItem.addAssessment(getAssessment("4"));
             } else if (navItemId.equals("13")) { // Session 2-4
                 currNavItem = new NavItem(navItemId, "2", "Session 4");
+
                 currNavItem.addContent(getContent("10"));
             } else if (navItemId.equals("14")) { // Session 1-2-1
                 currNavItem = new NavItem(navItemId, "4", "Session 1");
+
                 currNavItem.addContent(getContent("12"));
             } else if (navItemId.equals("15")) { // Session 1-2-2
                 currNavItem = new NavItem(navItemId, "4", "Session 2");
+
                 currNavItem.addContent(getContent("13"));
             } else if (navItemId.equals("16")) { // Session 1-2-3
                 currNavItem = new NavItem(navItemId, "4", "Session 3");
+
                 currNavItem.addContent(getContent("14"));
             } else if (navItemId.equals("17")) { // Session 1-2-4
                 currNavItem = new NavItem(navItemId, "4", "Session 4");
+
                 currNavItem.addContent(getContent("15"));
             }
             m_navItemMap.put(navItemId, currNavItem);
@@ -343,23 +260,140 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
         return m_contentMap.get(contentId);
     }
 
+    public Assessment getAssessment(String assessmentId) {
+        if (m_assessmentMap.containsKey(assessmentId) == false || isNewUpdate) {
+            // TODO: make call to database to get assessment
+            // SQL: select * from Assessment where id=" + assessmentId + ";";
+
+            Assessment assessment = null;
+            if (assessmentId.equals("1")) { // Session 1-1-1 Assessment
+                assessment = new Assessment(assessmentId, "Principles of Research Ethics Assessment", 75);
+                Question q1 = new Question("1", "Which of the following statements define the human research principle of respect for persons?",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q1.addPossibleAnswer("The capacity and rights of all individuals to make their own decisions", false);
+                q1.addPossibleAnswer("The respect for the autonomy of all human beings", false);
+                q1.addPossibleAnswer("The recognition of the dignity and freedom of all persons", false);
+                q1.addPossibleAnswer("The need to provide special protection to vulnerable persons", false);
+                q1.addPossibleAnswer("All of the above", true);
+                assessment.addQuestion(q1);
+                Question q2 = new Question("2", "Which of the following statements define the human research principle of beneficence?",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q2.addPossibleAnswer("Secure the participant's physical, mental and social well-being", false);
+                q2.addPossibleAnswer("Reduce the participant's risks to a minimum", false);
+                q2.addPossibleAnswer("Protection of the participant is more important than the pursuit of new knowledge", false);
+                q2.addPossibleAnswer("Protection of the participant is more important than personal or professional research interest", false);
+                q2.addPossibleAnswer("All of the above", true);
+                assessment.addQuestion(q2);
+                Question q3 = new Question("3", "Which of the following statements define the human research principle of justice?",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q3.addPossibleAnswer("The selection of participants must be done in an equitable manner", false);
+                q3.addPossibleAnswer("Using research participants for the exclusive benefit of more privileged groups is not permitted", false);
+                q3.addPossibleAnswer("Groups such as minors and pregnant women need special protection", false);
+                q3.addPossibleAnswer("The poor and those with limited access to health care services need special protection", false);
+                q3.addPossibleAnswer("All of the above", true);
+                assessment.addQuestion(q3);
+                Question q4 = new Question("4", "Which 2 of the following statements are essential elements of the definition of research?",
+                        Question.QuestionType.MULTIPLE_ANSWERS);
+                q4.addPossibleAnswer("A systematic investigation", true);
+                q4.addPossibleAnswer("A protocol approved by a scientific review group", false);
+                q4.addPossibleAnswer("A confirmation of recently obtained new knowledge", false);
+                q4.addPossibleAnswer("Develops or contributes to generalizable knowledge", true);
+                q4.addPossibleAnswer("Contributes to the advancement of science", false);
+                assessment.addQuestion(q4);
+            } else if (assessmentId.equals("2")) { // Session 1-1-2 Assessment
+                assessment = new Assessment(assessmentId, "Foundations of Research Ethics Assessment", 80);
+                Question q1 = new Question("5", "According to the Nuremberg Code, which of the following is true?",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q1.addPossibleAnswer("Military doctors should never conduct medical research", false);
+                q1.addPossibleAnswer("The voluntary consent of the human subject is absolutely essential", true);
+                q1.addPossibleAnswer("Research must not be conducted in times of war", false);
+                q1.addPossibleAnswer("Research should be regulated by an international agency", false);
+                q1.addPossibleAnswer("All of the above", false);
+                assessment.addQuestion(q1);
+                Question q2 = new Question("6", "The Declaration of Helsinki was revised in 2000. This revision prohibited the use of placebos in which scenario?",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q2.addPossibleAnswer("In psychiatric research where a washout period could prove harmful", false);
+                q2.addPossibleAnswer("In less developed countries where participants cannot afford standard therapy", false);
+                q2.addPossibleAnswer("In research with children", false);
+                q2.addPossibleAnswer("In cases where proven prophylactic, diagnostic or therapeutic method exists", true);
+                q2.addPossibleAnswer("All of the above", false);
+                assessment.addQuestion(q2);
+                Question q3 = new Question("7", "The Belmont Report, which sets forth the basic ethical principles that govern the conduct of research involving human subjects, was developed in response to which of the following?",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q3.addPossibleAnswer("Nazi experiments on prisoners in concentration camps", false);
+                q3.addPossibleAnswer("Placebo-controlled AZT studies in Africa", false);
+                q3.addPossibleAnswer("Research conducted on pregnant women", false);
+                q3.addPossibleAnswer("The Tuskegee syphilis study", true);
+                q3.addPossibleAnswer("The Common Rule", false);
+                assessment.addQuestion(q3);
+                Question q4 = new Question("8", "The US Common Rule governs which of the following?",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q4.addPossibleAnswer("Research funded by the U.S. government", false);
+                q4.addPossibleAnswer("All research on new drugs", false);
+                q4.addPossibleAnswer("All research conducted in the United States", false);
+                q4.addPossibleAnswer("All of the above", false);
+                q4.addPossibleAnswer("None of the above", true);
+                assessment.addQuestion(q4);
+                Question q5 = new Question("9", "Published in 1993, the CIOMS guidelines specifically address which of the following?",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q5.addPossibleAnswer("Conflict of interest", false);
+                q5.addPossibleAnswer("The accreditation of research centers", false);
+                q5.addPossibleAnswer("International research", true);
+                q5.addPossibleAnswer("The use of new designs in research", false);
+                q5.addPossibleAnswer("Behavioral research", false);
+                assessment.addQuestion(q5);
+            } else if (assessmentId.equals("3")) { // Session 1-1-3 Assessment
+                assessment = new Assessment(assessmentId, "Responsible Conduct of Ethical Research Assessment", 100);
+                Question q1 = new Question("10", "Which 3 of the following statements are essential elements of informed consent?",
+                        Question.QuestionType.MULTIPLE_ANSWERS);
+                q1.addPossibleAnswer("The participant has received the necessary information", true);
+                q1.addPossibleAnswer("The information has been given in the presence of a witness", false);
+                q1.addPossibleAnswer("The participant has understood the information", true);
+                q1.addPossibleAnswer("The participant arrived at a decision without undue influence", true);
+                q1.addPossibleAnswer("The information has been presented in a written document", false);
+                assessment.addQuestion(q1);
+                Question q2 = new Question("11", "Which of the following statements are true?",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q2.addPossibleAnswer("The foreseeable risks presented in the informed consent do not need to be reviewed & approved by the Ethics Committee", false);
+                q2.addPossibleAnswer("Participants may not withdraw from a study without prior approval of the researcher", false);
+                q2.addPossibleAnswer("Informed consent is mostly a legal document rather than an ethical issue", false);
+                q2.addPossibleAnswer("Information in an informed consent must be presented in a way comprehensible to the potential participant", true);
+                q2.addPossibleAnswer("Informed consent must be obtained by a third party with no interest in the research", false);
+                q2.addPossibleAnswer("A researcher's cultural or intellectual status should not play a role in the potential participant's decision to enroll in a research study", false);
+                assessment.addQuestion(q2);
+            } else if (assessmentId.equals("4")) { // Session 1-1-4 Assessment
+                assessment = new Assessment(assessmentId, "Roles and Responsibilities Assessment", 100);
+                Question q = new Question("12", "To be effective, Ethical Committees require which of the following?",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q.addPossibleAnswer("Members who are un-affiliated with the institution", false);
+                q.addPossibleAnswer("Members who are qualified scientists", false);
+                q.addPossibleAnswer("That the institution designates adequate resources", false);
+                q.addPossibleAnswer("All of the above", true);
+                q.addPossibleAnswer("None of the above", false);
+                assessment.addQuestion(q);
+            }
+            m_assessmentMap.put(assessmentId, assessment);
+        }
+        return m_assessmentMap.get(assessmentId);
+    }
+
     // returns -1 if the user has not attempted the assessment
-    public int getAssessmentScore(String sessionId, String userEmail) {
-        if (m_scoresMap.containsKey(sessionId + "-" + userEmail) == false || isNewUpdate) {
+    public int getAssessmentScore(String assessmentId, String userId) {
+        if (m_scoresMap.containsKey(assessmentId + "-" + userId) == false || isNewUpdate) {
             // TODO: make call to database to get assessment score
 
             // SQL: "Select score from scores where email=" + userEmail + " and session_id=" + sessionId + ";";
 
-            m_scoresMap.put(sessionId + "-" + userEmail, -1);
+            m_scoresMap.put(assessmentId + "-" + userId, -1);
         }
-        return m_scoresMap.get(sessionId + "-" + userEmail);
+        return m_scoresMap.get(assessmentId + "-" + userId);
     }
 
-    public boolean setAssessmentScore(String sessionId, String userEmail, int newScore) {
+    public boolean setAssessmentScore(String assessmentId, String userId, int newScore) {
         // TODO: make call to database to set new score
 
         // SQL: "Insert into scores where email=" + userEmail + " and session_id=" + sessionId + ";";
-        m_scoresMap.put(sessionId + "-" + userEmail, newScore);
+        m_scoresMap.put(assessmentId + "-" + userId, newScore);
         return true;
     }
 
@@ -370,7 +404,7 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
 
         // TODO: remove placeholder
         if (email.equals("bkt421@gmail.com") && password.equals("CH!(ch19")) {
-            return new CHIPUser("Robert", "Tanniru", "123 4th Street\r\nRochester, MI 48306",
+            return new CHIPUser("1", "Robert", "Tanniru", "123 4th Street\r\nRochester, MI 48306",
                                 "Detroit", "Program Team", "", "Mohan Tanniru",
                                 "Creating a mobile app version of the CHIP website",
                                 "bkt421@gmail.com");
@@ -379,21 +413,33 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
         }
     }
 
-
-    public String getMentorInfo(String mentorEmail) {
-        // TODO: make call to database to get mentor first, last, and
-
-        // SQL: "Select (firstname, lastname) from user where email=" + userEmail + ";";
+    public CHIPUser getMentor(String mentorId, String userId) {
+        // TODO: make call to database to get mentor and make sure that user has current mentor chosen
 
         // TODO: remove placeholder
-        if (mentorEmail.equals("tanniru@oakland.edu")) {
-            return "Mohan Tanniru - Business IT (US)";
+        if (mentorId.equals("2") && userId.equals("1")) {
+            return new CHIPUser("2" , "Mohan", "Tanniru", "123 4th Street\r\nRochester, MI 48306",
+                    "Detroit", "Mentor", "Business IT", "",
+                    "Helping with the business side of the CHIProgram",
+                    "tanniru@oakland.edu");
         } else {
             return null;
         }
     }
 
-    public String[] getMentorEmailList() {
+
+    public String getMentorInfo(String mentorId) {
+        // TODO: make call to database to get mentor overview info
+
+        // TODO: remove placeholder
+        if (mentorId.equals("2")) {
+            return ("Mohan Tanniru - Business IT (Detroit)");
+        } else {
+            return null;
+        }
+    }
+
+    public String[] getMentorIdList() {
         if (mentors == null || isNewUpdate) {
             // TODO: add in call to database for this
             /*
@@ -412,16 +458,16 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
              */
 
             // TODO: remove placeholder
-            mentors = new String[]{"tanniru@oakland.edu"};
+            mentors = new String[]{"2"};
         }
 
         return mentors;
     }
 
-    public String[] getMentorInfoList(String[] mentorEmails) {
-        String[] mentorInfoList = new String[mentorEmails.length];
-        for (int i = 0; i < mentorEmails.length; ++i) {
-            mentorInfoList[i] = getMentorInfo(mentorEmails[i]);
+    public String[] getMentorInfoList(String[] mentorIds) {
+        String[] mentorInfoList = new String[mentorIds.length];
+        for (int i = 0; i < mentorIds.length; ++i) {
+            mentorInfoList[i] = getMentorInfo(mentorIds[i]);
         }
         return mentorInfoList;
     }

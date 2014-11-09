@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import chiprogram.chipapp.classes.Assessment;
 import chiprogram.chipapp.classes.CHIPLoaderSQL;
 import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.CommonFunctions;
@@ -30,11 +31,14 @@ public class AssessmentActivity extends Activity implements
 
     private static final String CONFIRM_CANCEL_ASSESSMENT_TAG = "fragment_confirm_cancel_assessment";
     private static final int QUESTIONS_LOC_IN_LAYOUT = 1;
+
     private static final String CURRENT_RESPONSES = "chiprogram.chipapp.CURRENT_RESPONSES";
 
+    public static final String ASSESSMENT_ID = "chiprogram.chipapp.ASSESSMENT_ID";
+
     private CHIPUser m_user;
-    private String m_navItemId;
-    private NavItem m_navItem;
+    private String m_assessmentId;
+    private Assessment m_assessment;
 
     private FragmentManager m_fragmentManager;
 
@@ -53,14 +57,14 @@ public class AssessmentActivity extends Activity implements
 
         m_user = extras.getParcelable(ProfileActivity.ARGUMENT_USER);
 
-        m_navItemId = extras.getString(NavItemTabsActivity.CURRENT_ID);
-        m_navItem = CHIPLoaderSQL.getInstance().getNavItem(m_navItemId);
+        m_assessmentId = extras.getString(ASSESSMENT_ID);
+        m_assessment = CHIPLoaderSQL.getInstance().getAssessment(m_assessmentId);
 
         m_currentResponses = new ArrayList<Boolean[]>();
         m_allQuestionsAnswered = false;
         if (savedInstanceState == null) {
-            for (int i = 0; i < m_navItem.getNumQuestions(); ++i) {
-                Question currQuestion = m_navItem.getQuestion(i);
+            for (int i = 0; i < m_assessment.getNumQuestions(); ++i) {
+                Question currQuestion = m_assessment.getQuestion(i);
 
                 m_currentResponses.add(new Boolean[currQuestion.numAnswers()]);
                 for (int j = 0; j < currQuestion.numAnswers(); ++j) {
@@ -68,7 +72,7 @@ public class AssessmentActivity extends Activity implements
                 }
             }
         } else {
-            for (int i = 0; i < m_navItem.getNumQuestions(); ++i) {
+            for (int i = 0; i < m_assessment.getNumQuestions(); ++i) {
                 boolean[] bundleResponses = savedInstanceState.getBooleanArray(CURRENT_RESPONSES + i);
                 Boolean[] currResponses = new Boolean[bundleResponses.length];
 
@@ -149,12 +153,12 @@ public class AssessmentActivity extends Activity implements
     private void setUpQuestionsViews() {
 
         TextView assessmentTitle = (TextView) findViewById(R.id.questions_assessment_title);
-        assessmentTitle.setText(m_navItem.toString());
+        assessmentTitle.setText(m_assessment.getName());
 
         LinearLayout baseLayout = (LinearLayout) findViewById(R.id.questions_layout);
 
-        for (int i = 0; i < m_navItem.getNumQuestions(); ++i) {
-            Question currQuestion = m_navItem.getQuestion(i);
+        for (int i = 0; i < m_assessment.getNumQuestions(); ++i) {
+            Question currQuestion = m_assessment.getQuestion(i);
             Boolean[] currResponses = m_currentResponses.get(i);
 
             LinearLayout questionLayout = new LinearLayout(this);
@@ -209,8 +213,8 @@ public class AssessmentActivity extends Activity implements
         LinearLayout baseLayout = (LinearLayout) findViewById(R.id.questions_layout);
 
         m_allQuestionsAnswered = true;
-        for (int i = 0; i < m_navItem.getNumQuestions(); ++i) {
-            Question currQuestion = m_navItem.getQuestion(i);
+        for (int i = 0; i < m_assessment.getNumQuestions(); ++i) {
+            Question currQuestion = m_assessment.getQuestion(i);
             Boolean[] currResponses = m_currentResponses.get(i);
 
             LinearLayout questionLayout = (LinearLayout) baseLayout.getChildAt(i+QUESTIONS_LOC_IN_LAYOUT);
@@ -246,13 +250,13 @@ public class AssessmentActivity extends Activity implements
 
     public void submitClicked(View view) {
         int numCorrect = 0;
-        boolean[] answersCorrect = new boolean[m_navItem.getNumQuestions()];
+        boolean[] answersCorrect = new boolean[m_assessment.getNumQuestions()];
 
         getCurrentAnswers();
 
         if (m_allQuestionsAnswered) {
-            for (int i = 0; i < m_navItem.getNumQuestions(); ++i) {
-                answersCorrect[i] = m_navItem.getQuestion(i).checkAnswer(m_currentResponses.get(i));
+            for (int i = 0; i < m_assessment.getNumQuestions(); ++i) {
+                answersCorrect[i] = m_assessment.getQuestion(i).checkAnswer(m_currentResponses.get(i));
 
                 if (answersCorrect[i]) {
                     numCorrect++;
@@ -261,7 +265,7 @@ public class AssessmentActivity extends Activity implements
 
             String numCorrectString;
             String questionWord = "questions"; // TODO: remove magic text
-            if (numCorrect == m_navItem.getNumQuestions()) {
+            if (numCorrect == m_assessment.getNumQuestions()) {
                 numCorrectString = "all"; // TODO: remove magic text
             } else if (numCorrect == 0) {
                 numCorrectString = "no"; // TODO: remove magic text
@@ -273,9 +277,12 @@ public class AssessmentActivity extends Activity implements
             }
             Toast.makeText(this, "You got " + numCorrectString + " " + questionWord + " correct!", Toast.LENGTH_LONG).show(); // TODO: remove magic text
 
-            CHIPLoaderSQL.getInstance().setAssessmentScore(m_navItemId, m_user.get_email(), numCorrect);
+            CHIPLoaderSQL.getInstance().setAssessmentScore(m_assessmentId, m_user.get_id(), numCorrect);
 
             Intent intent = new Intent();
+
+            // TODO: add extras to intent
+
             setResult(numCorrect, intent);
             finish();
         } else {

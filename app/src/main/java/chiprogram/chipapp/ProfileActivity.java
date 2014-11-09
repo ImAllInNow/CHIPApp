@@ -3,10 +3,10 @@ package chiprogram.chipapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import chiprogram.chipapp.classes.CHIPLoaderSQL;
@@ -18,7 +18,11 @@ public class ProfileActivity extends Activity {
 
     public static final String ARGUMENT_USER = "chiprogram.chipapp.ARGUMENT_USER";
 
-    private CHIPUser m_user;
+    public static final int PROFILE_EDIT = 1;
+    public static final int EDIT_SUCCESSFUL = 1;
+    public static final int EDIT_FAILED = 1;
+
+    private CHIPUser m_user = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,21 +44,29 @@ public class ProfileActivity extends Activity {
         TextView firstNameView = (TextView) findViewById(R.id.prof_firstName);
         TextView lastNameView = (TextView) findViewById(R.id.prof_lastName);
         TextView addressView = (TextView) findViewById(R.id.prof_address);
-        TextView location = (TextView) findViewById(R.id.prof_location);
-        TextView role = (TextView) findViewById(R.id.prof_role);
-        TextView mentor = (TextView) findViewById(R.id.prof_mentor);
+        TextView locationView = (TextView) findViewById(R.id.prof_location);
+        TextView roleView = (TextView) findViewById(R.id.prof_role);
+        TextView specialization = (TextView) findViewById(R.id.prof_specialization);
+        LinearLayout specLL = (LinearLayout) findViewById(R.id.prof_specialization_layout);
+        TextView mentorView = (TextView) findViewById(R.id.prof_mentor);
         TextView shortBioView = (TextView) findViewById(R.id.prof_bio);
 
         emailView.setText(m_user.get_email());
         firstNameView.setText(m_user.get_firstName());
         lastNameView.setText(m_user.get_lastName());
         addressView.setText(m_user.get_address());
-        location.setText(m_user.get_location());
-        role.setText(m_user.get_role());
-        if (m_user.get_mentorEmail() == null) {
-            mentor.setText(getString(R.string.common_none));
+        locationView.setText(m_user.get_location());
+        roleView.setText(m_user.get_role());
+        if (m_user.get_role().equals(getString(R.string.common_mentor))) {
+            specLL.setVisibility(LinearLayout.VISIBLE);
+            specialization.setText(m_user.get_specialization());
         } else {
-            mentor.setText(CHIPLoaderSQL.getInstance().getMentorInfo(m_user.get_mentorEmail()));
+            specLL.setVisibility(LinearLayout.GONE);
+        }
+        if (m_user.get_mentorId() == null || m_user.get_mentorId().isEmpty()) {
+            mentorView.setText(getString(R.string.common_none));
+        } else {
+            mentorView.setText(CHIPLoaderSQL.getInstance().getMentorInfo(m_user.get_mentorId()));
         }
         shortBioView.setText(m_user.get_bio());
 
@@ -138,6 +150,22 @@ public class ProfileActivity extends Activity {
 
         intent.putExtras(extras);
 
-        startActivity(intent);
+        startActivityForResult(intent, PROFILE_EDIT);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data != null && requestCode == PROFILE_EDIT) {
+            Bundle extras = data.getExtras();
+
+            if (resultCode == EDIT_SUCCESSFUL) {
+                Intent intent = getIntent();
+                Bundle rootExtras = intent.getExtras();
+                rootExtras.putParcelable(ARGUMENT_USER, extras.getParcelable(ARGUMENT_USER));
+                intent.putExtras(rootExtras);
+                setIntent(intent);
+                recreate();
+            }
+        }
     }
 }
