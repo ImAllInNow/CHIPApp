@@ -168,6 +168,10 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
                 currNavItem = new NavItem(navItemId, "4", "Session 4");
 
                 currNavItem.addContent(getContent("15"));
+            } else if (navItemId.equals("18")) { // Assignment 1
+                currNavItem = new NavItem(navItemId, null, "Assignment 1");
+
+                currNavItem.addAssessment(getAssessment("5"));
             }
             m_navItemMap.put(navItemId, currNavItem);
 
@@ -183,6 +187,7 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
         // TODO: remove placeholder
         baseNavItems.add(getNavItem("1"));
         baseNavItems.add(getNavItem("2"));
+        baseNavItems.add(getNavItem("18"));
 
         return baseNavItems;
     }
@@ -370,6 +375,13 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
                 q.addPossibleAnswer("That the institution designates adequate resources", false);
                 q.addPossibleAnswer("All of the above", true);
                 q.addPossibleAnswer("None of the above", false);
+                assessment.addQuestion(q);
+            } else if (assessmentId.equals("5")) { // Assignment 1 Assessment
+                assessment = new Assessment(assessmentId, "Tasks for Assignment 1", 100);
+                Question q = new Question("13", "Have you met with your mentor to discuss your progress so far?.",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q.addPossibleAnswer("Yes", true);
+                q.addPossibleAnswer("No", false);
                 assessment.addQuestion(q);
             }
             m_assessmentMap.put(assessmentId, assessment);

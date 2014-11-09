@@ -45,6 +45,14 @@ public class DiscussionActivity extends Activity {
         myWebView.loadUrl("http://www.chiprogram.com/discussion/index.php");
     }
 
+    @Override
+    public void onResume() {
+        if (CommonFunctions.quitting_app) {
+            finish();
+        }
+        super.onResume();
+    }
+
     private void setupActionBar() {
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setDisplayShowHomeEnabled(true);
@@ -98,13 +106,7 @@ public class DiscussionActivity extends Activity {
             CommonFunctions.navigateToAboutCHIP(this);
             return true;
         } else if (id == R.id.action_email_mentor) {
-            CHIPUser mentor = m_user.get_mentor();
-            if (mentor != null) {
-                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", mentor.get_email(), null));
-                startActivity(Intent.createChooser(emailIntent, "Send email..."));
-            } else {
-                Toast.makeText(this, getString(R.string.no_mentor), Toast.LENGTH_SHORT).show();
-            }
+            CommonFunctions.emailMentor(this, m_user);
         }
          return super.onOptionsItemSelected(item);
     }

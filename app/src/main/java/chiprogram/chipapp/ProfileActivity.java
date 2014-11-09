@@ -13,7 +13,6 @@ import chiprogram.chipapp.classes.CHIPLoaderSQL;
 import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.CommonFunctions;
 
-
 public class ProfileActivity extends Activity {
 
     public static final String ARGUMENT_USER = "chiprogram.chipapp.ARGUMENT_USER";
@@ -137,6 +136,8 @@ public class ProfileActivity extends Activity {
         } else if (id == R.id.action_about_chip) {
             CommonFunctions.navigateToAboutCHIP(this);
             return true;
+        } else if (id == R.id.action_email_mentor) {
+            CommonFunctions.emailMentor(this, m_user);
         }
         return super.onOptionsItemSelected(item);
     }

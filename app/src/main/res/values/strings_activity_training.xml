@@ -25,6 +25,8 @@
 
     <string name="title_activity_assessment">Assessment questions</string>
     <string name="training_complete">Complete</string>
+    <string name="training_passed">Passed</string>
+    <string name="training_failed">Failed</string>
     <string name="training_incomplete">Incomplete</string>
     <string name="training_score">Score</string>
     <string name="questions_title_prefix">Assessment for</string>

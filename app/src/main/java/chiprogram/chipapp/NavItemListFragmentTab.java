@@ -98,8 +98,8 @@ public class NavItemListFragmentTab extends ListFragment {
         // TODO: create a TextView array instead for this.
         for (NavItem navItem : m_navItemArray) {
             int percentComplete = (int) navItem.getCompletionPercent(m_user.get_id());
-            if (percentComplete == -1) percentComplete = 0;
-            titlePlusProgress.add(navItem.toString() + " " +
+            if (percentComplete == -1) percentComplete = 100;
+            titlePlusProgress.add(navItem.toString() + " - " +
                                   percentComplete + "%");
         }
 

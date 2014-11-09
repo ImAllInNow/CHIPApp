@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import chiprogram.chipapp.classes.CommonFunctions;
+
 
 public class AboutCHIPActivity extends Activity {
 

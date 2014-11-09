@@ -75,7 +75,7 @@ public class AssessmentFragmentTab extends Fragment {
                 int userScore = CHIPLoaderSQL.getInstance().getAssessmentScore(currAssessment.getId(), m_user.get_id());
 
                 TableRow row = makeTableRow(view, currAssessment.getName(),
-                        userScore != -1, userScore, currAssessment.getNumQuestions());
+                        currAssessment.getPassingPercent(), userScore, currAssessment.getNumQuestions());
                 row.setOnClickListener(mListener);
                 row.setTag(currAssessment.getId());
 
@@ -88,7 +88,7 @@ public class AssessmentFragmentTab extends Fragment {
         return view;
     }
 
-    private TableRow makeTableRow(View view, String sessionName, boolean complete, int correct, int total) {
+    private TableRow makeTableRow(View view, String sessionName, int passingPercent, int correct, int total) {
 
         TableRow headerRow = (TableRow) view.findViewById(R.id.assess_table_header_row);
         TextView headerCol1 = (TextView) view.findViewById(R.id.assess_table_title1);
@@ -104,11 +104,14 @@ public class AssessmentFragmentTab extends Fragment {
 
         TextView secondColumn = new TextView(view.getContext());
         secondColumn.setLayoutParams(headerCol2.getLayoutParams());
-        if (complete) {
-            secondColumn.setText(getString(R.string.training_complete) + "\n" + correct + "/" + total);
+        if (correct == -1) {
+            secondColumn.setText(getString(R.string.training_incomplete));
+            //row.setBackgroundColor(R.color.); // TODO: add color
+        } else if ((double) correct / total * 100 >= passingPercent) {
+            secondColumn.setText(getString(R.string.training_passed) + "\n" + correct + "/" + total);
             //row.setBackgroundColor(R.color.); // TODO: add color
         } else {
-            secondColumn.setText(getString(R.string.training_incomplete));
+            secondColumn.setText(getString(R.string.training_failed) + "\n" + correct + "/" + total);
             //row.setBackgroundColor(R.color.); // TODO: add color
         }
         secondColumn.setTextSize(18);

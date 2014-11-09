@@ -10,6 +10,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import chiprogram.chipapp.classes.CHIPLoaderSQL;
+import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.NavItem;
 
 /**
@@ -49,6 +50,7 @@ public class ModuleListFragment extends ListFragment {
          * Callback for when an item has been selected.
          */
         public void onItemSelected(String id);
+        public CHIPUser getUser();
     }
 
     /**
@@ -58,6 +60,10 @@ public class ModuleListFragment extends ListFragment {
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
         public void onItemSelected(String id) {
+        }
+        @Override
+        public CHIPUser getUser() {
+            return null;
         }
     };
 
@@ -71,15 +77,6 @@ public class ModuleListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //m_modules = CHIPLoaderSQL.getModules();
-        m_topLevelNavItems = CHIPLoaderSQL.getInstance().getBaseNavItems();
-
-        setListAdapter(new ArrayAdapter<NavItem>(
-                getActivity(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                m_topLevelNavItems));
     }
 
     @Override
@@ -100,6 +97,28 @@ public class ModuleListFragment extends ListFragment {
         // Activities containing this fragment must implement its callbacks.
         if (!(activity instanceof Callbacks)) {
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
+        }
+
+        CHIPUser m_user = ((Callbacks) activity).getUser();
+
+        if (m_user != null) {
+            m_topLevelNavItems = CHIPLoaderSQL.getInstance().getBaseNavItems();
+
+            ArrayList<String> titlePlusProgress = new ArrayList<String>();
+
+            // TODO: create a TextView array instead for this.
+            for (NavItem navItem : m_topLevelNavItems) {
+                int percentComplete = (int) navItem.getCompletionPercent(m_user.get_id());
+                if (percentComplete == -1) percentComplete = 100;
+                titlePlusProgress.add(navItem.toString() + " - " +
+                        percentComplete + "%");
+            }
+
+            setListAdapter(new ArrayAdapter<String>(
+                    getActivity(),
+                    android.R.layout.simple_list_item_activated_1,
+                    android.R.id.text1,
+                    titlePlusProgress));
         }
 
         mCallbacks = (Callbacks) activity;

@@ -32,15 +32,16 @@ public class ModuleListActivity extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_module_list);
-
-        // Show the Up button in the action bar.
-        setupActionBar();
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
 
         m_user = extras.getParcelable(ProfileActivity.ARGUMENT_USER);
+
+        setContentView(R.layout.activity_module_list);
+
+        // Show the Up button in the action bar.
+        setupActionBar();
     }
 
     @Override
@@ -75,6 +76,15 @@ public class ModuleListActivity extends Activity
         navItemTabsActivity.putExtras(extras);
 
         startActivity(navItemTabsActivity);
+    }
+
+    /**
+     * Callback method from {@link ModuleListFragment.Callbacks}
+     * indicating an accessor for the m_user member
+     */
+    @Override
+    public CHIPUser getUser() {
+        return m_user;
     }
 
     @Override
@@ -124,6 +134,8 @@ public class ModuleListActivity extends Activity
         } else if (id == R.id.action_about_chip) {
             CommonFunctions.navigateToAboutCHIP(this);
             return true;
+        } else if (id == R.id.action_email_mentor) {
+            CommonFunctions.emailMentor(this, m_user);
         }
         return super.onOptionsItemSelected(item);
     }

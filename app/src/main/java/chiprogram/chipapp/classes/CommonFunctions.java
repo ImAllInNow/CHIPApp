@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -17,6 +19,7 @@ import chiprogram.chipapp.LoginActivity;
 import chiprogram.chipapp.ModuleListActivity;
 import chiprogram.chipapp.NavItemTabsActivity;
 import chiprogram.chipapp.ProfileActivity;
+import chiprogram.chipapp.R;
 import chiprogram.chipapp.SettingsActivity;
 
 /**
@@ -156,6 +159,17 @@ public class CommonFunctions {
         Intent intent = new Intent(activity, IntroScreenActivity.class);
         activity.startActivity(intent);
         activity.finish();
+    }
+
+    public static void emailMentor(Activity activity, CHIPUser user) {
+        CHIPUser mentor = user.get_mentor();
+        if (mentor != null) {
+            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", mentor.get_email(), null));
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "CHIP mentor email");
+            activity.startActivity(Intent.createChooser(emailIntent, "Send email to mentor..."));
+        } else {
+            Toast.makeText(activity, activity.getString(R.string.no_mentor), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private static void resetAutoLoginPreference(Activity activity) {

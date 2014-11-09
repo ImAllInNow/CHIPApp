@@ -53,12 +53,16 @@ public class HomeActivity extends Activity implements
         // Update profile for current user
         this.setTitle(getString(R.string.title_activity_home) + " " + m_user.get_firstName());
 
-        addRecentlyViewedItem();
-        addProgressReport();
+        updateRecentlyViewedItem();
+        updateProgressReport();
     }
 
-    private void addRecentlyViewedItem() {
+    private void updateRecentlyViewedItem() {
         LinearLayout recentItemLayout = (LinearLayout) findViewById(R.id.most_recently_viewed_item);
+
+        for (int i = recentItemLayout.getChildCount() - 1; i > 0; --i) {
+            recentItemLayout.removeViewAt(recentItemLayout.getChildCount() - 1);
+        }
 
         String recentlyViewedId = CHIPLoaderSQL.getInstance().getMostRecentNavItem(m_user.get_id());
         if (recentlyViewedId == null) {
@@ -94,8 +98,12 @@ public class HomeActivity extends Activity implements
         }
     }
 
-    private void addProgressReport() {
+    private void updateProgressReport() {
         LinearLayout progressReportLayout = (LinearLayout) findViewById(R.id.progress_report);
+
+        for (int i = progressReportLayout.getChildCount() - 1; i > 0; --i) {
+            progressReportLayout.removeViewAt(progressReportLayout.getChildCount() - 1);
+        }
 
         ArrayList<NavItem> topLevelItems = CHIPLoaderSQL.getInstance().getBaseNavItems();
 
@@ -110,7 +118,7 @@ public class HomeActivity extends Activity implements
                 if (completionPercentage == -1) {
                     completionPercentage = 100;
                 }
-                newTextView.setText(currentItem.toString() + " " + completionPercentage + "%");
+                newTextView.setText(currentItem.toString() + " - " + completionPercentage + "%");
                 newTextView.setTextSize(Consts.MEDIUM_TEXT_SIZE);
 
                 TableRow fillerRow = new TableRow(this);
@@ -138,6 +146,9 @@ public class HomeActivity extends Activity implements
     public void onResume() {
         if (CommonFunctions.quitting_app) {
             finish();
+        } else {
+            updateRecentlyViewedItem();
+            updateProgressReport();
         }
         super.onResume();
     }
@@ -181,6 +192,8 @@ public class HomeActivity extends Activity implements
         } else if (id == R.id.action_about_chip) {
             CommonFunctions.navigateToAboutCHIP(this);
             return true;
+        } else if (id == R.id.action_email_mentor) {
+            CommonFunctions.emailMentor(this, m_user);
         }
         return super.onOptionsItemSelected(item);
     }
