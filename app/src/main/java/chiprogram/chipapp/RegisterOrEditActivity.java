@@ -296,6 +296,7 @@ public class RegisterOrEditActivity extends Activity implements
                         specializationString, mentorId, shortBio, email);
 
                 // TODO: edit user in database
+                CHIPLoaderSQL.getInstance().writeUserToFile(editedUser.get_email(), editedUser, this);
 
                 Toast.makeText(this, getString(R.string.edit_success), Toast.LENGTH_SHORT).show();
 
@@ -310,8 +311,8 @@ public class RegisterOrEditActivity extends Activity implements
                 CHIPUser newUser = new CHIPUser("1", firstName, lastName, address, location, role,
                         specializationString, mentorId, shortBio, email);
 
-                boolean unique = true;
                 // TODO: check if user email is already in the database
+                boolean unique = CHIPLoaderSQL.getInstance().registerUser(newUser, password, this);
 
                 if (unique) {
                     // TODO: submit user to database and update id
@@ -320,6 +321,9 @@ public class RegisterOrEditActivity extends Activity implements
 
                     CommonFunctions.navigateToHome(this, newUser);
                     finish();
+                } else {
+                    // TODO: handle non-unique user
+                    Toast.makeText(this, getString(R.string.register_non_unique), Toast.LENGTH_SHORT).show();
                 }
             }
         }

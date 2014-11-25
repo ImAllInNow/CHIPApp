@@ -9,7 +9,8 @@ public class Question {
 
     public enum QuestionType {
         SINGLE_ANSWER,
-        MULTIPLE_ANSWERS
+        MULTIPLE_ANSWERS,
+        DISCUSSION
     }
 
     private String m_id;

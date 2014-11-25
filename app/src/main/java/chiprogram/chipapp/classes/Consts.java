@@ -16,4 +16,12 @@ public class Consts {
     public static final int SMALL_TEXT_SIZE = 15;
     public static final int MEDIUM_TEXT_SIZE = 18;
     public static final int LARGE_TEXT_SIZE = 21;
+
+    // file saving constants
+    public static final String CHIPUSER_MEMBER_SEPARATOR = "<chip_ms>";
+    public static final String PASSWORD_SEPARATOR = "<chip_ps>";
+    public static final String CHIPUSER_SEPARATOR = "<chip>";
+
+
+
 }

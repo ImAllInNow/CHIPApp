@@ -1,8 +1,15 @@
 package chiprogram.chipapp.classes;
 
+import android.content.Context;
+import android.content.Intent;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -116,14 +123,17 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
 
                 currNavItem.addContent(getContent("7"));
                 currNavItem.addContent(getContent("11"));
+                currNavItem.addAssessment(getAssessment("6"));
             } else if (navItemId.equals("7")) { // Session 2-2
                 currNavItem = new NavItem(navItemId, "2", "Session 2");
 
                 currNavItem.addContent(getContent("8"));
+                currNavItem.addAssessment(getAssessment("7"));
             } else if (navItemId.equals("8")) { // Session 2-3
                 currNavItem = new NavItem(navItemId, "2", "Session 3");
 
                 currNavItem.addContent(getContent("9"));
+                currNavItem.addAssessment(getAssessment("8"));
             } else if (navItemId.equals("9")) { // Session 1-1-1
                 currNavItem = new NavItem(navItemId, "3", "Principles of Research Ethics");
 
@@ -152,22 +162,27 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
                 currNavItem = new NavItem(navItemId, "2", "Session 4");
 
                 currNavItem.addContent(getContent("10"));
+                currNavItem.addAssessment(getAssessment("9"));
             } else if (navItemId.equals("14")) { // Session 1-2-1
                 currNavItem = new NavItem(navItemId, "4", "Session 1");
 
                 currNavItem.addContent(getContent("12"));
+                currNavItem.addAssessment(getAssessment("10"));
             } else if (navItemId.equals("15")) { // Session 1-2-2
                 currNavItem = new NavItem(navItemId, "4", "Session 2");
 
                 currNavItem.addContent(getContent("13"));
+                currNavItem.addAssessment(getAssessment("11"));
             } else if (navItemId.equals("16")) { // Session 1-2-3
                 currNavItem = new NavItem(navItemId, "4", "Session 3");
 
                 currNavItem.addContent(getContent("14"));
+                currNavItem.addAssessment(getAssessment("12"));
             } else if (navItemId.equals("17")) { // Session 1-2-4
                 currNavItem = new NavItem(navItemId, "4", "Session 4");
 
                 currNavItem.addContent(getContent("15"));
+                currNavItem.addAssessment(getAssessment("13"));
             } else if (navItemId.equals("18")) { // Assignment 1
                 currNavItem = new NavItem(navItemId, null, "Assignment 1");
 
@@ -383,6 +398,148 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
                 q.addPossibleAnswer("Yes", true);
                 q.addPossibleAnswer("No", false);
                 assessment.addQuestion(q);
+            } else if (assessmentId.equals("6")) { // Session 2-1 Assessment
+                assessment = new Assessment(assessmentId, "Session 1 Assessment", 100);
+                Question q1 = new Question("14", "mHealth applications can only be used on mobile phones.",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q1.addPossibleAnswer("True", false);
+                q1.addPossibleAnswer("False", true);
+                assessment.addQuestion(q1);
+                Question q2 = new Question("15", "What is \"gamification?\"",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q2.addPossibleAnswer("Developing a separate game to help people learn the concepts.", false);
+                q2.addPossibleAnswer("The application of typical elements of game playing to other areas of activity.", true);
+                q2.addPossibleAnswer("Using prizes to motivate people to finish work.", false);
+                q2.addPossibleAnswer("Manipulating people who use your system to get other people to use the service.", false);
+                assessment.addQuestion(q2);
+                Question q3 = new Question("16", "mHealth and eHealth are terms that can be used interchangeably.",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q3.addPossibleAnswer("True", false);
+                q3.addPossibleAnswer("False", true);
+                assessment.addQuestion(q3);
+            } else if (assessmentId.equals("7")) { // Session 2-2 Assessment
+                assessment = new Assessment(assessmentId, "Session 2 Assessment", 100);
+                Question q1 = new Question("17", "mHealth applications can only be used on smart phones and devices.",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q1.addPossibleAnswer("True", false);
+                q1.addPossibleAnswer("False", true);
+                assessment.addQuestion(q1);
+                Question q2 = new Question("18", "Data vulnerability is one of the biggest challenges to mHealth data collection apps.",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q2.addPossibleAnswer("True", true);
+                q2.addPossibleAnswer("False", false);
+                assessment.addQuestion(q2);
+            } else if (assessmentId.equals("8")) { // Session 2-3 Assessment
+                // TODO: add support for discussion questions
+                assessment = new Assessment(assessmentId, "Session 3 Assessment", 100);
+                Question q1 = new Question("19", "Please discuss two ways that mHealth applications and devices can monitor people’s health in their everyday lives. Please post your response to this question at the link below:\n" +
+                        "\n" +
+                        "http://chiprogram.com/discussion/viewtopic.php?f=5&t=4\n",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q1.addPossibleAnswer("Complete", true);
+                q1.addPossibleAnswer("Incomplete", false);
+                assessment.addQuestion(q1);
+            } else if (assessmentId.equals("9")) { // Session 2-4 Assessment
+                assessment = new Assessment(assessmentId, "Session 4 Assessment", 100);
+                Question q1 = new Question("20", "mHealth applications can help to supplement traditional point-of-care methods.",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q1.addPossibleAnswer("True", true);
+                q1.addPossibleAnswer("False", false);
+                assessment.addQuestion(q1);
+            } else if (assessmentId.equals("10")) { // Session 1-2-1 Assessment
+                assessment = new Assessment(assessmentId, "Session 1 Assessment", 75);
+                Question q1 = new Question("21", "Which of the following is a reason to conduct research?",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q1.addPossibleAnswer("To get rich and earn a lot of money", false);
+                q1.addPossibleAnswer("To reduce the efficiency in our use of resources", false);
+                q1.addPossibleAnswer("To find new ways to improve the quality of our lives", true);
+                assessment.addQuestion(q1);
+                Question q2 = new Question("22", "Research is characterized by which of the following:",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q2.addPossibleAnswer("A systematic process of collecting and logically analyzing information", true);
+                q2.addPossibleAnswer("A random process of making occasional observations", false);
+                q2.addPossibleAnswer("A process that does not involve use of the scientific method", false);
+                assessment.addQuestion(q2);
+                Question q3 = new Question("23", "The scientific method involves:",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q3.addPossibleAnswer("A disorganized approach to collection of scientific data", false);
+                q3.addPossibleAnswer("Principles and processes regarded as necessary for scientific investigation", true);
+                q3.addPossibleAnswer("A process or approach for generating unreliable knowledge", false);
+                assessment.addQuestion(q3);
+                Question q4 = new Question("24", "You form a research hypothesis when you:",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q4.addPossibleAnswer("Make an educated guess at the answer to your research question", true);
+                q4.addPossibleAnswer("Collect information from a large number of survey participants", false);
+                q4.addPossibleAnswer("Review results of data collected during the process of your research", false);
+                assessment.addQuestion(q4);
+            } else if (assessmentId.equals("11")) { // Session 1-2-2 Assessment
+                assessment = new Assessment(assessmentId, "Session 2 Assessment", 75);
+                Question q1 = new Question("25", "A research hypothesis provides the basis for investigators to:",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q1.addPossibleAnswer("Describe their prediction of research outcomes based on their fortune teller", false);
+                q1.addPossibleAnswer("Avoid expressing what they see as the relationship between two or more variables", false);
+                q1.addPossibleAnswer("State their prediction regarding the relationship between two or more variables", true);
+                assessment.addQuestion(q1);
+                Question q2 = new Question("26", "Quantitative research involves:",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q2.addPossibleAnswer("Systematic collection, evaluation and analysis of information based on numerical measurements of outcomes", true);
+                q2.addPossibleAnswer("Random collection, evaluation and analysis of information based on non-numerical measurement of outcomes", false);
+                q2.addPossibleAnswer("Non-systematic collection, evaluation and analysis that provides no measurements or values for pre-specified outcomes or comparisons of interest", false);
+                assessment.addQuestion(q2);
+                Question q3 = new Question("27", "In conducting research, the target population is:",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q3.addPossibleAnswer("The smallest population from which a sample can be selected", false);
+                q3.addPossibleAnswer("The population to be studied to which the investigator wants to generalize results", true);
+                q3.addPossibleAnswer("The population that will be all enrolled in the study once recruitment begins", false);
+                assessment.addQuestion(q3);
+                Question q4 = new Question("28", "In taking a random sample of participants from a community:",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q4.addPossibleAnswer("Each community pre-selects residents who they wish to participate in a study", false);
+                q4.addPossibleAnswer("Each participant has an unknown probability of being selected for inclusion", false);
+                q4.addPossibleAnswer("Each participant has a known probability of being selected for inclusion", true);
+                assessment.addQuestion(q4);
+            } else if (assessmentId.equals("12")) { // Session 1-2-3 Assessment
+                assessment = new Assessment(assessmentId, "Session 3 Assessment", 100);
+                Question q1 = new Question("29", "A community health needs assessment helps to describe:",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q1.addPossibleAnswer("The health status of a community ten years in the future", false);
+                q1.addPossibleAnswer("The present health status as a baseline for comparison in the future", true);
+                q1.addPossibleAnswer("The past health status of a community at a point 20 years in the past", false);
+                assessment.addQuestion(q1);
+                Question q2 = new Question("30", "Community health needs assessments tend to assess:",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q2.addPossibleAnswer("What services are currently being provided", false);
+                q2.addPossibleAnswer("What do local people see as their health needs", false);
+                q2.addPossibleAnswer("What the national and local priorities for health are", false);
+                q2.addPossibleAnswer("All of the above", true);
+                assessment.addQuestion(q2);
+                Question q3 = new Question("31", "Which of the following isn’t involved in the holistic view of health found in a community needs assessment?",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q3.addPossibleAnswer("The physical environment", false);
+                q3.addPossibleAnswer("The social environment", false);
+                q3.addPossibleAnswer("The political spectrum environment", true);
+                q3.addPossibleAnswer("The economic environment", false);
+                assessment.addQuestion(q3);
+            } else if (assessmentId.equals("13")) { // Session 1-2-4 Assessment
+                assessment = new Assessment(assessmentId, "Session 4 Assessment", 100);
+                Question q1 = new Question("32", "Interpretation of research data is:",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q1.addPossibleAnswer("A process of examining data collection forms for errors in design of questionnaires", false);
+                q1.addPossibleAnswer("A process of creating new data on the computer and looking for patterns in the data", false);
+                q1.addPossibleAnswer("A process of examining research data and searching for relationships and patterns", true);
+                assessment.addQuestion(q1);
+                Question q2 = new Question("33", "How should you aim to present your results to someone not familiar with your data?",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q2.addPossibleAnswer("Starting off with general information and progressing to more specific info", true);
+                q2.addPossibleAnswer("Starting off with specific information and working backwards from there", false);
+                q2.addPossibleAnswer("A highly specific and technical report of your data", false);
+                assessment.addQuestion(q2);
+                Question q3 = new Question("34", "Valid data are:",
+                        Question.QuestionType.SINGLE_ANSWER);
+                q3.addPossibleAnswer("Information collected from whoever is available to study", false);
+                q3.addPossibleAnswer("Information collected in a manner that minimizes bias due to random error or lack of generalizability", true);
+                q3.addPossibleAnswer("Information collected in a manner that maximizes speed of collection", false);
+                assessment.addQuestion(q3);
             }
             m_assessmentMap.put(assessmentId, assessment);
         }
@@ -409,12 +566,47 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
         return true;
     }
 
-    public CHIPUser checkUserLogin(String email, String password) {
+    public CHIPUser checkUserLogin(String email, String password, Context context) {
         // TODO: make call to database to check user login
 
         // SQL: "Select password from passwords where email=" + userEmail + ";";
 
         // TODO: remove placeholder
+        try {
+            InputStream inputStream = context.openFileInput("users");
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString;
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append(receiveString);
+                }
+
+                inputStream.close();
+                if (stringBuilder.toString().isEmpty() == false) {
+                    String[] userPassStrings = stringBuilder.toString().split(Consts.CHIPUSER_SEPARATOR, -1);
+                    for (int i = 0; i < userPassStrings.length; ++i) {
+                        String currUserPass = userPassStrings[i];
+                        String[] userStrings = currUserPass.split(Consts.PASSWORD_SEPARATOR, -1);
+
+                        if (email.equals(userStrings[0]) && password.equals(userStrings[1])) {
+                            return getUserFromFile(email, context);
+                        }
+                    }
+                } else {
+                    return null;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            return null;
+        } catch (IOException e) {
+            return null;
+        }
+
+        /*
         if (email.equals("bkt421@gmail.com") && password.equals("CH!(ch19")) {
             return new CHIPUser("1", "Robert", "Tanniru", "123 4th Street\r\nRochester, MI 48306",
                                 "Detroit", "Program Team", "", "Mohan Tanniru",
@@ -423,6 +615,116 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
         } else {
             return null;
         }
+        */
+        return null;
+    }
+
+    public boolean registerUser(CHIPUser user, String password, Context context) {
+        try {
+            ArrayList<CHIPUser> currentUsers = getUsersFromFile("users", context);
+
+            if (currentUsers != null) {
+                for (CHIPUser u : currentUsers) {
+                    if (u.get_email().equals(user.get_email())) {
+                        // not unique
+                        return false;
+                    }
+                }
+            }
+
+            OutputStreamWriter outputStreamWriter =
+                    new OutputStreamWriter(context.openFileOutput("users", Context.MODE_APPEND));
+
+            outputStreamWriter.write(user.get_email() + Consts.PASSWORD_SEPARATOR + password +
+                    Consts.PASSWORD_SEPARATOR + Consts.CHIPUSER_SEPARATOR);
+            outputStreamWriter.close();
+
+            writeUserToFile(user.get_email(), user, context);
+        }
+        catch (IOException e) {
+            String message = "error writing to file: users";
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
+
+    public void writeUserToFile(String filename, CHIPUser user, Context context) {
+        try {
+            OutputStreamWriter outputStreamWriter =
+                    new OutputStreamWriter(context.openFileOutput(filename, Context.MODE_PRIVATE));
+
+            outputStreamWriter.write(user.toFileString());
+            outputStreamWriter.close();
+        }
+        catch (IOException e) {
+            String message = "error writing to file: " + filename;
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private ArrayList<CHIPUser> getUsersFromFile(String filename, Context context) {
+        ArrayList<CHIPUser> users = new ArrayList<CHIPUser>();
+        try {
+            InputStream inputStream = context.openFileInput(filename);
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString;
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append(receiveString);
+                }
+
+                inputStream.close();
+                if (stringBuilder.toString().isEmpty() == false) {
+                    String[] userPassStrings = stringBuilder.toString().split(Consts.CHIPUSER_SEPARATOR, -1);
+                    for (int i = 0; i < userPassStrings.length - 1; ++i) {
+                        String currUserPass = userPassStrings[i];
+                        String[] userStrings = currUserPass.split(Consts.PASSWORD_SEPARATOR, -1);
+                        users.add(getUserFromFile(userStrings[0], context));
+                    }
+                } else {
+                    return null;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            return null;
+        } catch (IOException e) {
+            return null;
+        }
+        return users;
+    }
+
+    private CHIPUser getUserFromFile(String filename, Context context) {
+        try {
+            InputStream inputStream = context.openFileInput(filename);
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString;
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append(receiveString + "\n");
+                }
+
+                inputStream.close();
+                if (stringBuilder.toString().isEmpty() == false) {
+                    return new CHIPUser(stringBuilder.toString());
+                } else {
+                    return null;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            return null;
+        } catch (IOException e) {
+            return null;
+        }
+        return null;
     }
 
     public CHIPUser getMentor(String mentorId, String userId) {

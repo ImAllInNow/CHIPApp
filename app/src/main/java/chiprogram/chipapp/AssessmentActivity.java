@@ -172,7 +172,7 @@ public class AssessmentActivity extends Activity implements
             TextView questionText = new TextView(this);
             questionText.setText((i + 1) + ". " + currQuestion.toString());
             questionText.setTextSize(18);
-
+            questionText.setTextIsSelectable(true);
             questionLayout.addView(questionText);
 
             if (currQuestion.getType() == Question.QuestionType.MULTIPLE_ANSWERS) {

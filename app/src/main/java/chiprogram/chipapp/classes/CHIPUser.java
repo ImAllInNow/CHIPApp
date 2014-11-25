@@ -8,7 +8,7 @@ import chiprogram.chipapp.R;
 /**
  * Created by Rob Tanniru on 10/6/2014.
  */
-public class CHIPUser implements Parcelable {
+public class CHIPUser implements Parcelable, SavableObject {
 
     private String m_id;
     private String m_firstName;
@@ -35,6 +35,10 @@ public class CHIPUser implements Parcelable {
             return new CHIPUser[size];
         }
     };
+
+    public CHIPUser(String fileString) {
+        readFromFileString(fileString);
+    }
 
     public CHIPUser(String _id, String _firstName, String _lastName, String _address, String _location,
                     String _role, String _specialization, String _mentorId,
@@ -127,5 +131,39 @@ public class CHIPUser implements Parcelable {
         m_mentorId = in.readString();
         m_bio = in.readString();
         m_email = in.readString();
+    }
+
+    @Override
+    public void readFromFileString(String fs) {
+        String[] members = fs.split(Consts.CHIPUSER_MEMBER_SEPARATOR, -1);
+        int i = 0;
+        m_id = members[i++];
+        m_firstName = members[i++];
+        m_lastName = members[i++];
+        m_address = members[i++];
+        m_location = members[i++];
+        m_role = members[i++];
+        m_specialization = members[i++];
+        m_mentorId = members[i++];
+        m_bio = members[i++];
+        m_email = members[i++];
+    }
+
+    @Override
+    public String toFileString() {
+        String fs = "";
+
+        fs += m_id + Consts.CHIPUSER_MEMBER_SEPARATOR;
+        fs += m_firstName + Consts.CHIPUSER_MEMBER_SEPARATOR;
+        fs += m_lastName + Consts.CHIPUSER_MEMBER_SEPARATOR;
+        fs += m_address + Consts.CHIPUSER_MEMBER_SEPARATOR;
+        fs += m_location + Consts.CHIPUSER_MEMBER_SEPARATOR;
+        fs += m_role + Consts.CHIPUSER_MEMBER_SEPARATOR;
+        fs += m_specialization + Consts.CHIPUSER_MEMBER_SEPARATOR;
+        fs += m_mentorId + Consts.CHIPUSER_MEMBER_SEPARATOR;
+        fs += m_bio + Consts.CHIPUSER_MEMBER_SEPARATOR;
+        fs += m_email + Consts.CHIPUSER_MEMBER_SEPARATOR;
+
+        return fs;
     }
 }
