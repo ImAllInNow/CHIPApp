@@ -3,7 +3,10 @@ package chiprogram.chipapp.classes;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import chiprogram.chipapp.R;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import chiprogram.chipapp.database.CHIPLoaderSQL;
 
 /**
  * Created by Rob Tanniru on 10/6/2014.
@@ -40,11 +43,29 @@ public class CHIPUser implements Parcelable, SavableObject {
         readFromFileString(fileString);
     }
 
+    public CHIPUser(JSONObject jsonObject) {
+        try {
+            JSONObject CHIP = jsonObject.getJSONObject("CHIP");
+            m_id = "" + CHIP.getInt("ID");
+            m_firstName = CHIP.getString("FirstName");
+            m_lastName = CHIP.getString("LastName");
+            m_email = CHIP.getString("Email");
+            m_address = "";
+            m_location = "";
+            m_role = CHIP.getInt("RoleID") == 2 ? "Mentor" : "Innovator";
+            m_mentorId = "";
+            m_bio = "";
+            m_specialization = "";
+        } catch (JSONException e) {
+            m_id = null;
+        } catch (NullPointerException e) {
+            m_id = null;
+        }
+    }
+
     public CHIPUser(String _id, String _firstName, String _lastName, String _address, String _location,
                     String _role, String _specialization, String _mentorId,
                     String _bio, String _email) {
-
-        // TODO: remove placeholders
         m_id = _id;
         m_firstName = _firstName;
         m_lastName = _lastName;

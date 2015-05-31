@@ -17,7 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import chiprogram.chipapp.classes.CHIPLoaderSQL;
+import chiprogram.chipapp.database.CHIPLoaderSQL;
 import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.CommonFunctions;
 

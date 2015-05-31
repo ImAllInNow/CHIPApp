@@ -21,20 +21,23 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import chiprogram.chipapp.classes.CHIPLoaderSQL;
+import org.json.JSONObject;
+
+import chiprogram.chipapp.database.CHIPLoaderSQL;
 import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.CommonFunctions;
 import chiprogram.chipapp.classes.Consts;
+import chiprogram.chipapp.database.JSONServlet;
 
 /**
  * A login screen that offers login via email/password.
 
  */
-public class LoginActivity extends Activity {
+public class LoginActivity extends Activity implements JSONServlet.LoginServletListener {
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    private UserLoginTask m_AuthTask = null;
+    //private UserLoginTask m_AuthTask = null;
 
     // UI references.
     private AutoCompleteTextView m_EmailView;
@@ -123,9 +126,9 @@ public class LoginActivity extends Activity {
      * errors are presented and no actual login attempt is made.
      */
     public void attemptLogin() {
-        if (m_AuthTask != null) {
-            return;
-        }
+        //if (m_AuthTask != null) {
+        //    return;
+        //}
 
         // Reset errors.
         m_EmailView.setError(null);
@@ -165,8 +168,36 @@ public class LoginActivity extends Activity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            m_AuthTask = new UserLoginTask(this, email, password);
-            m_AuthTask.execute((Void) null);
+            JSONServlet.runLoginServlet(this, email, password);
+
+            //m_AuthTask = new UserLoginTask(this, email, password);
+            //m_AuthTask.execute((Void) null);
+        }
+    }
+
+    @Override
+    public void onLoginResult(JSONObject jsonObject) {
+        //showProgress(false);
+
+        CHIPUser user = new CHIPUser(jsonObject);
+
+        if (user.get_id() != null) {
+            setLoginPreferences();
+
+            // navigate to profile activity
+            Intent intent = new Intent(this, HomeActivity.class);
+
+            // add in user to bundle
+            Bundle extras = new Bundle();
+            extras.putParcelable(ProfileActivity.ARGUMENT_USER, user);
+
+            intent.putExtras(extras);
+
+            startActivity(intent);
+            finish();
+        } else {
+            //m_PasswordView.setError(getString(R.string.error_incorrect_password));
+            //m_PasswordView.requestFocus();
         }
     }
 
@@ -235,7 +266,7 @@ public class LoginActivity extends Activity {
 
         @Override
         protected void onPostExecute(final Boolean success) {
-            m_AuthTask = null;
+            //m_AuthTask = null;
             showProgress(false);
 
             if (success) {
@@ -260,7 +291,7 @@ public class LoginActivity extends Activity {
 
         @Override
         protected void onCancelled() {
-            m_AuthTask = null;
+            //m_AuthTask = null;
             showProgress(false);
         }
     }

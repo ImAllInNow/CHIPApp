@@ -2,6 +2,8 @@ package chiprogram.chipapp.classes;
 
 import java.util.ArrayList;
 
+import chiprogram.chipapp.database.CHIPLoaderSQL;
+
 /**
  * Created by Turtle II on 10/25/2014.
  */

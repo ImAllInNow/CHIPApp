@@ -9,7 +9,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import chiprogram.chipapp.classes.CHIPLoaderSQL;
+import chiprogram.chipapp.database.CHIPLoaderSQL;
 import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.Content;
 import chiprogram.chipapp.classes.NavItem;

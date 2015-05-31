@@ -11,7 +11,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import chiprogram.chipapp.classes.Assessment;
-import chiprogram.chipapp.classes.CHIPLoaderSQL;
+import chiprogram.chipapp.database.CHIPLoaderSQL;
 import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.NavItem;
 

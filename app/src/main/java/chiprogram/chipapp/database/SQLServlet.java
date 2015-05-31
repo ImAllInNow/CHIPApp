@@ -1,4 +1,4 @@
-package chiprogram.chipapp.classes;
+package chiprogram.chipapp.database;
 
 import android.os.AsyncTask;
 

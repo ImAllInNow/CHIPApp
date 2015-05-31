@@ -15,13 +15,17 @@ import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
-import chiprogram.chipapp.classes.CHIPLoaderSQL;
+import chiprogram.chipapp.database.CHIPLoaderSQL;
 import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.CommonFunctions;
 import chiprogram.chipapp.classes.Consts;
 import chiprogram.chipapp.classes.NavItem;
+import chiprogram.chipapp.database.JSONServlet;
 
 
 public class HomeActivity extends Activity implements

@@ -1,7 +1,6 @@
-package chiprogram.chipapp.classes;
+package chiprogram.chipapp.database;
 
 import android.content.Context;
-import android.content.Intent;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -14,9 +13,13 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
-import chiprogram.chipapp.R;
+import chiprogram.chipapp.classes.Assessment;
+import chiprogram.chipapp.classes.CHIPUser;
+import chiprogram.chipapp.classes.Consts;
+import chiprogram.chipapp.classes.Content;
+import chiprogram.chipapp.classes.NavItem;
+import chiprogram.chipapp.classes.Question;
 
 /**
  * Created by Rob Tanniru on 10/7/2014.

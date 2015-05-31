@@ -19,11 +19,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import chiprogram.chipapp.classes.Assessment;
-import chiprogram.chipapp.classes.CHIPLoaderSQL;
+import chiprogram.chipapp.database.CHIPLoaderSQL;
 import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.CommonFunctions;
 import chiprogram.chipapp.classes.Question;
-import chiprogram.chipapp.classes.NavItem;
 
 
 public class AssessmentActivity extends Activity implements
