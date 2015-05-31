@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="chiprogram.chipapp.IntroScreenActivity" >
+    tools:context="chiprogram.chipapp.activities.IntroScreenActivity" >
 
     <item android:id="@+id/action_login"
         android:title="@string/common_login"

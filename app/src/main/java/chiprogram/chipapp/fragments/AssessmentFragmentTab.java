@@ -1,4 +1,4 @@
-package chiprogram.chipapp;
+package chiprogram.chipapp.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -10,6 +10,9 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import chiprogram.chipapp.R;
+import chiprogram.chipapp.activities.NavItemTabsActivity;
+import chiprogram.chipapp.activities.ProfileActivity;
 import chiprogram.chipapp.classes.Assessment;
 import chiprogram.chipapp.database.CHIPLoaderSQL;
 import chiprogram.chipapp.classes.CHIPUser;

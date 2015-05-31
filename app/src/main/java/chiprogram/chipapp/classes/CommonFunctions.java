@@ -11,16 +11,16 @@ import android.widget.Toast;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-import chiprogram.chipapp.AboutCHIPActivity;
-import chiprogram.chipapp.DiscussionActivity;
-import chiprogram.chipapp.HomeActivity;
-import chiprogram.chipapp.IntroScreenActivity;
-import chiprogram.chipapp.LoginActivity;
-import chiprogram.chipapp.ModuleListActivity;
-import chiprogram.chipapp.NavItemTabsActivity;
-import chiprogram.chipapp.ProfileActivity;
+import chiprogram.chipapp.activities.AboutCHIPActivity;
+import chiprogram.chipapp.activities.DiscussionActivity;
+import chiprogram.chipapp.activities.HomeActivity;
+import chiprogram.chipapp.activities.IntroScreenActivity;
+import chiprogram.chipapp.activities.LoginActivity;
+import chiprogram.chipapp.activities.ModuleListActivity;
+import chiprogram.chipapp.activities.NavItemTabsActivity;
+import chiprogram.chipapp.activities.ProfileActivity;
 import chiprogram.chipapp.R;
-import chiprogram.chipapp.SettingsActivity;
+import chiprogram.chipapp.activities.SettingsActivity;
 
 /**
  * Created by Rob Tanniru on 10/6/2014.

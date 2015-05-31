@@ -1,4 +1,4 @@
-package chiprogram.chipapp;
+package chiprogram.chipapp.activities;
 
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import chiprogram.chipapp.dialogs.ConfirmationDialog;
+import chiprogram.chipapp.R;
 import chiprogram.chipapp.classes.Assessment;
 import chiprogram.chipapp.database.CHIPLoaderSQL;
 import chiprogram.chipapp.classes.CHIPUser;

@@ -1,27 +1,31 @@
-package chiprogram.chipapp;
+package chiprogram.chipapp.fragments;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.app.ListFragment;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import chiprogram.chipapp.activities.NavItemTabsActivity;
+import chiprogram.chipapp.activities.ProfileActivity;
 import chiprogram.chipapp.database.CHIPLoaderSQL;
 import chiprogram.chipapp.classes.CHIPUser;
+import chiprogram.chipapp.classes.Content;
 import chiprogram.chipapp.classes.NavItem;
 
 /**
- * A list fragment representing a list of Modules.
+ * A list fragment representing a list of Chapters.
  * <p>
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class ModuleListFragment extends ListFragment {
+public class ContentListFragmentTab extends ListFragment {
 
-    private ArrayList<NavItem> m_topLevelNavItems;
+    private ArrayList<Content> m_contentArray;
+    private CHIPUser m_user;
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -49,8 +53,7 @@ public class ModuleListFragment extends ListFragment {
         /**
          * Callback for when an item has been selected.
          */
-        public void onItemSelected(String id);
-        public CHIPUser getUser();
+        public void onItemSelected(boolean isNavItem, int index);
     }
 
     /**
@@ -59,11 +62,7 @@ public class ModuleListFragment extends ListFragment {
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(String id) {
-        }
-        @Override
-        public CHIPUser getUser() {
-            return null;
+        public void onItemSelected(boolean isNavItem, int index) {
         }
     };
 
@@ -71,17 +70,47 @@ public class ModuleListFragment extends ListFragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public ModuleListFragment() {
+    public ContentListFragmentTab() {
+    }
+
+    public static ContentListFragmentTab newInstance(CHIPUser user, String navItemId) {
+        ContentListFragmentTab fragment = new ContentListFragmentTab();
+        Bundle args = new Bundle();
+        args.putParcelable(ProfileActivity.ARGUMENT_USER, user);
+        args.putString(NavItemTabsActivity.CURRENT_ID, navItemId);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            m_user = getArguments().getParcelable(ProfileActivity.ARGUMENT_USER);
+            String m_navItemId = getArguments().getString(NavItemTabsActivity.CURRENT_ID);
+            NavItem ni = CHIPLoaderSQL.getInstance().getNavItem(m_navItemId);
+            m_contentArray = ni.getContentArray();
+        } else {
+            m_contentArray = null;
+        }
+    }
+
+    public void setArrayAdapter() {
+        // TODO: create a TableRow array instead for this and
+        // have a way to mark a piece of content as "completed".
+        setListAdapter(new ArrayAdapter<Content>(
+                getActivity(),
+                android.R.layout.simple_list_item_activated_1,
+                android.R.id.text1,
+                m_contentArray));
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        setArrayAdapter();
 
         // Restore the previously serialized activated item position.
         if (savedInstanceState != null
@@ -97,28 +126,6 @@ public class ModuleListFragment extends ListFragment {
         // Activities containing this fragment must implement its callbacks.
         if (!(activity instanceof Callbacks)) {
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
-        }
-
-        CHIPUser m_user = ((Callbacks) activity).getUser();
-
-        if (m_user != null) {
-            m_topLevelNavItems = CHIPLoaderSQL.getInstance().getBaseNavItems();
-
-            ArrayList<String> titlePlusProgress = new ArrayList<String>();
-
-            // TODO: create a TextView array instead for this.
-            for (NavItem navItem : m_topLevelNavItems) {
-                int percentComplete = (int) navItem.getCompletionPercent(m_user.get_id());
-                if (percentComplete == -1) percentComplete = 100;
-                titlePlusProgress.add(navItem.toString() + " - " +
-                        percentComplete + "%");
-            }
-
-            setListAdapter(new ArrayAdapter<String>(
-                    getActivity(),
-                    android.R.layout.simple_list_item_activated_1,
-                    android.R.id.text1,
-                    titlePlusProgress));
         }
 
         mCallbacks = (Callbacks) activity;
@@ -138,7 +145,7 @@ public class ModuleListFragment extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(m_topLevelNavItems.get(position).getId());
+        mCallbacks.onItemSelected(false, position);
     }
 
     @Override

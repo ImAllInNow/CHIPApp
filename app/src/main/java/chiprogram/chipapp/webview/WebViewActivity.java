@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-import chiprogram.chipapp.ProfileActivity;
+import chiprogram.chipapp.activities.ProfileActivity;
 import chiprogram.chipapp.R;
 import chiprogram.chipapp.database.CHIPLoaderSQL;
 import chiprogram.chipapp.classes.CHIPUser;

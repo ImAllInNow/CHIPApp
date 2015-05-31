@@ -1,10 +1,12 @@
-package chiprogram.chipapp;
+package chiprogram.chipapp.dialogs;
 
 import android.os.Bundle;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.app.DialogFragment;
+
+import chiprogram.chipapp.R;
 
 public class ConfirmationDialog extends DialogFragment {
 

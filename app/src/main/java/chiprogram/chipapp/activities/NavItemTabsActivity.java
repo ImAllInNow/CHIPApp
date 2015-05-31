@@ -1,4 +1,4 @@
-package chiprogram.chipapp;
+package chiprogram.chipapp.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -16,6 +16,11 @@ import android.widget.TableRow;
 
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import java.util.Locale;
+
+import chiprogram.chipapp.fragments.AssessmentFragmentTab;
+import chiprogram.chipapp.fragments.ContentListFragmentTab;
+import chiprogram.chipapp.fragments.NavItemListFragmentTab;
+import chiprogram.chipapp.R;
 import chiprogram.chipapp.database.CHIPLoaderSQL;
 import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.CommonFunctions;

@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="chiprogram.chipapp.ProfileActivity" >
+    tools:context="chiprogram.chipapp.activities.ProfileActivity" >
 
     <item android:id="@+id/action_profile"
         android:title="@string/common_profile"

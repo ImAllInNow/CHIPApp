@@ -1,4 +1,4 @@
-package chiprogram.chipapp;
+package chiprogram.chipapp.activities;
 
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -11,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import chiprogram.chipapp.dialogs.ConfirmationDialog;
+import chiprogram.chipapp.R;
 import chiprogram.chipapp.classes.CommonFunctions;
 import chiprogram.chipapp.classes.Consts;
 

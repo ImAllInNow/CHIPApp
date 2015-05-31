@@ -1,4 +1,4 @@
-package chiprogram.chipapp;
+package chiprogram.chipapp.fragments;
 
 import android.app.Activity;
 import android.app.ListFragment;
@@ -9,9 +9,10 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import chiprogram.chipapp.activities.NavItemTabsActivity;
+import chiprogram.chipapp.activities.ProfileActivity;
 import chiprogram.chipapp.database.CHIPLoaderSQL;
 import chiprogram.chipapp.classes.CHIPUser;
-import chiprogram.chipapp.classes.Content;
 import chiprogram.chipapp.classes.NavItem;
 
 /**
@@ -20,11 +21,10 @@ import chiprogram.chipapp.classes.NavItem;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class ContentListFragmentTab extends ListFragment {
+public class NavItemListFragmentTab extends ListFragment {
 
-    private ArrayList<Content> m_contentArray;
+    private ArrayList<NavItem> m_navItemArray;
     private CHIPUser m_user;
-
     /**
      * The serialization (saved instance state) Bundle key representing the
      * activated item position. Only used on tablets.
@@ -68,13 +68,13 @@ public class ContentListFragmentTab extends ListFragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public ContentListFragmentTab() {
+    public NavItemListFragmentTab() {
     }
 
-    public static ContentListFragmentTab newInstance(CHIPUser user, String navItemId) {
-        ContentListFragmentTab fragment = new ContentListFragmentTab();
+    public static NavItemListFragmentTab newInstance(CHIPUser m_user, String navItemId) {
+        NavItemListFragmentTab fragment = new NavItemListFragmentTab();
         Bundle args = new Bundle();
-        args.putParcelable(ProfileActivity.ARGUMENT_USER, user);
+        args.putParcelable(ProfileActivity.ARGUMENT_USER, m_user);
         args.putString(NavItemTabsActivity.CURRENT_ID, navItemId);
         fragment.setArguments(args);
         return fragment;
@@ -88,20 +88,28 @@ public class ContentListFragmentTab extends ListFragment {
             m_user = getArguments().getParcelable(ProfileActivity.ARGUMENT_USER);
             String m_navItemId = getArguments().getString(NavItemTabsActivity.CURRENT_ID);
             NavItem ni = CHIPLoaderSQL.getInstance().getNavItem(m_navItemId);
-            m_contentArray = ni.getContentArray();
+            m_navItemArray = ni.getChildArray();
         } else {
-            m_contentArray = null;
+            m_navItemArray = null;
         }
     }
 
     public void setArrayAdapter() {
-        // TODO: create a TableRow array instead for this and
-        // have a way to mark a piece of content as "completed".
-        setListAdapter(new ArrayAdapter<Content>(
+        ArrayList<String> titlePlusProgress = new ArrayList<String>();
+
+        // TODO: create a TextView array instead for this.
+        for (NavItem navItem : m_navItemArray) {
+            int percentComplete = (int) navItem.getCompletionPercent(m_user.get_id());
+            if (percentComplete == -1) percentComplete = 100;
+            titlePlusProgress.add(navItem.toString() + " - " +
+                                  percentComplete + "%");
+        }
+
+        setListAdapter(new ArrayAdapter<String>(
                 getActivity(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
-                m_contentArray));
+                titlePlusProgress));
     }
 
     @Override
@@ -143,7 +151,7 @@ public class ContentListFragmentTab extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(false, position);
+        mCallbacks.onItemSelected(true, position);
     }
 
     @Override

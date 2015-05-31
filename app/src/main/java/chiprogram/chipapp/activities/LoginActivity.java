@@ -1,4 +1,4 @@
-package chiprogram.chipapp;
+package chiprogram.chipapp.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import org.json.JSONObject;
 
+import chiprogram.chipapp.R;
 import chiprogram.chipapp.database.CHIPLoaderSQL;
 import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.CommonFunctions;

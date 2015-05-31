@@ -1,12 +1,13 @@
-package chiprogram.chipapp;
+package chiprogram.chipapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
-import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import chiprogram.chipapp.fragments.ModuleListFragment;
+import chiprogram.chipapp.R;
 import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.CommonFunctions;
 
@@ -18,10 +19,10 @@ import chiprogram.chipapp.classes.CommonFunctions;
  * lead to a {@link NavItemTabsActivity} representing the chosen Module.
  * <p>
  * The activity makes use of fragments. The list of items is a
- * {@link ModuleListFragment}.
+ * {@link chiprogram.chipapp.fragments.ModuleListFragment}.
  * <p>
  * This activity also implements the required
- * {@link ModuleListFragment.Callbacks} interface
+ * {@link chiprogram.chipapp.fragments.ModuleListFragment.Callbacks} interface
  * to listen for module selections.
  */
 public class ModuleListActivity extends Activity

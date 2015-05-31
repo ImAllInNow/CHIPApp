@@ -1,8 +1,8 @@
-package chiprogram.chipapp;
+package chiprogram.chipapp.fragments;
 
 import android.app.Activity;
-import android.app.ListFragment;
 import android.os.Bundle;
+import android.app.ListFragment;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -14,15 +14,15 @@ import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.NavItem;
 
 /**
- * A list fragment representing a list of Chapters.
+ * A list fragment representing a list of Modules.
  * <p>
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class NavItemListFragmentTab extends ListFragment {
+public class ModuleListFragment extends ListFragment {
 
-    private ArrayList<NavItem> m_navItemArray;
-    private CHIPUser m_user;
+    private ArrayList<NavItem> m_topLevelNavItems;
+
     /**
      * The serialization (saved instance state) Bundle key representing the
      * activated item position. Only used on tablets.
@@ -49,7 +49,8 @@ public class NavItemListFragmentTab extends ListFragment {
         /**
          * Callback for when an item has been selected.
          */
-        public void onItemSelected(boolean isNavItem, int index);
+        public void onItemSelected(String id);
+        public CHIPUser getUser();
     }
 
     /**
@@ -58,7 +59,11 @@ public class NavItemListFragmentTab extends ListFragment {
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(boolean isNavItem, int index) {
+        public void onItemSelected(String id) {
+        }
+        @Override
+        public CHIPUser getUser() {
+            return null;
         }
     };
 
@@ -66,55 +71,17 @@ public class NavItemListFragmentTab extends ListFragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public NavItemListFragmentTab() {
-    }
-
-    public static NavItemListFragmentTab newInstance(CHIPUser m_user, String navItemId) {
-        NavItemListFragmentTab fragment = new NavItemListFragmentTab();
-        Bundle args = new Bundle();
-        args.putParcelable(ProfileActivity.ARGUMENT_USER, m_user);
-        args.putString(NavItemTabsActivity.CURRENT_ID, navItemId);
-        fragment.setArguments(args);
-        return fragment;
+    public ModuleListFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            m_user = getArguments().getParcelable(ProfileActivity.ARGUMENT_USER);
-            String m_navItemId = getArguments().getString(NavItemTabsActivity.CURRENT_ID);
-            NavItem ni = CHIPLoaderSQL.getInstance().getNavItem(m_navItemId);
-            m_navItemArray = ni.getChildArray();
-        } else {
-            m_navItemArray = null;
-        }
-    }
-
-    public void setArrayAdapter() {
-        ArrayList<String> titlePlusProgress = new ArrayList<String>();
-
-        // TODO: create a TextView array instead for this.
-        for (NavItem navItem : m_navItemArray) {
-            int percentComplete = (int) navItem.getCompletionPercent(m_user.get_id());
-            if (percentComplete == -1) percentComplete = 100;
-            titlePlusProgress.add(navItem.toString() + " - " +
-                                  percentComplete + "%");
-        }
-
-        setListAdapter(new ArrayAdapter<String>(
-                getActivity(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                titlePlusProgress));
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        setArrayAdapter();
 
         // Restore the previously serialized activated item position.
         if (savedInstanceState != null
@@ -130,6 +97,28 @@ public class NavItemListFragmentTab extends ListFragment {
         // Activities containing this fragment must implement its callbacks.
         if (!(activity instanceof Callbacks)) {
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
+        }
+
+        CHIPUser m_user = ((Callbacks) activity).getUser();
+
+        if (m_user != null) {
+            m_topLevelNavItems = CHIPLoaderSQL.getInstance().getBaseNavItems();
+
+            ArrayList<String> titlePlusProgress = new ArrayList<String>();
+
+            // TODO: create a TextView array instead for this.
+            for (NavItem navItem : m_topLevelNavItems) {
+                int percentComplete = (int) navItem.getCompletionPercent(m_user.get_id());
+                if (percentComplete == -1) percentComplete = 100;
+                titlePlusProgress.add(navItem.toString() + " - " +
+                        percentComplete + "%");
+            }
+
+            setListAdapter(new ArrayAdapter<String>(
+                    getActivity(),
+                    android.R.layout.simple_list_item_activated_1,
+                    android.R.id.text1,
+                    titlePlusProgress));
         }
 
         mCallbacks = (Callbacks) activity;
@@ -149,7 +138,7 @@ public class NavItemListFragmentTab extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(true, position);
+        mCallbacks.onItemSelected(m_topLevelNavItems.get(position).getId());
     }
 
     @Override
