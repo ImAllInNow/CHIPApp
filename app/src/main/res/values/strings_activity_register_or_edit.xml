@@ -32,6 +32,6 @@
     <string name="register_error_short_bio">Please provide a short bio</string>
     <string name="register_error_email">Please provide a valid email address</string>
     <string name="register_error_reenter_email">Email address confirmation doesn\'t match</string>
-    <string name="register_error_password">Please provide a valid password (at least 4 characters)</string>
+    <string name="register_error_password">Please provide a valid password (4 to 12 letters or numbers)</string>
     <string name="register_non_unique">That email address is already used!</string>
 </resources>

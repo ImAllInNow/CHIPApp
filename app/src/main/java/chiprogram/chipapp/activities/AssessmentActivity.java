@@ -1,6 +1,5 @@
 package chiprogram.chipapp.activities;
 
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -27,7 +26,7 @@ import chiprogram.chipapp.classes.CommonFunctions;
 import chiprogram.chipapp.classes.Question;
 
 
-public class AssessmentActivity extends Activity implements
+public class AssessmentActivity extends BaseActivity implements
         ConfirmationDialog.ConfirmationDialogListener {
 
     private static final String CONFIRM_CANCEL_ASSESSMENT_TAG = "fragment_confirm_cancel_assessment";
@@ -84,14 +83,6 @@ public class AssessmentActivity extends Activity implements
             }
         }
         setUpQuestionsViews();
-    }
-
-    @Override
-    public void onResume() {
-        if (CommonFunctions.quitting_app) {
-            finish();
-        }
-        super.onResume();
     }
 
     @Override
@@ -267,18 +258,20 @@ public class AssessmentActivity extends Activity implements
             }
 
             String numCorrectString;
-            String questionWord = "questions"; // TODO: remove magic text
+            String questionWord = getString(R.string.response_questions);
             if (numCorrect == m_assessment.getNumQuestions()) {
-                numCorrectString = "all"; // TODO: remove magic text
+                numCorrectString = getString(R.string.response_all);
             } else if (numCorrect == 0) {
-                numCorrectString = "no"; // TODO: remove magic text
+                numCorrectString = getString(R.string.response_no);
             } else {
                 numCorrectString = "" + numCorrect;
                 if (numCorrect == 1) {
-                    questionWord = "question"; // TODO: remove magic text
+                    questionWord = getString(R.string.response_question);
                 }
             }
-            Toast.makeText(this, "You got " + numCorrectString + " " + questionWord + " correct!", Toast.LENGTH_LONG).show(); // TODO: remove magic text
+            Toast.makeText(this, getString(R.string.response_You_got) + " " +
+                    numCorrectString + " " + questionWord +
+                    getString(R.string.response_correct) + "!", Toast.LENGTH_LONG).show();
 
             CHIPLoaderSQL.getInstance().setAssessmentScore(m_assessmentId, m_user.get_id(), numCorrect);
 
@@ -289,7 +282,7 @@ public class AssessmentActivity extends Activity implements
             setResult(numCorrect, intent);
             finish();
         } else {
-            Toast.makeText(this, "Please answer all of the questions before submitting", Toast.LENGTH_LONG).show(); // TODO: remove magic text
+            Toast.makeText(this, getString(R.string.submit_when_incomplete), Toast.LENGTH_LONG).show();
         }
     }
 }

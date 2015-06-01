@@ -1,6 +1,5 @@
 package chiprogram.chipapp.activities;
 
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -26,7 +25,7 @@ import chiprogram.chipapp.classes.Consts;
 import chiprogram.chipapp.classes.NavItem;
 
 
-public class HomeActivity extends Activity implements
+public class HomeActivity extends BaseActivity implements
         ConfirmationDialog.ConfirmationDialogListener,
         View.OnClickListener {
 
@@ -146,13 +145,10 @@ public class HomeActivity extends Activity implements
 
     @Override
     public void onResume() {
-        if (CommonFunctions.quitting_app) {
-            finish();
-        } else {
-            updateRecentlyViewedItem();
-            updateProgressReport();
-        }
         super.onResume();
+
+        updateRecentlyViewedItem();
+        updateProgressReport();
     }
 
     /**

@@ -27,18 +27,16 @@ import chiprogram.chipapp.activities.SettingsActivity;
  */
 public class CommonFunctions {
 
+    public static final String DATABASE_URL = "http://www.tombrusca.com/chip/json/auth_user.aspx";
+
     public static boolean quitting_app = false;
 
     public static boolean ValidateEmail(String email) {
-        // TODO: make this better
-
-        return (email.indexOf('@') != -1);
+        return (email.matches("^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,4})+$"));
     }
 
     public static boolean ValidatePassword(String password) {
-        // TODO: make this better
-
-        return (password.length() >= 4);
+        return (password.matches("^\\w{4,12}$"));
     }
 
     // TODO: extract time bracket parameters

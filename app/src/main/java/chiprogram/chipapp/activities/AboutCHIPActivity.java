@@ -1,15 +1,13 @@
 package chiprogram.chipapp.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import chiprogram.chipapp.R;
-import chiprogram.chipapp.classes.CommonFunctions;
 
 
-public class AboutCHIPActivity extends Activity {
+public class AboutCHIPActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

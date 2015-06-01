@@ -1,7 +1,6 @@
 package chiprogram.chipapp.activities;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -28,7 +27,7 @@ import chiprogram.chipapp.classes.Content;
 import chiprogram.chipapp.classes.NavItem;
 import chiprogram.chipapp.webview.WebViewActivity;
 
-public class NavItemTabsActivity extends Activity implements ActionBar.TabListener,
+public class NavItemTabsActivity extends BaseActivity implements ActionBar.TabListener,
         NavItemListFragmentTab.Callbacks,
         ContentListFragmentTab.Callbacks,
         View.OnClickListener {
@@ -115,14 +114,6 @@ public class NavItemTabsActivity extends Activity implements ActionBar.TabListen
                                 .setTabListener(this));
             }
         }
-    }
-
-    @Override
-    public void onResume() {
-        if (CommonFunctions.quitting_app) {
-            finish();
-        }
-        super.onResume();
     }
 
     @Override

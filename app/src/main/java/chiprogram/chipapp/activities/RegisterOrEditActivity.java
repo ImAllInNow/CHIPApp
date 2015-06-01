@@ -1,6 +1,5 @@
 package chiprogram.chipapp.activities;
 
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
@@ -23,7 +22,7 @@ import chiprogram.chipapp.database.CHIPLoaderSQL;
 import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.CommonFunctions;
 
-public class RegisterOrEditActivity extends Activity implements
+public class RegisterOrEditActivity extends BaseActivity implements
         ConfirmationDialog.ConfirmationDialogListener,
         AdapterView.OnItemSelectedListener {
 
@@ -159,14 +158,6 @@ public class RegisterOrEditActivity extends Activity implements
         reenterEmailLL.setVisibility(LinearLayout.GONE);
         emailLL.setVisibility(LinearLayout.GONE);
         passwordLL.setVisibility(LinearLayout.GONE);
-    }
-
-    @Override
-    public void onResume() {
-        if (CommonFunctions.quitting_app) {
-            finish();
-        }
-        super.onResume();
     }
 
     @Override

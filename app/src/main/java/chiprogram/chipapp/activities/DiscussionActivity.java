@@ -1,6 +1,5 @@
 package chiprogram.chipapp.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,7 +12,7 @@ import chiprogram.chipapp.classes.CHIPUser;
 import chiprogram.chipapp.classes.CommonFunctions;
 import chiprogram.chipapp.webview.DiscussionWebViewClient;
 
-public class DiscussionActivity extends Activity {
+public class DiscussionActivity extends BaseActivity {
 
     private static final String CURRENT_URL = "chiprogram.chipapp.CURRENT_URL";
 
@@ -40,14 +39,6 @@ public class DiscussionActivity extends Activity {
         webSettings.setBuiltInZoomControls(true);
         myWebView.setWebViewClient(new DiscussionWebViewClient());
         myWebView.loadUrl("http://www.chiprogram.com/discussion/index.php");
-    }
-
-    @Override
-    public void onResume() {
-        if (CommonFunctions.quitting_app) {
-            finish();
-        }
-        super.onResume();
     }
 
     private void setupActionBar() {

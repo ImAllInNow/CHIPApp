@@ -33,4 +33,13 @@
 
     <string name="confirm_cancel_assessment">Cancel assessment?</string>
 
+    <string name="response_You_got">You got</string>
+    <string name="response_all">all</string>
+    <string name="response_no">no</string>
+    <string name="response_question">question</string>
+    <string name="response_questions">questions</string>
+    <string name="response_correct">correct</string>
+
+    <string name="submit_when_incomplete">Please answer all of the questions before submitting</string>
+
 </resources>

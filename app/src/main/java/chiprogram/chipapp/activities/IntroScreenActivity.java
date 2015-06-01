@@ -1,6 +1,5 @@
 package chiprogram.chipapp.activities;
 
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -17,7 +16,7 @@ import chiprogram.chipapp.classes.CommonFunctions;
 import chiprogram.chipapp.classes.Consts;
 
 
-public class IntroScreenActivity extends Activity implements
+public class IntroScreenActivity extends BaseActivity implements
         ConfirmationDialog.ConfirmationDialogListener {
 
     private FragmentManager m_fragmentManager;
@@ -42,14 +41,6 @@ public class IntroScreenActivity extends Activity implements
         if (prefs.getString(Consts.PREF_REM_PASSWORD, "").isEmpty() == false) {
             loginClicked(null);
         }
-    }
-
-    @Override
-    public void onResume() {
-        if (CommonFunctions.quitting_app) {
-            finish();
-        }
-        super.onResume();
     }
 
     @Override

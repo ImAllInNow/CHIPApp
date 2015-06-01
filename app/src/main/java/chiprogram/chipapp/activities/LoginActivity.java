@@ -34,7 +34,7 @@ import chiprogram.chipapp.database.JSONServlet;
  * A login screen that offers login via email/password.
 
  */
-public class LoginActivity extends Activity implements JSONServlet.LoginServletListener {
+public class LoginActivity extends BaseActivity implements JSONServlet.LoginServletListener {
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -111,14 +111,6 @@ public class LoginActivity extends Activity implements JSONServlet.LoginServletL
         } else {
             m_rememberEmail.setEnabled(true);
         }
-    }
-
-    @Override
-    public void onResume() {
-        if (CommonFunctions.quitting_app) {
-            finish();
-        }
-        super.onResume();
     }
 
     /**

@@ -2,7 +2,6 @@ package chiprogram.chipapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -25,7 +24,7 @@ import chiprogram.chipapp.classes.CommonFunctions;
  * {@link chiprogram.chipapp.fragments.ModuleListFragment.Callbacks} interface
  * to listen for module selections.
  */
-public class ModuleListActivity extends Activity
+public class ModuleListActivity extends BaseActivity
         implements ModuleListFragment.Callbacks {
 
     private CHIPUser m_user;
@@ -43,14 +42,6 @@ public class ModuleListActivity extends Activity
 
         // Show the Up button in the action bar.
         setupActionBar();
-    }
-
-    @Override
-    public void onResume() {
-        if (CommonFunctions.quitting_app) {
-            finish();
-        }
-        super.onResume();
     }
 
     /**

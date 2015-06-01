@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import chiprogram.chipapp.classes.CommonFunctions;
+
 /**
  * Created by Rob Tanniru on 1/24/2015.
  */
@@ -47,8 +49,8 @@ public class JSONServlet {
         public String getLoginResponseHttp() {
             StringBuilder builder = new StringBuilder();
             HttpClient client = new DefaultHttpClient();
-            String URL = "http://www.tombrusca.com/chip/json/auth_user.aspx?";
-            URL += "email=" + m_email;
+            String URL = CommonFunctions.DATABASE_URL;
+            URL += "?email=" + m_email;
             URL += "&password=" + m_password;
             HttpGet httpGet = new HttpGet(URL);
             try {

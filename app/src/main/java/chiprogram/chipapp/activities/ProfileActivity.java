@@ -69,17 +69,6 @@ public class ProfileActivity extends Activity {
             mentorView.setText(CHIPLoaderSQL.getInstance().getMentorInfo(m_user.get_mentorId()));
         }
         shortBioView.setText(m_user.get_bio());
-
-        // TODO: use this or remove it
-        //new GcmRegistrationAsyncTask().execute(this);
-    }
-
-    @Override
-    public void onResume() {
-        if (CommonFunctions.quitting_app) {
-            finish();
-        }
-        super.onResume();
     }
 
     /**
