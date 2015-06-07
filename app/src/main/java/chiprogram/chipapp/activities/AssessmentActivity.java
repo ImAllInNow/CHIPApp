@@ -270,7 +270,7 @@ public class AssessmentActivity extends BaseActivity implements
                 }
             }
             Toast.makeText(this, getString(R.string.response_You_got) + " " +
-                    numCorrectString + " " + questionWord +
+                    numCorrectString + " " + questionWord + " " +
                     getString(R.string.response_correct) + "!", Toast.LENGTH_LONG).show();
 
             CHIPLoaderSQL.getInstance().setAssessmentScore(m_assessmentId, m_user.get_id(), numCorrect);

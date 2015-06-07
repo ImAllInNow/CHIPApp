@@ -27,7 +27,7 @@ import chiprogram.chipapp.activities.SettingsActivity;
  */
 public class CommonFunctions {
 
-    public static final String DATABASE_URL = "http://www.tombrusca.com/chip/json/auth_user.aspx";
+    public static final String DATABASE_LOGIN_URL = "http://www.tombrusca.com/chip/json/auth_user.aspx";
 
     public static boolean quitting_app = false;
 

@@ -49,7 +49,7 @@ public class JSONServlet {
         public String getLoginResponseHttp() {
             StringBuilder builder = new StringBuilder();
             HttpClient client = new DefaultHttpClient();
-            String URL = CommonFunctions.DATABASE_URL;
+            String URL = CommonFunctions.DATABASE_LOGIN_URL;
             URL += "?email=" + m_email;
             URL += "&password=" + m_password;
             HttpGet httpGet = new HttpGet(URL);
