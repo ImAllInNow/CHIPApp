@@ -150,7 +150,7 @@ public class JSONServlet {
                 URL += "&trainingId=" + m_trainingId;
 
                 jsonObject = new JSONObject(getResponseHttp(URL));
-                Log.e("getAssessmentScoreResponse", jsonObject.toString());
+                Log.e("getAssessScoreResponse", jsonObject.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -197,7 +197,7 @@ public class JSONServlet {
                 URL += "&score=" + m_score;
 
                 jsonObject = new JSONObject(getResponseHttp(URL));
-                Log.e("getSetAssessmentScoreResponse", jsonObject.toString());
+                Log.e("setAssessScoreResponse", jsonObject.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
