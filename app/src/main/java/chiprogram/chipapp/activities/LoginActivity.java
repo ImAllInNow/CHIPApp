@@ -38,8 +38,6 @@ public class LoginActivity extends BaseActivity implements JSONServlet.LoginServ
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    //private UserLoginTask m_AuthTask = null;
-
     // UI references.
     private AutoCompleteTextView m_EmailView;
     private EditText m_PasswordView;
@@ -114,15 +112,11 @@ public class LoginActivity extends BaseActivity implements JSONServlet.LoginServ
     }
 
     /**
-     * Attempts to sign in or register the account specified by the login form.
+     * Attempts to sign in account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
     public void attemptLogin() {
-        //if (m_AuthTask != null) {
-        //    return;
-        //}
-
         // Reset errors.
         m_EmailView.setError(null);
         m_PasswordView.setError(null);
@@ -162,16 +156,11 @@ public class LoginActivity extends BaseActivity implements JSONServlet.LoginServ
             // perform the user login attempt.
             showProgress(true);
             JSONServlet.runLoginServlet(this, email, password);
-
-            //m_AuthTask = new UserLoginTask(this, email, password);
-            //m_AuthTask.execute((Void) null);
         }
     }
 
     @Override
     public void onLoginResult(JSONObject jsonObject) {
-        //showProgress(false);
-
         CHIPUser user = new CHIPUser(jsonObject);
 
         if (user.get_id() != null) {
@@ -188,9 +177,6 @@ public class LoginActivity extends BaseActivity implements JSONServlet.LoginServ
 
             startActivity(intent);
             finish();
-        } else {
-            //m_PasswordView.setError(getString(R.string.error_incorrect_password));
-            //m_PasswordView.requestFocus();
         }
     }
 
@@ -227,65 +213,6 @@ public class LoginActivity extends BaseActivity implements JSONServlet.LoginServ
             // and hide the relevant UI components.
             m_ProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             m_LoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
-    }
-
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-
-        private final Activity m_Activity;
-        private final String m_Email;
-        private final String m_Password;
-
-        private CHIPUser m_loginUser;
-
-        UserLoginTask(Activity baseActivity, String email, String password) {
-            m_loginUser = null;
-
-            m_Activity = baseActivity;
-            m_Email = email;
-            m_Password = password;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            m_loginUser = CHIPLoaderSQL.getInstance().checkUserLogin(m_Email, m_Password, m_Activity);
-
-            return (m_loginUser != null);
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            //m_AuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                setLoginPreferences();
-
-                // navigate to profile activity
-                Intent intent = new Intent(m_Activity, HomeActivity.class);
-
-                // add in user to bundle
-                Bundle extras = new Bundle();
-                extras.putParcelable(ProfileActivity.ARGUMENT_USER, m_loginUser);
-
-                intent.putExtras(extras);
-
-                startActivity(intent);
-                finish();
-            } else {
-                m_PasswordView.setError(getString(R.string.error_incorrect_password));
-                m_PasswordView.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            //m_AuthTask = null;
-            showProgress(false);
         }
     }
 

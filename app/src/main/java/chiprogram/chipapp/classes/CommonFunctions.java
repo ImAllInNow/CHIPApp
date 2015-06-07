@@ -40,7 +40,7 @@ public class CommonFunctions {
     }
 
     public static boolean ValidatePassword(String password) {
-        return (password.matches("^\\w{4,12}$"));
+        return (password.matches("^[\\w!@#\\$%\\^&\\*\\(\\)]{4,12}$"));
     }
 
     // TODO: extract time bracket parameters
@@ -161,17 +161,6 @@ public class CommonFunctions {
         Intent intent = new Intent(activity, IntroScreenActivity.class);
         activity.startActivity(intent);
         activity.finish();
-    }
-
-    public static void emailMentor(Activity activity, CHIPUser user) {
-        CHIPUser mentor = user.get_mentor();
-        if (mentor != null) {
-            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", mentor.get_email(), null));
-            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "CHIP mentor email");
-            activity.startActivity(Intent.createChooser(emailIntent, "Send email to mentor..."));
-        } else {
-            Toast.makeText(activity, activity.getString(R.string.no_mentor), Toast.LENGTH_SHORT).show();
-        }
     }
 
     private static void resetAutoLoginPreference(Activity activity) {

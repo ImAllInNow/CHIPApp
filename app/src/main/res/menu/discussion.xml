@@ -17,11 +17,6 @@
           app:showAsAction="ifRoom"
           android:showAsAction="ifRoom"/>
 
-    <item android:id="@+id/action_email_mentor"
-          android:title="@string/title_activity_email_mentor"
-          android:orderInCategory="99"
-          app:showAsAction="never" />
-
     <item android:id="@+id/action_settings"
           android:title="@string/action_settings"
           android:orderInCategory="100"

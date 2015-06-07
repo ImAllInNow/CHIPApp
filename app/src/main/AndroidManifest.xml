@@ -36,15 +36,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.RegisterOrEditActivity"
-            android:label="@string/title_activity_register" >
-        </activity>
-        <activity
             android:name=".activities.ProfileActivity"
             android:label="@string/title_activity_profile" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="chiprogram.chipapp.HomeActivity" />
+                android:value="chiprogram.chipapp.activities.HomeActivity" />
         </activity>
         <activity
             android:name=".activities.DiscussionActivity"
@@ -53,21 +49,21 @@
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="chiprogram.chipapp.HomeActivity" />
+                android:value="chiprogram.chipapp.activities.HomeActivity" />
         </activity>
         <activity
             android:name=".activities.ModuleListActivity"
             android:label="@string/title_module_list" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="chiprogram.chipapp.HomeActivity" />
+                android:value="chiprogram.chipapp.activities.HomeActivity" />
         </activity>
         <activity
             android:name=".activities.AssessmentActivity"
             android:label="@string/title_activity_assessment" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ChapterTabsActivity" />
+                android:value="activities.NavItemTabsActivity" />
         </activity>
         <activity
             android:name=".activities.AboutCHIPActivity"
@@ -78,7 +74,7 @@
             android:label="@string/title_activity_settings" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ProfileActivity" />
+                android:value="activities.ProfileActivity" />
         </activity>
         <activity
             android:name=".activities.HomeActivity"
@@ -89,7 +85,7 @@
             android:label="@string/title_activity_navitem_tabs" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="chiprogram.chipapp.ChapterListActivity" />
+                android:value="chiprogram.chipapp.activities.ModuleListActivity" />
         </activity>
 
         <activity

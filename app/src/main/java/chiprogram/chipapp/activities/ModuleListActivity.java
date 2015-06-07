@@ -126,8 +126,6 @@ public class ModuleListActivity extends BaseActivity
         } else if (id == R.id.action_about_chip) {
             CommonFunctions.navigateToAboutCHIP(this);
             return true;
-        } else if (id == R.id.action_email_mentor) {
-            CommonFunctions.emailMentor(this, m_user);
         }
         return super.onOptionsItemSelected(item);
     }

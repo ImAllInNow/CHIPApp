@@ -43,32 +43,12 @@ public class ProfileActivity extends Activity {
         TextView emailView = (TextView) findViewById(R.id.prof_email);
         TextView firstNameView = (TextView) findViewById(R.id.prof_firstName);
         TextView lastNameView = (TextView) findViewById(R.id.prof_lastName);
-        TextView addressView = (TextView) findViewById(R.id.prof_address);
-        TextView locationView = (TextView) findViewById(R.id.prof_location);
         TextView roleView = (TextView) findViewById(R.id.prof_role);
-        TextView specialization = (TextView) findViewById(R.id.prof_specialization);
-        LinearLayout specLL = (LinearLayout) findViewById(R.id.prof_specialization_layout);
-        TextView mentorView = (TextView) findViewById(R.id.prof_mentor);
-        TextView shortBioView = (TextView) findViewById(R.id.prof_bio);
 
         emailView.setText(m_user.get_email());
         firstNameView.setText(m_user.get_firstName());
         lastNameView.setText(m_user.get_lastName());
-        addressView.setText(m_user.get_address());
-        locationView.setText(m_user.get_location());
         roleView.setText(m_user.get_role());
-        if (m_user.get_role().equals(getString(R.string.common_mentor))) {
-            specLL.setVisibility(LinearLayout.VISIBLE);
-            specialization.setText(m_user.get_specialization());
-        } else {
-            specLL.setVisibility(LinearLayout.GONE);
-        }
-        if (m_user.get_mentorId() == null || m_user.get_mentorId().isEmpty()) {
-            mentorView.setText(getString(R.string.common_none));
-        } else {
-            mentorView.setText(CHIPLoaderSQL.getInstance().getMentorInfo(m_user.get_mentorId()));
-        }
-        shortBioView.setText(m_user.get_bio());
     }
 
     /**
@@ -126,22 +106,8 @@ public class ProfileActivity extends Activity {
         } else if (id == R.id.action_about_chip) {
             CommonFunctions.navigateToAboutCHIP(this);
             return true;
-        } else if (id == R.id.action_email_mentor) {
-            CommonFunctions.emailMentor(this, m_user);
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void editProfileClicked(View view) {
-        Intent intent = new Intent(this, RegisterOrEditActivity.class);
-
-        // add in user to bundle
-        Bundle extras = new Bundle();
-        extras.putParcelable(ProfileActivity.ARGUMENT_USER, m_user);
-
-        intent.putExtras(extras);
-
-        startActivityForResult(intent, PROFILE_EDIT);
     }
 
     @Override

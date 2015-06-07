@@ -59,9 +59,6 @@ public class IntroScreenActivity extends BaseActivity implements
         if (id == R.id.action_login) {
             loginClicked(null);
             return true;
-        } else if (id == R.id.action_register) {
-            registerClicked(null);
-            return true;
         } else if (id == R.id.action_about_chip) {
             CommonFunctions.navigateToAboutCHIP(this);
             return true;
@@ -93,11 +90,6 @@ public class IntroScreenActivity extends BaseActivity implements
             CommonFunctions.quitting_app = true;
             finish();
         }
-    }
-
-    public void registerClicked(View view) {
-        Intent intent = new Intent(this, RegisterOrEditActivity.class);
-        startActivity(intent);
     }
 
     public void loginClicked(View view) {

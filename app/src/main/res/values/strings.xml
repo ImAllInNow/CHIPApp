@@ -5,7 +5,6 @@
     <string name="action_settings">Settings</string>
     <string name="common_confirm_exit_app">Exit the app?</string>
     <string name="common_login">Login</string>
-    <string name="common_register">Register</string>
     <string name="common_profile">Profile</string>
     <string name="common_training">Training</string>
     <string name="common_discussion">Discussion</string>

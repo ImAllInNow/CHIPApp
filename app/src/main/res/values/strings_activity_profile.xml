@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Strings related to register -->
     <string name="title_activity_profile">Profile for</string>
 
     <string name="profile_title">Profile</string>
@@ -8,14 +7,7 @@
     <string name="profile_email">Email</string>
     <string name="profile_first_name">First name</string>
     <string name="profile_last_name">Last name</string>
-    <string name="profile_address">Address</string>
-    <string name="profile_location">Location</string>
     <string name="profile_role">Role</string>
-    <string name="profile_mentor">Mentor</string>
-    <string name="profile_bio">Short bio</string>
-
-    <string name="profile_edit">Edit Profile</string>
 
     <string name="confirm_logout">Logout of CHIP App?</string>
-    <string name="profile_specialization">Specialization</string>
 </resources>

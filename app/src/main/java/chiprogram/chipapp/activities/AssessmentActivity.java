@@ -112,8 +112,6 @@ public class AssessmentActivity extends BaseActivity implements
         if (id == android.R.id.home) {
             onBackPressed();
             return true;
-        } else if (id == R.id.action_email_mentor) {
-            CommonFunctions.emailMentor(this, m_user);
         }
         return super.onOptionsItemSelected(item);
     }
