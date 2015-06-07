@@ -27,7 +27,11 @@ import chiprogram.chipapp.activities.SettingsActivity;
  */
 public class CommonFunctions {
 
-    public static final String DATABASE_LOGIN_URL = "http://www.tombrusca.com/chip/json/auth_user.aspx";
+    public static final String DATABASE_URL_BASE = "http://www.tombrusca.com/chip/json/";
+    public static final String DATABASE_LOGIN_PAGE = "auth_user.aspx";
+    public static final String DATABASE_GET_ASSESSMENTS_PAGE = "get_assessment.aspx";
+    public static final String DATABASE_GET_ASSESSMENT_SCORE_PAGE = "get_assessment_score.aspx";
+    public static final String DATABASE_SET_ASSESSMENT_SCORE_PAGE = "set_assessment_score.aspx";
 
     public static boolean quitting_app = false;
 
