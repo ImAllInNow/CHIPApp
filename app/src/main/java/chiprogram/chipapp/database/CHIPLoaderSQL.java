@@ -1,22 +1,15 @@
 package chiprogram.chipapp.database;
 
+import android.app.Activity;
 import android.content.Context;
-import android.widget.Toast;
+import android.content.SharedPreferences;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import chiprogram.chipapp.classes.Assessment;
-import chiprogram.chipapp.classes.CHIPUser;
-import chiprogram.chipapp.classes.Consts;
 import chiprogram.chipapp.classes.Content;
 import chiprogram.chipapp.classes.NavItem;
 import chiprogram.chipapp.classes.Question;
@@ -30,10 +23,6 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
     private Map<String, Assessment> m_assessmentMap = new HashMap<String, Assessment>();
     private Map<String, Integer> m_scoresMap = new HashMap<String, Integer>();
     private Map<String, String> m_recentViewedItem = new HashMap<String, String>();
-
-    private String[] mentors;
-    private String[] roles;
-    private String[] locations;
 
     private boolean isNewUpdate = false; // TODO: make this better and actually work
 
@@ -59,18 +48,20 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
         }
     }
 
-    public String getMostRecentNavItem(String email) {
-        if (m_recentViewedItem.containsKey(email) == false || isNewUpdate) {
-            // TODO: make call to database to get more recent navitem
-
-            // TODO: remove placeholder
-            return "9";
-        }
-        return m_recentViewedItem.get(email);
+    public String getMostRecentNavItem(Activity activity, String email) {
+        SharedPreferences prefs = activity.getSharedPreferences(email,
+                Context.MODE_PRIVATE);
+        return prefs.getString("recentlyViewedId", null);
     }
 
-    public void setMostRecentNavItem(String email, String navItemId) {
-        m_recentViewedItem.put(email, navItemId);
+    public void setMostRecentNavItem(Activity activity, String email, String navItemId) {
+        SharedPreferences prefs = activity.getSharedPreferences(email,
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putString("recentlyViewedId", navItemId);
+
+        editor.apply();
     }
 
     public NavItem getNavItem(String navItemId) {

@@ -73,7 +73,7 @@ public class NavItemTabsActivity extends BaseActivity implements ActionBar.TabLi
         m_currentId = extras.getString(CURRENT_ID);
         m_navItem = CHIPLoaderSQL.getInstance().getNavItem(m_currentId);
 
-        CHIPLoaderSQL.getInstance().setMostRecentNavItem(m_user.get_id(), m_currentId);
+        CHIPLoaderSQL.getInstance().setMostRecentNavItem(this, m_user.get_id(), m_currentId);
 
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();

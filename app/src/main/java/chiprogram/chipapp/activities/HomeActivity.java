@@ -65,9 +65,21 @@ public class HomeActivity extends BaseActivity implements
             recentItemLayout.removeViewAt(recentItemLayout.getChildCount() - 1);
         }
 
-        String recentlyViewedId = CHIPLoaderSQL.getInstance().getMostRecentNavItem(m_user.get_id());
+        String recentlyViewedId = CHIPLoaderSQL.getInstance().getMostRecentNavItem(this, m_user.get_id());
         if (recentlyViewedId == null) {
-            recentItemLayout.setVisibility(LinearLayout.GONE);
+            TextView newTextView = new TextView(this);
+            newTextView.setText(getString(R.string.no_recent_items_message));
+            newTextView.setTextSize(Consts.MEDIUM_TEXT_SIZE);
+
+            TableRow fillerRow = new TableRow(this);
+            fillerRow.addView(newTextView);
+            recentItemLayout.addView(fillerRow);
+
+            ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) fillerRow.getLayoutParams();
+            lp.setMargins(0, 5, 5, 5);
+            fillerRow.setLayoutParams(lp);
+            fillerRow.setTag("");
+            fillerRow.setOnClickListener(this);
         } else {
             recentItemLayout.setVisibility(LinearLayout.VISIBLE);
             NavItem recentlyViewedItem = CHIPLoaderSQL.getInstance().getNavItem(recentlyViewedId);
@@ -139,7 +151,12 @@ public class HomeActivity extends BaseActivity implements
     public void onClick(View view) {
         if (view.getClass() == TableRow.class &&
             view.getTag() != null && view.getTag().getClass() == String.class) {
-            CommonFunctions.navigateToNavItem(this, m_user, (String) view.getTag());
+            String str = (String) view.getTag();
+            if (str.isEmpty()) {
+                CommonFunctions.navigateToTraining(this, m_user);
+            } else {
+                CommonFunctions.navigateToNavItem(this, m_user, str);
+            }
         }
     }
 
