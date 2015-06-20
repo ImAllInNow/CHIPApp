@@ -1,0 +1,262 @@
+{
+  "NavItems" : [
+    {
+      "id" : 1,
+      "name" : "Research Module",
+      "childrenName" : "Chapters",
+      "children" : [
+        {
+          "id" : 3,
+          "name" : "Chapter 1: Ethics",
+          "childrenName" : "Sessions",
+          "content" : [
+            {
+              "id" : 1,
+              "name" : "Ethics YouTube Video",
+              "type" : 0,
+              "link" : "https://www.youtube.com/watch?v=Ir3VvYNzHeM"
+            },
+            {
+              "id" : 2,
+              "name" : "Ethics PDF Link",
+              "type" : 1,
+              "link" : "http://chiprogram.com/training_articles/ethics.pdf"
+            }
+          ],
+          "children" : [
+            {
+              "id" : 9,
+              "name" : "Principles of Research Ethics",
+              "content" : [
+                {
+                  "id" : 3,
+                  "name" : "Session 1 PPT",
+                  "type" : 2,
+                  "link" : "http://chiprogram.com/training_ppt/session_1.pptx"
+                }
+              ],
+              "assessments" : [
+                {
+                  "id" : 1
+                }
+              ]
+            },
+            {
+              "id" : 10,
+              "name" : "Foundations of Research Ethics",
+              "content" : [
+                {
+                  "id" : 4,
+                  "name" : "Session 2 PPT",
+                  "type" : 2,
+                  "link" : "http://chiprogram.com/training_ppt/session_2.pptx"
+                }
+              ],
+              "assessments" : [
+                {
+                  "id" : 2
+                }
+              ]
+            },
+            {
+              "id" : 11,
+              "name" : "Responsible Conduct of Ethical Research",
+              "content" : [
+                {
+                  "id" : 5,
+                  "name" : "Session 3 PPT",
+                  "type" : 2,
+                  "link" : "http://chiprogram.com/training_ppt/session_3.pptx"
+                }
+              ],
+              "assessments" : [
+                {
+                  "id" : 3
+                }
+              ]
+            },
+            {
+              "id" : 12,
+              "name" : "Roles and Responsibilities",
+              "content" : [
+                {
+                  "id" : 6,
+                  "name" : "Session 4 PPT",
+                  "type" : 2,
+                  "link" : "http://chiprogram.com/training_ppt/session_4.pptx"
+                }
+              ],
+              "assessments" : [
+                {
+                  "id" : 4
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id" : 4,
+          "name" : "Chapter 2: Intro to Research",
+          "childrenName" : "Sessions",
+          "children" : [
+            {
+              "id" : 14,
+              "name" : "Session 1",
+              "content" : [
+                {
+                  "id" : 12,
+                  "name" : "Session 1 PDF: (Pages 4-6)",
+                  "type" : 1,
+                  "link" : "http://www.rds-yh.nihr.ac.uk/wp-content/uploads/2013/05/5_Introduction-to-qualitative-research-2009.pdf"
+                }
+              ],
+              "assessments" : [
+                {
+                  "id" : 10
+                }
+              ]
+            },
+            {
+              "id" : 15,
+              "name" : "Session 2",
+              "content" : [
+                {
+                  "id" : 13,
+                  "name" : "Session 2 PDF (Pages 9-16)",
+                  "type" : 1,
+                  "link" : "http://www.rds-yh.nihr.ac.uk/wp-content/uploads/2013/05/5_Introduction-to-qualitative-research-2009.pdf"
+                }
+              ],
+              "assessments" : [
+                {
+                  "id" : 11
+                }
+              ]
+            },
+            {
+              "id" : 16,
+              "name" : "Session 3",
+              "content" : [
+                {
+                  "id" : 14,
+                  "name" : "Session 3 PDF (Pages 24-31)",
+                  "type" : 1,
+                  "link" : "http://www.rds-yh.nihr.ac.uk/wp-content/uploads/2013/05/5_Introduction-to-qualitative-research-2009.pdf"
+                }
+              ],
+              "assessments" : [
+                {
+                  "id" : 12
+                }
+              ]
+            },
+            {
+              "id" : 17,
+              "name" : "Session 4",
+              "content" : [
+                {
+                  "id" : 15,
+                  "name" : "Session 4 PDF (Pages 31-34)",
+                  "type" : 1,
+                  "link" : "http://www.rds-yh.nihr.ac.uk/wp-content/uploads/2013/05/5_Introduction-to-qualitative-research-2009.pdf"
+                }
+              ],
+              "assessments" : [
+                {
+                  "id" : 13
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id" : 5,
+          "name" : "Chapter 3: Unknown",
+          "childrenName" : "Sessions"
+        }
+      ]
+    },
+    {
+
+      "id" : 2,
+      "name" : "mHealth Module",
+      "childrenName" : "Chapters",
+      "children" : [
+        {
+          "id" : 6,
+          "name" : "Session 1",
+          "content" : [
+            {
+              "id" : 7,
+              "name" : "Session 1 YouTube Video",
+              "type" : 0,
+              "link" : "https://www.youtube.com/watch?v=k3Xr7sPi7iU"
+            },
+            {
+              "id" : 11,
+              "name" : "Session 1 YouTube Video 2",
+              "type" : 0,
+              "link" : "https://www.youtube.com/watch?v=Xh52sRK13i8"
+            }
+          ],
+          "assessments" : [
+            {
+              "id" : 6
+            }
+          ]
+        },
+        {
+          "id" : 7,
+          "name" : "Session 2",
+          "content" : [
+            {
+              "id" : 8,
+              "name" : "Session 2 YouTube Video",
+              "type" : 0,
+              "link" : "https://www.youtube.com/watch?v=qkm_7XUDqIY"
+            }
+          ],
+          "assessments" : [
+            {
+              "id" : 7
+            }
+          ]
+        },
+        {
+          "id" : 8,
+          "name" : "Session 3",
+          "content" : [
+            {
+              "id" : 9,
+              "name" : "Session 3 YouTube Video",
+              "type" : 0,
+              "link" : "https://www.youtube.com/watch?v=MRYVI42x41Q"
+            }
+          ],
+          "assessments" : [
+            {
+              "id" : 8
+            }
+          ]
+        },
+        {
+          "id" : 13,
+          "name" : "Session 4",
+          "content" : [
+            {
+              "id" : 10,
+              "name" : "Session 4 YouTube Video",
+              "type" : 0,
+              "link" : "https://www.youtube.com/watch?v=XFcbx81CxeM"
+            }
+          ],
+          "assessments" : [
+            {
+              "id" : 9
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -14,8 +14,11 @@ import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
+import chiprogram.chipapp.database.JSONReaderUtility;
 import chiprogram.chipapp.dialogs.ConfirmationDialog;
 import chiprogram.chipapp.R;
 import chiprogram.chipapp.database.CHIPLoaderSQL;
@@ -55,6 +58,11 @@ public class HomeActivity extends BaseActivity implements
         this.setTitle(getString(R.string.title_activity_home) + " " + m_user.get_firstName());
 
         updateRecentlyViewedItem();
+
+        //TODO: testing getting nav items from json file in assets folder
+        JSONReaderUtility util = JSONReaderUtility.getInstance();
+        JSONObject jsonObj = util.readJSONAsset(this, "nav_items.json");
+
         updateProgressReport();
     }
 
