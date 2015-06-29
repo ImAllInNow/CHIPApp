@@ -102,13 +102,13 @@ public class ModuleListFragment extends ListFragment {
         CHIPUser m_user = ((Callbacks) activity).getUser();
 
         if (m_user != null) {
-            m_topLevelNavItems = CHIPLoaderSQL.getInstance().getBaseNavItems();
+            m_topLevelNavItems = CHIPLoaderSQL.getInstance().getBaseNavItems(activity);
 
             ArrayList<String> titlePlusProgress = new ArrayList<String>();
 
             // TODO: create a TextView array instead for this.
             for (NavItem navItem : m_topLevelNavItems) {
-                int percentComplete = (int) navItem.getCompletionPercent(m_user.get_id());
+                int percentComplete = (int) navItem.getCompletionPercent(getActivity(), m_user.get_email());
                 if (percentComplete == -1) percentComplete = 100;
                 titlePlusProgress.add(navItem.toString() + " - " +
                         percentComplete + "%");

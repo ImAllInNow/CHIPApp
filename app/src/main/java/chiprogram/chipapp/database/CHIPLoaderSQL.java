@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,8 +27,6 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
     private Map<String, Assessment> m_assessmentMap = new HashMap<String, Assessment>();
     private Map<String, Integer> m_scoresMap = new HashMap<String, Integer>();
     private Map<String, String> m_recentViewedItem = new HashMap<String, String>();
-
-    private boolean isNewUpdate = false; // TODO: make this better and actually work
 
     private static CHIPLoaderSQL instance = null;
 
@@ -64,218 +66,52 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
         editor.apply();
     }
 
-    public NavItem getNavItem(String navItemId) {
-        if (m_navItemMap.containsKey(navItemId) == false || isNewUpdate) {
-            // TODO: make call to database to get navitem
-            //new SQLServlet("select * from tbl_test", "tombrusca", this).execute();
-            // SQL: select * from nav_item where id=" + navItemId + ";";
-            // select id from nav_item where parentId=" + navItemId + ";";
-            // for each id
-            //   currNavItem.addChild(getNavItem(id));
-            // select id from content where parentId=" + navItemId + ";";
-            // for each id
-            //   currNavItem.addContent(getContent(id));
-            // select * from question where parentId=" + navItemId + ";";
-            // for each question
-            //   select * from choices where parentId=" + question.id + ";";
-            //   currNavItem.addQuestion(new Question(/*data*/));
 
-            // TODO: remove placeholder
-            NavItem currNavItem = null;
-            if (navItemId.equals("1")) { // Module 1
-                currNavItem = new NavItem(navItemId, null, "Research Module", "Chapters");
-                currNavItem.addChild(getNavItem("3"));
-                currNavItem.addChild(getNavItem("4"));
-                currNavItem.addChild(getNavItem("5"));
-            } else if (navItemId.equals("2")) { // Module 2
-                currNavItem = new NavItem(navItemId, null, "mHealth Module", "Sessions");
-                currNavItem.addChild(getNavItem("6"));
-                currNavItem.addChild(getNavItem("7"));
-                currNavItem.addChild(getNavItem("8"));
-                currNavItem.addChild(getNavItem("13"));
-            } else if (navItemId.equals("3")) { // Chapter 1-1
-                currNavItem = new NavItem(navItemId, "1", "Chapter 1: Ethics", "Sessions");
-
-                currNavItem.addContent(getContent("1"));
-                currNavItem.addContent(getContent("2"));
-
-                currNavItem.addChild(getNavItem("9"));
-                currNavItem.addChild(getNavItem("10"));
-                currNavItem.addChild(getNavItem("11"));
-                currNavItem.addChild(getNavItem("12"));
-            } else if (navItemId.equals("4")) { // Chapter 1-2
-                currNavItem = new NavItem(navItemId, "1", "Chapter 2: Intro to Research", "Sessions");
-
-                currNavItem.addChild(getNavItem("14"));
-                currNavItem.addChild(getNavItem("15"));
-                currNavItem.addChild(getNavItem("16"));
-                currNavItem.addChild(getNavItem("17"));
-            } else if (navItemId.equals("5")) { // Chapter 1-3
-                currNavItem = new NavItem(navItemId, "1", "Chapter 3: Unknown", "Sessions");
-            } else if (navItemId.equals("6")) { // Session 2-1
-                currNavItem = new NavItem(navItemId, "2", "Session 1");
-
-                currNavItem.addContent(getContent("7"));
-                currNavItem.addContent(getContent("11"));
-                currNavItem.addAssessment(getAssessment("6"));
-            } else if (navItemId.equals("7")) { // Session 2-2
-                currNavItem = new NavItem(navItemId, "2", "Session 2");
-
-                currNavItem.addContent(getContent("8"));
-                currNavItem.addAssessment(getAssessment("7"));
-            } else if (navItemId.equals("8")) { // Session 2-3
-                currNavItem = new NavItem(navItemId, "2", "Session 3");
-
-                currNavItem.addContent(getContent("9"));
-                currNavItem.addAssessment(getAssessment("8"));
-            } else if (navItemId.equals("9")) { // Session 1-1-1
-                currNavItem = new NavItem(navItemId, "3", "Principles of Research Ethics");
-
-                currNavItem.addContent(getContent("3"));
-
-                currNavItem.addAssessment(getAssessment("1"));
-            } else if (navItemId.equals("10")) { // Session 1-1-2
-                currNavItem = new NavItem(navItemId, "3", "Foundations of Research Ethics");
-
-                currNavItem.addContent(getContent("4"));
-
-                currNavItem.addAssessment(getAssessment("2"));
-            } else if (navItemId.equals("11")) { // Session 1-1-3
-                currNavItem = new NavItem(navItemId, "3", "Responsible Conduct of Ethical Research");
-
-                currNavItem.addContent(getContent("5"));
-
-                currNavItem.addAssessment(getAssessment("3"));
-            } else if (navItemId.equals("12")) { // Session 1-1-4
-                currNavItem = new NavItem(navItemId, "3", "Roles and Responsibilities");
-
-                currNavItem.addContent(getContent("6"));
-
-                currNavItem.addAssessment(getAssessment("4"));
-            } else if (navItemId.equals("13")) { // Session 2-4
-                currNavItem = new NavItem(navItemId, "2", "Session 4");
-
-                currNavItem.addContent(getContent("10"));
-                currNavItem.addAssessment(getAssessment("9"));
-            } else if (navItemId.equals("14")) { // Session 1-2-1
-                currNavItem = new NavItem(navItemId, "4", "Session 1");
-
-                currNavItem.addContent(getContent("12"));
-                currNavItem.addAssessment(getAssessment("10"));
-            } else if (navItemId.equals("15")) { // Session 1-2-2
-                currNavItem = new NavItem(navItemId, "4", "Session 2");
-
-                currNavItem.addContent(getContent("13"));
-                currNavItem.addAssessment(getAssessment("11"));
-            } else if (navItemId.equals("16")) { // Session 1-2-3
-                currNavItem = new NavItem(navItemId, "4", "Session 3");
-
-                currNavItem.addContent(getContent("14"));
-                currNavItem.addAssessment(getAssessment("12"));
-            } else if (navItemId.equals("17")) { // Session 1-2-4
-                currNavItem = new NavItem(navItemId, "4", "Session 4");
-
-                currNavItem.addContent(getContent("15"));
-                currNavItem.addAssessment(getAssessment("13"));
-            } else if (navItemId.equals("18")) { // Assignment 1
-                currNavItem = new NavItem(navItemId, null, "Assignment 1");
-
-                currNavItem.addAssessment(getAssessment("5"));
-            }
-            m_navItemMap.put(navItemId, currNavItem);
-
+    public NavItem getNavItem(String navItemId, Context context) {
+        if (m_navItemMap.containsKey(navItemId) == false) {
+            getBaseNavItems(context);
         }
         return m_navItemMap.get(navItemId);
     }
 
-    public ArrayList<NavItem> getBaseNavItems() {
+    public ArrayList<NavItem> getBaseNavItems(Context context) {
         ArrayList<NavItem> baseNavItems = new ArrayList<NavItem>();
-        // TODO: make call to database to get modules
-        // SQL: select * from nav_item where parentId=null;";
 
-        // TODO: remove placeholder
-        baseNavItems.add(getNavItem("1"));
-        baseNavItems.add(getNavItem("2"));
-        baseNavItems.add(getNavItem("18"));
+        // TODO: eventually get this from the central database
+        try {
+            JSONReaderUtility util = JSONReaderUtility.getInstance();
+            JSONObject jsonObj = util.readJSONAsset(context, "nav_items.json");
+            JSONArray navItems = jsonObj.has("NavItems") ? jsonObj.getJSONArray("NavItems") : null;
+
+            if (navItems != null) {
+                for (int i = 0; i < navItems.length(); ++i) {
+                    JSONObject navItem = navItems.getJSONObject(i);
+                    String n_id = "" + navItem.getInt("id");
+                    String n_name = navItem.getString("name");
+                    String n_childrenName = navItem.has("childrenName") ? navItem.getString("childrenName") : null;
+                    NavItem navItemAdd = new NavItem(n_id, null, n_name, n_childrenName);
+                    navItemAdd.readFromJSONObject(navItem, m_navItemMap, m_contentMap);
+                    m_navItemMap.put(n_id, navItemAdd);
+                    baseNavItems.add(navItemAdd);
+                }
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         return baseNavItems;
     }
 
-    public Content getContent(String contentId) {
-        if (m_contentMap.containsKey(contentId) == false || isNewUpdate) {
-            // TODO: make call to database to get content
-            // SQL: select * from content where id=" + contentId + ";";
-
-            // TODO: remove placeholder
-            Content currContent = null;
-            if (contentId.equals("1")) { // Chapter 1-1 YouTube video
-                currContent = new Content(contentId, "Ethics YouTube Video",
-                        Content.ContentType.YOUTUBE_VIDEO,
-                        "https://www.youtube.com/watch?v=Ir3VvYNzHeM");
-            } else if (contentId.equals("2")) { // Chapter 1-1 PDF file
-                currContent = new Content(contentId, "Ethics PDF Link",
-                        Content.ContentType.PDF_LINK,
-                        "http://chiprogram.com/training_articles/ethics.pdf");
-            } else if (contentId.equals("3")) { // Session 1-1-1 PPT file
-                currContent = new Content(contentId, "Session 1 PPT",
-                        Content.ContentType.PPT_LINK,
-                        "http://chiprogram.com/training_ppt/session_1.pptx");
-            } else if (contentId.equals("4")) { // Session 1-1-2 PPT file
-                currContent = new Content(contentId, "Session 2 PPT",
-                        Content.ContentType.PPT_LINK,
-                        "http://chiprogram.com/training_ppt/session_2.pptx");
-            } else if (contentId.equals("5")) { // Session 1-1-3 PPT file
-                currContent = new Content(contentId, "Session 3 PPT",
-                        Content.ContentType.PPT_LINK,
-                        "http://chiprogram.com/training_ppt/session_3.pptx");
-            } else if (contentId.equals("6")) { // Session 1-1-4 PPT file
-                currContent = new Content(contentId, "Session 4 PPT",
-                        Content.ContentType.PPT_LINK,
-                        "http://chiprogram.com/training_ppt/session_4.pptx");
-            } else if (contentId.equals("7")) { // Session 2-1 YouTube Video
-                currContent = new Content(contentId, "Session 1 YouTube Video",
-                        Content.ContentType.YOUTUBE_VIDEO,
-                        "https://www.youtube.com/watch?v=k3Xr7sPi7iU");
-            } else if (contentId.equals("8")) { // Session 2-2 YouTube Video
-                currContent = new Content(contentId, "Session 2 YouTube Video",
-                        Content.ContentType.YOUTUBE_VIDEO,
-                        "https://www.youtube.com/watch?v=qkm_7XUDqIY");
-            } else if (contentId.equals("9")) { // Session 2-3 YouTube Video
-                currContent = new Content(contentId, "Session 3 YouTube Video",
-                        Content.ContentType.YOUTUBE_VIDEO,
-                        "https://www.youtube.com/watch?v=MRYVI42x41Q");
-            } else if (contentId.equals("10")) { // Session 2-4 YouTube Video
-                currContent = new Content(contentId, "Session 4 YouTube Video",
-                        Content.ContentType.YOUTUBE_VIDEO,
-                        "https://www.youtube.com/watch?v=XFcbx81CxeM");
-            } else if (contentId.equals("11")) { // Session 2-1 YouTube Video 2
-                currContent = new Content(contentId, "Session 1 YouTube Video 2",
-                        Content.ContentType.YOUTUBE_VIDEO,
-                        "https://www.youtube.com/watch?v=Xh52sRK13i8");
-            } else if (contentId.equals("12")) { // Session 1-2-1 PDF
-                currContent = new Content(contentId, "Session 1 PDF: (Pages 4-6)",
-                        Content.ContentType.PDF_LINK,
-                        "http://www.rds-yh.nihr.ac.uk/wp-content/uploads/2013/05/5_Introduction-to-qualitative-research-2009.pdf");
-            } else if (contentId.equals("13")) { // Session 1-2-2 PDF
-                currContent = new Content(contentId, "Session 2 PDF: (Pages 9-16)",
-                        Content.ContentType.PDF_LINK,
-                        "http://www.rds-yh.nihr.ac.uk/wp-content/uploads/2013/05/5_Introduction-to-qualitative-research-2009.pdf");
-            } else if (contentId.equals("14")) { // Session 1-2-3 PDF
-                currContent = new Content(contentId, "Session 3 PDF: (Pages 24-31)",
-                        Content.ContentType.PDF_LINK,
-                        "http://www.rds-yh.nihr.ac.uk/wp-content/uploads/2013/05/5_Introduction-to-qualitative-research-2009.pdf");
-            } else if (contentId.equals("15")) { // Session 1-2-4 PDF
-                currContent = new Content(contentId, "Session 4 PDF: (Pages 31-34)",
-                        Content.ContentType.PDF_LINK,
-                        "http://www.rds-yh.nihr.ac.uk/wp-content/uploads/2013/05/5_Introduction-to-qualitative-research-2009.pdf");
-            }
-            m_contentMap.put(contentId, currContent);
+    public Content getContent(String contentId, Context context) {
+        if (m_contentMap.containsKey(contentId) == false) {
+            getBaseNavItems(context);
         }
         return m_contentMap.get(contentId);
     }
 
     public Assessment getAssessment(String assessmentId) {
-        if (m_assessmentMap.containsKey(assessmentId) == false || isNewUpdate) {
+        if (m_assessmentMap.containsKey(assessmentId) == false) {
             // TODO: make call to database to get assessment
             // SQL: select * from Assessment where id=" + assessmentId + ";";
 
@@ -541,22 +377,31 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
     }
 
     // returns -1 if the user has not attempted the assessment
-    public int getAssessmentScore(String assessmentId, String userId) {
-        if (m_scoresMap.containsKey(assessmentId + "-" + userId) == false || isNewUpdate) {
+    public int getAssessmentScore(Activity activity, String assessmentId, String userEmail) {
+        if (m_scoresMap.containsKey(assessmentId + "-" + userEmail) == false) {
             // TODO: make call to database to get assessment score
 
             // SQL: "Select score from scores where email=" + userEmail + " and session_id=" + sessionId + ";";
+            SharedPreferences prefs = activity.getSharedPreferences(userEmail,
+                    Context.MODE_PRIVATE);
 
-            m_scoresMap.put(assessmentId + "-" + userId, -1);
+            m_scoresMap.put(assessmentId + "-" + userEmail, prefs.getInt("score", -1));
         }
-        return m_scoresMap.get(assessmentId + "-" + userId);
+        return m_scoresMap.get(assessmentId + "-" + userEmail);
     }
 
-    public boolean setAssessmentScore(String assessmentId, String userId, int newScore) {
+    public boolean setAssessmentScore(Activity activity, String assessmentId, String userEmail, int newScore) {
         // TODO: make call to database to set new score
 
         // SQL: "Insert into scores where email=" + userEmail + " and session_id=" + sessionId + ";";
-        m_scoresMap.put(assessmentId + "-" + userId, newScore);
+        SharedPreferences prefs = activity.getSharedPreferences(userEmail,
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putInt("score", newScore);
+
+        editor.apply();
+        m_scoresMap.put(assessmentId + "-" + userEmail, newScore);
         return true;
     }
 }

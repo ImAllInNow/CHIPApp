@@ -39,7 +39,7 @@ public class WebViewActivity extends Activity {
         m_user = extras.getParcelable(ProfileActivity.ARGUMENT_USER);
         m_contentId = extras.getString(CONTENT_ID);
 
-        Content content = CHIPLoaderSQL.getInstance().getContent(m_contentId);
+        Content content = CHIPLoaderSQL.getInstance().getContent(m_contentId, this);
         this.setTitle(content.getName());
 
         m_myWebView = (WebView) findViewById(R.id.webview);

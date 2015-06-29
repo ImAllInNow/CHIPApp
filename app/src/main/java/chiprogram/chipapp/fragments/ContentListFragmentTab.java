@@ -89,7 +89,7 @@ public class ContentListFragmentTab extends ListFragment {
         if (getArguments() != null) {
             m_user = getArguments().getParcelable(ProfileActivity.ARGUMENT_USER);
             String m_navItemId = getArguments().getString(NavItemTabsActivity.CURRENT_ID);
-            NavItem ni = CHIPLoaderSQL.getInstance().getNavItem(m_navItemId);
+            NavItem ni = CHIPLoaderSQL.getInstance().getNavItem(m_navItemId, getActivity());
             m_contentArray = ni.getContentArray();
         } else {
             m_contentArray = null;

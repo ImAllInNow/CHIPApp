@@ -59,10 +59,6 @@ public class HomeActivity extends BaseActivity implements
 
         updateRecentlyViewedItem();
 
-        //TODO: testing getting nav items from json file in assets folder
-        JSONReaderUtility util = JSONReaderUtility.getInstance();
-        JSONObject jsonObj = util.readJSONAsset(this, "nav_items.json");
-
         updateProgressReport();
     }
 
@@ -90,13 +86,13 @@ public class HomeActivity extends BaseActivity implements
             fillerRow.setOnClickListener(this);
         } else {
             recentItemLayout.setVisibility(LinearLayout.VISIBLE);
-            NavItem recentlyViewedItem = CHIPLoaderSQL.getInstance().getNavItem(recentlyViewedId);
+            NavItem recentlyViewedItem = CHIPLoaderSQL.getInstance().getNavItem(recentlyViewedId, this);
             ArrayList<NavItem> navItemTree = new ArrayList<NavItem>();
 
             NavItem currentItem = recentlyViewedItem;
             navItemTree.add(currentItem);
             while(currentItem.getParentId() != null) {
-                currentItem = CHIPLoaderSQL.getInstance().getNavItem(currentItem.getParentId());
+                currentItem = CHIPLoaderSQL.getInstance().getNavItem(currentItem.getParentId(), this);
                 navItemTree.add(currentItem);
             }
 
@@ -126,7 +122,7 @@ public class HomeActivity extends BaseActivity implements
             progressReportLayout.removeViewAt(progressReportLayout.getChildCount() - 1);
         }
 
-        ArrayList<NavItem> topLevelItems = CHIPLoaderSQL.getInstance().getBaseNavItems();
+        ArrayList<NavItem> topLevelItems = CHIPLoaderSQL.getInstance().getBaseNavItems(this);
 
         if (topLevelItems.isEmpty()) {
             progressReportLayout.setVisibility(LinearLayout.GONE);
@@ -135,7 +131,7 @@ public class HomeActivity extends BaseActivity implements
                 TextView newTextView = new TextView(this);
                 NavItem currentItem = topLevelItems.get(i);
 
-                double completionPercentage = currentItem.getCompletionPercent(m_user.get_id());
+                double completionPercentage = currentItem.getCompletionPercent(this, m_user.get_email());
                 if (completionPercentage == -1) {
                     completionPercentage = 100;
                 }

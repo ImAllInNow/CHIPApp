@@ -58,7 +58,7 @@ public class AssessmentFragmentTab extends Fragment {
             m_user = getArguments().getParcelable(ProfileActivity.ARGUMENT_USER);
             String navItemId = getArguments().getString(NavItemTabsActivity.CURRENT_ID);
 
-            m_navItem = CHIPLoaderSQL.getInstance().getNavItem(navItemId);
+            m_navItem = CHIPLoaderSQL.getInstance().getNavItem(navItemId, getActivity());
         } else {
             m_navItem = null;
         }
@@ -75,7 +75,8 @@ public class AssessmentFragmentTab extends Fragment {
             for (int i = 0; i < m_navItem.getNumAssessments(); ++i) {
                 Assessment currAssessment = m_navItem.getAssessment(i);
 
-                int userScore = CHIPLoaderSQL.getInstance().getAssessmentScore(currAssessment.getId(), m_user.get_id());
+                int userScore = CHIPLoaderSQL.getInstance().getAssessmentScore(getActivity(),
+                        currAssessment.getId(), m_user.get_email());
 
                 TableRow row = makeTableRow(view, currAssessment.getName(),
                         currAssessment.getPassingPercent(), userScore, currAssessment.getNumQuestions());

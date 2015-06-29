@@ -1,13 +1,20 @@
 package chiprogram.chipapp.classes;
 
+import android.app.Activity;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Map;
 
 import chiprogram.chipapp.database.CHIPLoaderSQL;
 
 /**
  * Created by Turtle II on 10/25/2014.
  */
-public class NavItem {
+public class NavItem implements JSONReadable {
 
     private String m_id;
     private String m_parentId;
@@ -51,12 +58,12 @@ public class NavItem {
     }
 
     // returns -1 if there are no items in this NavItem that can be completed
-    public double getCompletionPercent(String userId) {
+    public double getCompletionPercent(Activity activity, String userEmail) {
         double runningSum = 0;
         int runningCount = 0;
         if (hasChildren()) {
             for (NavItem navItem : m_childArray) {
-                double subCompletionPercent = navItem.getCompletionPercent(userId);
+                double subCompletionPercent = navItem.getCompletionPercent(activity, userEmail);
                 if (subCompletionPercent != -1) {
                     runningSum = runningSum + subCompletionPercent;
                     ++runningCount;
@@ -66,7 +73,7 @@ public class NavItem {
         if (hasAssessments()) {
             for (Assessment assessment : m_assessmentArray) {
                 ++runningCount;
-                int currScore = CHIPLoaderSQL.getInstance().getAssessmentScore(assessment.getId(), userId);
+                int currScore = CHIPLoaderSQL.getInstance().getAssessmentScore(activity, assessment.getId(), userEmail);
                 if (currScore == -1) currScore = 0;
                 double assessmentScore = (double) currScore / assessment.getNumQuestions();
                 if (assessmentScore * 100 >= assessment.getPassingPercent()) {
@@ -173,5 +180,53 @@ public class NavItem {
     @Override
     public String toString() {
         return m_name;
+    }
+
+
+    @Override
+    public void readFromJSONObject(JSONObject jsonObject,
+                                   Map<String, NavItem> navItemMap,
+                                   Map<String, Content> contentMap)
+            throws JSONException, NullPointerException {
+        JSONArray content = jsonObject.has("content") ? jsonObject.getJSONArray("content") : null;
+
+        if (content != null) {
+            for (int i = 0; i < content.length(); ++i) {
+                JSONObject c = content.getJSONObject(i);
+                String c_id = "" + c.getInt("id");
+                String c_name = c.getString("name");
+                Content.ContentType c_type = Content.ContentType.values()[c.getInt("type")];
+                String c_link = c.getString("link");
+                Content contentAdd = new Content(c_id, c_name, c_type, c_link);
+                contentMap.put(c_id, contentAdd);
+                m_contentArray.add(contentAdd);
+            }
+        }
+
+        JSONArray assessments = jsonObject.has("assessments") ? jsonObject.getJSONArray("assessments") : null;
+
+        if (assessments != null) {
+            for (int i = 0; i < assessments.length(); ++i) {
+                JSONObject a = assessments.getJSONObject(i);
+                String a_id = "" + a.getInt("id");
+                m_assessmentArray.add(CHIPLoaderSQL.getInstance().getAssessment(a_id));
+            }
+        }
+
+        JSONArray children = jsonObject.has("children") ? jsonObject.getJSONArray("children") : null;
+
+        if (children != null) {
+            for (int i = 0; i < children.length(); ++i) {
+                JSONObject child = children.getJSONObject(i);
+                String c_id = "" + child.getInt("id");
+                String c_parentId = m_id;
+                String c_name = child.getString("name");
+                String c_childrenName = child.has("childrenName") ? child.getString("childrenName") : null;
+                NavItem childAdd = new NavItem(c_id, c_parentId, c_name, c_childrenName);
+                childAdd.readFromJSONObject(child, navItemMap, contentMap);
+                navItemMap.put(c_id, childAdd);
+                m_childArray.add(childAdd);
+            }
+        }
     }
 }

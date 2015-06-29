@@ -271,7 +271,7 @@ public class AssessmentActivity extends BaseActivity implements
                     numCorrectString + " " + questionWord + " " +
                     getString(R.string.response_correct) + "!", Toast.LENGTH_LONG).show();
 
-            CHIPLoaderSQL.getInstance().setAssessmentScore(m_assessmentId, m_user.get_id(), numCorrect);
+            CHIPLoaderSQL.getInstance().setAssessmentScore(this, m_assessmentId, m_user.get_id(), numCorrect);
 
             Intent intent = new Intent();
 

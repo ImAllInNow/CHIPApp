@@ -87,7 +87,7 @@ public class NavItemListFragmentTab extends ListFragment {
         if (getArguments() != null) {
             m_user = getArguments().getParcelable(ProfileActivity.ARGUMENT_USER);
             String m_navItemId = getArguments().getString(NavItemTabsActivity.CURRENT_ID);
-            NavItem ni = CHIPLoaderSQL.getInstance().getNavItem(m_navItemId);
+            NavItem ni = CHIPLoaderSQL.getInstance().getNavItem(m_navItemId, getActivity());
             m_navItemArray = ni.getChildArray();
         } else {
             m_navItemArray = null;
@@ -99,7 +99,7 @@ public class NavItemListFragmentTab extends ListFragment {
 
         // TODO: create a TextView array instead for this.
         for (NavItem navItem : m_navItemArray) {
-            int percentComplete = (int) navItem.getCompletionPercent(m_user.get_id());
+            int percentComplete = (int) navItem.getCompletionPercent(getActivity(), m_user.get_email());
             if (percentComplete == -1) percentComplete = 100;
             titlePlusProgress.add(navItem.toString() + " - " +
                                   percentComplete + "%");

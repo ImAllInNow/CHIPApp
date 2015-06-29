@@ -71,7 +71,7 @@ public class NavItemTabsActivity extends BaseActivity implements ActionBar.TabLi
 
         m_user = extras.getParcelable(ProfileActivity.ARGUMENT_USER);
         m_currentId = extras.getString(CURRENT_ID);
-        m_navItem = CHIPLoaderSQL.getInstance().getNavItem(m_currentId);
+        m_navItem = CHIPLoaderSQL.getInstance().getNavItem(m_currentId, this);
 
         CHIPLoaderSQL.getInstance().setMostRecentNavItem(this, m_user.get_id(), m_currentId);
 
@@ -142,7 +142,7 @@ public class NavItemTabsActivity extends BaseActivity implements ActionBar.TabLi
                 intent = new Intent(this, ModuleListActivity.class);
             } else {
                 intent = new Intent(this, NavItemTabsActivity.class);
-                NavItem parent = CHIPLoaderSQL.getInstance().getNavItem(m_navItem.getParentId());
+                NavItem parent = CHIPLoaderSQL.getInstance().getNavItem(m_navItem.getParentId(), this);
                 extras.putString(NavItemTabsActivity.CURRENT_ID, parent.getId());
             }
 

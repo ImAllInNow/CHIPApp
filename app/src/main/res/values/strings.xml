@@ -21,4 +21,5 @@
     <string name="common_none">None</string>
     <string name="common_mentor">Mentor</string>
 
+    <integer name="passing_percentage">80</integer>
 </resources>
