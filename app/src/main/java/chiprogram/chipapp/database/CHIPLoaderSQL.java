@@ -385,7 +385,7 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
             SharedPreferences prefs = activity.getSharedPreferences(userEmail,
                     Context.MODE_PRIVATE);
 
-            m_scoresMap.put(assessmentId + "-" + userEmail, prefs.getInt("score", -1));
+            m_scoresMap.put(assessmentId + "-" + userEmail, prefs.getInt("score-" + assessmentId, -1));
         }
         return m_scoresMap.get(assessmentId + "-" + userEmail);
     }
@@ -398,7 +398,7 @@ public class CHIPLoaderSQL implements SQLServlet.SQLListener {
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
-        editor.putInt("score", newScore);
+        editor.putInt("score-" + assessmentId, newScore);
 
         editor.apply();
         m_scoresMap.put(assessmentId + "-" + userEmail, newScore);
