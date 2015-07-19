@@ -41,5 +41,6 @@
     <string name="response_correct">correct</string>
 
     <string name="submit_when_incomplete">Please answer all of the questions before submitting</string>
+    <string name="confirm_retake_assessment">You have already passed this assessment. Are you sure you want to retake it?</string>
 
 </resources>

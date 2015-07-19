@@ -16,6 +16,8 @@ import android.widget.TableRow;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import java.util.Locale;
 
+import chiprogram.chipapp.classes.Assessment;
+import chiprogram.chipapp.dialogs.ConfirmationDialog;
 import chiprogram.chipapp.fragments.AssessmentFragmentTab;
 import chiprogram.chipapp.fragments.ContentListFragmentTab;
 import chiprogram.chipapp.fragments.NavItemListFragmentTab;
@@ -30,6 +32,7 @@ import chiprogram.chipapp.webview.WebViewActivity;
 public class NavItemTabsActivity extends BaseActivity implements ActionBar.TabListener,
         NavItemListFragmentTab.Callbacks,
         ContentListFragmentTab.Callbacks,
+        ConfirmationDialog.ConfirmationDialogListener,
         View.OnClickListener {
 
     public enum TabType {
@@ -39,6 +42,8 @@ public class NavItemTabsActivity extends BaseActivity implements ActionBar.TabLi
     }
 
     public static final String CURRENT_ID = "chiprogram.chipapp.CURRENT_ID";
+
+    private static final String CONFIRM_RETAKE_ASSESSMENT = "fragment_confirm_retake_assessment";
 
     public final static int REQUEST_ASSESSMENT = 1;
 
@@ -57,6 +62,8 @@ public class NavItemTabsActivity extends BaseActivity implements ActionBar.TabLi
      */
     ViewPager mViewPager;
 
+    private FragmentManager m_fragmentManager;
+
     private CHIPUser m_user;
     private NavItem m_navItem;
     String m_currentId;
@@ -68,6 +75,8 @@ public class NavItemTabsActivity extends BaseActivity implements ActionBar.TabLi
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
+
+        m_fragmentManager = getFragmentManager();
 
         m_user = extras.getParcelable(ProfileActivity.ARGUMENT_USER);
         m_currentId = extras.getString(CURRENT_ID);
@@ -236,7 +245,38 @@ public class NavItemTabsActivity extends BaseActivity implements ActionBar.TabLi
     @Override
     public void onClick(View view) {
         if (view.getClass() == TableRow.class) {
+            // check if they have a passing grade for this assessment,
+            // if so, confirm they actually want to retake the assessment
             String assessmentId = (String) view.getTag();
+            int userScore = CHIPLoaderSQL.getInstance().getAssessmentScore(this, assessmentId, m_user.get_email());
+            Assessment assessmentClicked = CHIPLoaderSQL.getInstance().getAssessment(assessmentId);
+            double passingPercent = assessmentClicked.getPassingPercent();
+            int numQuestions = assessmentClicked.getNumQuestions();
+
+            if (userScore != -1 && ((double)userScore) * 100 / numQuestions >= passingPercent) {
+                FragmentTransaction fragmentTransaction = m_fragmentManager.beginTransaction();
+
+                ConfirmationDialog confirmDeleteCompletedTasksDialog =
+                        new ConfirmationDialog();
+
+                Bundle args = new Bundle();
+                args.putString(ConfirmationDialog.ARG_MESSAGE_TEXT, getString(R.string.confirm_retake_assessment));
+                args.putString(ConfirmationDialog.ARG_TAG, CONFIRM_RETAKE_ASSESSMENT + assessmentId);
+
+                confirmDeleteCompletedTasksDialog.setArguments(args);
+
+                fragmentTransaction.add(confirmDeleteCompletedTasksDialog, CONFIRM_RETAKE_ASSESSMENT);
+                fragmentTransaction.commit();
+            } else {
+                onFinishConfirmationDialog(CONFIRM_RETAKE_ASSESSMENT + assessmentId);
+            }
+        }
+    }
+
+    public void onFinishConfirmationDialog(String tag) {
+        if (tag.startsWith(CONFIRM_RETAKE_ASSESSMENT)) {
+            String assessmentId = tag.substring(CONFIRM_RETAKE_ASSESSMENT.length());
+
             Intent intent = new Intent(this, AssessmentActivity.class);
 
             // add in user to bundle
@@ -364,7 +404,8 @@ public class NavItemTabsActivity extends BaseActivity implements ActionBar.TabLi
                 case CHILDREN:
                     if (m_navItem.getChildrenName() == null) {
                         return getString(R.string.title_section2).toUpperCase(l);
-                    } else if (m_navItem.getChildrenName().equals("Modules")) {
+                        /*
+                    } else if (m_navItem.getChildrenName().equals("Modules")) { // TODO: figure out how to make this more general
                         return getString(R.string.title_section2_modules).toUpperCase(l);
                     } else if (m_navItem.getChildrenName().equals("Chapters")) {
                         return getString(R.string.title_section2_chapters).toUpperCase(l);
@@ -372,6 +413,9 @@ public class NavItemTabsActivity extends BaseActivity implements ActionBar.TabLi
                         return getString(R.string.title_section2_sessions).toUpperCase(l);
                     } else {
                         return m_navItem.getChildrenName().toUpperCase(l);
+                        */
+                    } else {
+                        return (m_navItem.getChildrenName().toUpperCase(l));
                     }
                 case ASSESSMENTS:
                     return getString(R.string.title_section3).toUpperCase(l);

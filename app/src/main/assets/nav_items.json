@@ -177,7 +177,6 @@
       ]
     },
     {
-
       "id" : 2,
       "name" : "mHealth Module",
       "childrenName" : "Chapters",
@@ -255,6 +254,16 @@
               "id" : 9
             }
           ]
+        }
+      ]
+    },
+    {
+      "id" : 18,
+      "name" : "Assignment 1",
+      "childrenName" : "",
+      "assessments" : [
+        {
+          "id" : 5
         }
       ]
     }

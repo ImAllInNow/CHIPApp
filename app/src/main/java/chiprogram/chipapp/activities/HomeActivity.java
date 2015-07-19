@@ -228,9 +228,9 @@ public class HomeActivity extends BaseActivity implements
         SharedPreferences prefs = getSharedPreferences(LoginActivity.class.getSimpleName(),
                 Context.MODE_PRIVATE);
         if (prefs.getString(Consts.PREF_REM_PASSWORD, "").isEmpty()) {
-            args.putString(ConfirmationDialog.ARG_MESSAGE_TEXT, getString(R.string.confirm_logout));
+            args.putString(ConfirmationDialog.ARG_MESSAGE_TITLE, getString(R.string.confirm_logout));
         } else {
-            args.putString(ConfirmationDialog.ARG_MESSAGE_TEXT, getString(R.string.common_confirm_exit_app));
+            args.putString(ConfirmationDialog.ARG_MESSAGE_TITLE, getString(R.string.common_confirm_exit_app));
         }
         args.putString(ConfirmationDialog.ARG_TAG, CONFIRM_LOGOUT_TAG);
 

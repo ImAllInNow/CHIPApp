@@ -75,7 +75,7 @@ public class IntroScreenActivity extends BaseActivity implements
                 new ConfirmationDialog();
 
         Bundle args = new Bundle();
-        args.putString(ConfirmationDialog.ARG_MESSAGE_TEXT, getString(R.string.common_confirm_exit_app));
+        args.putString(ConfirmationDialog.ARG_MESSAGE_TITLE, getString(R.string.common_confirm_exit_app));
         args.putString(ConfirmationDialog.ARG_TAG, CONFIRM_EXIT_APP_TAG);
 
         confirmExitAppDialog.setArguments(args);

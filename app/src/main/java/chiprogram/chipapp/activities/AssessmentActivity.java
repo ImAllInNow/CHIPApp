@@ -125,7 +125,7 @@ public class AssessmentActivity extends BaseActivity implements
                 new ConfirmationDialog();
 
         Bundle args = new Bundle();
-        args.putString(ConfirmationDialog.ARG_MESSAGE_TEXT, getString(R.string.confirm_cancel_assessment));
+        args.putString(ConfirmationDialog.ARG_MESSAGE_TITLE, getString(R.string.confirm_cancel_assessment));
         args.putString(ConfirmationDialog.ARG_TAG, CONFIRM_CANCEL_ASSESSMENT_TAG);
 
         confirmDeleteCompletedTasksDialog.setArguments(args);
